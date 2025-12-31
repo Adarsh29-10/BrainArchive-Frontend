@@ -11,13 +11,11 @@ function AuthBootstrap() {
         const syncUser = async () => {
             try {
                 const token = await getAccessTokenSilently()
-                console.log(token)
-                const response = await axios.get('http://localhost:8000/user/me', {
+                await axios.get('http://localhost:8000/user/me', {
                     headers: {
                         Authorization: `Bearer ${token}` 
                     }
                 })
-                console.log(response)
             } catch (error) {
                 console.log(error)
             }
