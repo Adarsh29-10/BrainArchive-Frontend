@@ -1,5 +1,5 @@
 export interface Notebook {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   createdAt: Date;
