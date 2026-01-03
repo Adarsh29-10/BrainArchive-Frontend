@@ -1,4 +1,6 @@
+import AuthAxiosBridge from "./auth/AuthAxiosBridge"
 import AuthBootstrap from "./auth/AuthBootstrap"
+import AuthRedirectHandler from "./auth/AuthRedirectHandler"
 import Dashboard from "./pages/Dashboard"
 import LandingPage from "./pages/LandingPage"
 import LearningSession from "./pages/LearningSession"
@@ -7,10 +9,13 @@ import { Route, Routes } from "react-router-dom"
 function App() {
   return (
     <>
-    <AuthBootstrap />
+    <AuthBootstrap />        {/*  //sync frontend-backend user (/user/me)   */}
+    <AuthAxiosBridge />      {/*  //attach Auth0 token to axios globally    */}
+    <AuthRedirectHandler />  {/*  //redirect user after auth state settles  */}
+
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/notebooks" element={<Dashboard />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/learning-session" element={<LearningSession />} />
     </Routes>
     </>
