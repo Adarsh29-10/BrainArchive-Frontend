@@ -1,32 +1,14 @@
-import { useState, useCallback } from 'react';
-import type { Notebook, NotebookFormData } from '../types/notebook';
+import { useState, useEffect } from 'react';
+import type { Notebook } from '../types/notebook';
 import AddNotebookButton from '../components/buttons/AddNotebookButton';
 import AddNotebookModal from '../components/modals/AddNotebookModal';
-import NotebookGrid from '../components/grids/NotebookGrid';
 import Navbar from '../components/navbar/Navbar';
+import NotebookGrid from '../components/grids/NotebookGrid';
 
-
-function Dashboard() {
+ function Dashboard() {
     const [notebooks, setNotebooks] = useState<Notebook[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const handleModalSubmit = useCallback((formData: NotebookFormData) => {
-        const newNotebook: Notebook = {
-            id: new Date().toString(),
-            ...formData,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        };
-
-        setNotebooks((prevNotebooks) => [newNotebook, ...prevNotebooks]);
-        setIsModalOpen(false);
-    }, []);
-
-    const handleDeleteNotebook = useCallback((id: string) => {
-        setNotebooks((prevNotebooks) =>
-            prevNotebooks.filter((notebook) => notebook.id !== id)
-        );
-    }, []);
+    
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -49,23 +31,13 @@ function Dashboard() {
                 </div>
 
                 {/* Notebooks Grid */}
-                <div>    
-                    <NotebookGrid
-                        notebooks={notebooks}
-                        onDeleteNotebook={handleDeleteNotebook}
-                        onNotebookClick={(notebook) => {
-                            // TODO: Navigate to notebook detail page
-                            console.log('Opening notebook:', notebook);
-                        }}
-                    />
-                </div>
+                <NotebookGrid/>
             </div>
 
-            {/* Add Notebook Modal */}
+            {/* Add Notebook Modal - DONE*/}
             <AddNotebookModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                onSubmit={handleModalSubmit}
             />
         </div>
     );
