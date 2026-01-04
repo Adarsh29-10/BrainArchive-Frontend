@@ -1,6 +1,7 @@
 import AuthAxiosBridge from "./auth/AuthAxiosBridge"
 import AuthBootstrap from "./auth/AuthBootstrap"
 import AuthRedirectHandler from "./auth/AuthRedirectHandler"
+import ProtectedRoute from "./auth/ProtectedRoute"
 import Dashboard from "./pages/Dashboard"
 import LandingPage from "./pages/LandingPage"
 import LearningSession from "./pages/LearningSession"
@@ -15,8 +16,13 @@ function App() {
 
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/learning-session" element={<LearningSession />} />
+
+      {/* Authenticated Routes */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/learning-session" element={<LearningSession />} />
+      </Route>
+      
     </Routes>
     </>
   )
