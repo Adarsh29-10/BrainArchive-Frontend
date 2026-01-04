@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import type { NotebookFormData } from '../../types/notebook';
+import { useCreateNotebook } from '../../hooks/useNotebooks';
 
 interface AddNotebookModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: NotebookFormData) => void;
 }
 
-function AddNotebookModal({ isOpen, onClose, onSubmit }: AddNotebookModalProps) {
+function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [errors, setErrors] = useState<{ title?: string; description?: string }>({});
 
+  const createNotebookMutation = useCreateNotebook();
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: { title?: string; description?: string } = {};
@@ -26,10 +27,11 @@ function AddNotebookModal({ isOpen, onClose, onSubmit }: AddNotebookModalProps) 
       return;
     }
 
-    onSubmit({ title, description });
+    createNotebookMutation.mutate({title, description})
     setTitle('');
     setDescription('');
     setErrors({});
+    onClose()
   };
 
   const handleClose = () => {
