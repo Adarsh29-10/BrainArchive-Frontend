@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
-import type { Notebook } from '../types/notebook';
+import { useState } from 'react';
 import AddNotebookButton from '../components/buttons/AddNotebookButton';
 import AddNotebookModal from '../components/modals/AddNotebookModal';
 import Navbar from '../components/navbar/Navbar';
 import NotebookGrid from '../components/grids/NotebookGrid';
 
  function Dashboard() {
-    const [notebooks, setNotebooks] = useState<Notebook[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     
 
@@ -20,8 +18,6 @@ import NotebookGrid from '../components/grids/NotebookGrid';
                     {/* Heading */}
                     <div className="mb-12">
                         <h1 className="text-5xl font-bold text-gray-900 mb-2">My Notebooks</h1>
-                        
-                        <p className="text-gray-600 text-lg">{notebooks.length} notebook{notebooks.length !== 1 ? 's' : ''}</p>
                     </div>
                     
                     {/* Add Button Section */}
