@@ -35,7 +35,7 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
 
     editNotebookMutation.mutate(
       {
-        id: notebook._id,
+        notebookId: notebook._id,
         title,
         description,
       },
