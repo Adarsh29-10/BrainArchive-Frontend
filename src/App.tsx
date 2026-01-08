@@ -20,9 +20,9 @@ function App() {
       {/* Authenticated Routes */}
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/learning-session" element={<LearningSession />} />
+        <Route path="/nb/:notebookId" element={<LearningSession />} />
       </Route>
-      
+
     </Routes>
     </>
   )
