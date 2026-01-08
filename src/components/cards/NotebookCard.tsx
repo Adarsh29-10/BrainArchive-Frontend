@@ -1,6 +1,7 @@
 import { Trash2, BookOpen, Edit } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import type { Notebook } from '../../types/notebook';
-import { useDeleteNotebook } from '../../hooks/useNotebooks';
+import { useGetNotebookById } from '../../hooks/useNotebooks';
 
 interface NotebookCardProps {
   notebook: Notebook;
@@ -9,16 +10,14 @@ interface NotebookCardProps {
 }
 
 function NotebookCard({ notebook, onDeleteClick, onUpdateClick}: NotebookCardProps) {
-
-  const handleOpenNotebook = () => {
-      console.log('Open Notebook:', notebook.title);
-      // createDeleteMutation.mutate(notebookId);
-  };
+  const navigate = useNavigate();
   
   return (
     <div className="group bg-white rounded-lg shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-gray-200 hover:border-pink-300 cursor-pointer"
     >
-      <div className="p-6" onClick={handleOpenNotebook}>
+      <div 
+        className="p-6" 
+        onClick={()=> navigate(`/nb/${notebook._id}`)}>
 
         {/* title and description */}
         <div className="flex items-start justify-between mb-4">
