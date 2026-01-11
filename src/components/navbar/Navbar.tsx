@@ -1,4 +1,3 @@
-import { Brain } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function Navbar() {
@@ -9,11 +8,10 @@ function Navbar() {
   }
 
   return (
-    <nav className="bg-white/10 backdrop-blur-md border-b border-black/20 sticky top-0 z-50 flex justify-between items-center px-16 py-4">
+    <nav className="bg-white/10 backdrop-blur-md border-b border-black/20 sticky top-0 z-50 flex justify-between items-center px-16 py-2">
       
         <div className="flex items-center gap-2 justify-center">
-          <Brain size={32} className="text-black" />
-          <span className="text-xl font-bold text-black">BrainArchive</span>
+          <span className="text-2xl font-bold text-black">BrainArchive</span>
         </div>
 
         {isAuthenticated ? (
@@ -33,7 +31,7 @@ function Navbar() {
         ) : (
           <button
             onClick={() => loginWithRedirect()}
-            className="px-6 py-2 rounded-lg bg-black text-white font-semibold"
+            className="px-6 py-2 rounded-lg bg-black text-white font-bold hover:scale-105 transition-transform duration-300"
           >
             Sign In
           </button>
