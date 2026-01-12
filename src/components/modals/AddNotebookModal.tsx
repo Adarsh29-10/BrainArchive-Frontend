@@ -27,11 +27,18 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
       return;
     }
 
-    createNotebookMutation.mutate({title, description})
+    createNotebookMutation.mutate({
+      title, 
+      description,
+      blocks: [],
+      isPublic: false,
+      lastActivityAt: new Date(),
+      totalTimeSpent: 0
+    });
     setTitle('');
     setDescription('');
     setErrors({});
-    onClose()
+    onClose();
   };
 
   const handleClose = () => {
