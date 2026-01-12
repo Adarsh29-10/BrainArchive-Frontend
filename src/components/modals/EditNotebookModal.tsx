@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useUpdateNotebook } from '../../hooks/useNotebooks';
 import type { Notebook } from '../../types/notebook';
@@ -11,17 +11,9 @@ interface EditNotebookModalProps {
 function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
   const editNotebookMutation = useUpdateNotebook();
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [errors, setErrors] = useState<{ title?: string }>({});
-
-  // 🔑 Prefill form when notebook changes
-  useEffect(() => {
-    if (notebook) {
-      setTitle(notebook.title);
-      setDescription(notebook.description || '');
-    }
-  }, [notebook]);
+  const [title, setTitle] = useState(notebook?.title || '');
+  const [description, setDescription] = useState(notebook?.description || '');
+  const [titleError, setTitleError] = useState('');
 
   if (!notebook) return null;
 
@@ -29,9 +21,11 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
     e.preventDefault();
 
     if (!title.trim()) {
-      setErrors({ title: 'Title is required' });
+      setTitleError('Title is required');
       return;
     }
+
+    setTitleError('');
 
     editNotebookMutation.mutate(
       {
@@ -56,12 +50,18 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full border p-2 rounded"
-            placeholder="Title"
-          />
+          <div>
+            <input
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                if (titleError) setTitleError('');
+              }}
+              className={`w-full border p-2 rounded ${titleError ? 'border-red-500 bg-red-50' : ''}`}
+              placeholder="Title"
+            />
+            {titleError && <p className="text-red-600 text-sm mt-1">{titleError}</p>}
+          </div>
 
           <textarea
             value={description}
