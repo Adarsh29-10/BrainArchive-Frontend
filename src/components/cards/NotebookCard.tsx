@@ -1,7 +1,6 @@
 import { Trash2, BookOpen, Edit } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { Notebook } from '../../types/notebook';
-import { useGetNotebookById } from '../../hooks/useNotebooks';
 
 interface NotebookCardProps {
   notebook: Notebook;
