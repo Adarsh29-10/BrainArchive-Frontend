@@ -6,7 +6,7 @@ interface BulletBlockProps {
     content: string;
   };
   onChange: (id: string, value: string) => void;
-  onDelete: (id: string) => void;
+  onDelete?: (id: string) => void;
 }
 
 function BulletBlock({ block, onChange, onDelete }: BulletBlockProps) {
@@ -54,7 +54,7 @@ function BulletBlock({ block, onChange, onDelete }: BulletBlockProps) {
 
       {/* Delete entire block button */}
       <button
-        onClick={() => onDelete(block._id)}
+        onClick={() => onDelete?.(block._id)}
         className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 p-2 text-red-600 hover:bg-red-100 rounded-lg transition-all"
         aria-label="Delete bullet block"
       >

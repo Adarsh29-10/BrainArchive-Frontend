@@ -8,7 +8,7 @@ interface CodeBlockProps {
     language?: string;
   };
   onChange: (id: string, value: string) => void;
-  onDelete: (id: string) => void;
+  onDelete?: (id: string) => void;
 }
 
 function CodeBlock({ block, onChange, onDelete }: CodeBlockProps) {
@@ -41,7 +41,7 @@ function CodeBlock({ block, onChange, onDelete }: CodeBlockProps) {
 
       {/* Delete button - show on hover */}
       <button
-        onClick={() => onDelete(block._id)}
+        onClick={() => onDelete?.(block._id)}
         className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 p-2 text-red-600 hover:bg-red-100 rounded-lg transition-all z-10"
         aria-label="Delete code block"
       >
