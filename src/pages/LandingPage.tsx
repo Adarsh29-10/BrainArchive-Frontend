@@ -1,5 +1,5 @@
 import { BookOpen, Brain, Zap, Users } from 'lucide-react';
-import Navbar from '../components/navbar/Navbar';
+import NavbarLandingPage from '../components/navbar/NavbarLandingPage';
 
 function LandingPage() {
 
@@ -30,7 +30,7 @@ function LandingPage() {
   return (
     <div className="min-h-screen bg-yellow-50/60 ">
       {/* Navigation Bar */}
-      <Navbar />
+      <NavbarLandingPage />
 
       {/* Hero Section */}
       <div className="flex items-center justify-center min-h-screen bg-pink-900 px-4 relative overflow-hidden">
