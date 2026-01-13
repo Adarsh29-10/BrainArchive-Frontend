@@ -13,11 +13,11 @@ import NotebookGrid from '../components/grids/NotebookGrid';
             <Navbar />
             
             {/* Main Content */}
-            <div className="pl-16 pr-16 py-8">
+            <div className="px-6 sm:px-16 py-4">
                 <div className='flex items-center justify-between'>
                     {/* Heading */}
                     <div className="mb-12">
-                        <h1 className="text-5xl font-bold text-gray-900 mb-2">My Notebooks</h1>
+                        <h1 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-2">My Notebooks</h1>
                     </div>
                     
                     {/* Add Button Section */}
