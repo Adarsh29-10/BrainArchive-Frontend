@@ -14,7 +14,7 @@ function AddNotebookButton({onClick}:AddNotebookButtonProps) {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             className={`
-                relative px-4 py-4 rounded-full 
+                relative px-3 py-3 sm:px-4 sm:py-4 rounded-full 
                 transition-all duration-300 ease-in-out
                 ${isHovered 
                     ? 'border-pink-500 bg-pink-500 shadow-xl scale-105' 
