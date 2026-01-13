@@ -42,7 +42,7 @@ function NotebookCard({ notebook, onDeleteClick, onUpdateClick}: NotebookCardPro
       </div>
 
         {/* Action Buttons */}
-      <div className="flex gap-2 pt-4 border-t border-gray-100 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-6">
+      <div className="flex gap-2 pt-4 border-t border-gray-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-6">
         <button
           onClick={(e) => {
             e.stopPropagation();
