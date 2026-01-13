@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Analytics } from "@vercel/analytics/react"
 import App from "./App";
 import "./index.css";
 
@@ -34,6 +35,7 @@ createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <App />
+          <Analytics />
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false}/>
       </QueryClientProvider>
