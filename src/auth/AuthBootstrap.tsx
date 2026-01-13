@@ -1,29 +1,27 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
-import {useEffect} from 'react'
+import {useEffect, useRef} from 'react'
+import { api } from "../apis/axios.api";
 
 
 function AuthBootstrap() {
-    const {isAuthenticated, getAccessTokenSilently} = useAuth0();
+    const {isAuthenticated} = useAuth0();
+    const ranRef = useRef(false);
 
     useEffect(()=>{
-        if(!isAuthenticated) return;
+        if(!isAuthenticated || ranRef.current) return;
+        ranRef.current = true;
+
         const syncUser = async () => {
             try {
-                const token = await getAccessTokenSilently()
-                await axios.get('http://localhost:8000/user/me', {
-                    headers: {
-                        Authorization: `Bearer ${token}` 
-                    }
-                })
+                await api.get('/user/me')
             } catch (error) {
-                console.log(error)
+                console.log("Auth bootstrap failed", error)
             }
         };
 
         syncUser();
 
-    }, [isAuthenticated, getAccessTokenSilently])
+    }, [isAuthenticated])
 
     return null;
 }
