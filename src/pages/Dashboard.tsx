@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import AddNotebookButton from '../components/buttons/AddNotebookButton';
 import AddNotebookModal from '../components/modals/AddNotebookModal';
-import Navbar from '../components/navbars/Navbar';
 import NotebookGrid from '../components/grids/NotebookGrid';
 
  function Dashboard() {
@@ -9,8 +8,7 @@ import NotebookGrid from '../components/grids/NotebookGrid';
     
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-            <Navbar />
+        <div className="h-full bg-gradient-to-br from-slate-50 to-slate-100 overflow-y-auto">
             
             {/* Main Content */}
             <div className="px-6 sm:px-16 py-4">
