@@ -1,5 +1,5 @@
 import { BookOpen, Brain, Zap, Users } from 'lucide-react';
-import NavbarLandingPage from '../components/navbar/NavbarLandingPage';
+import NavbarLandingPage from '../components/navbars/NavbarLandingPage';
 
 function LandingPage() {
 
