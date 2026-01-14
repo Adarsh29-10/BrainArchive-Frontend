@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import AddNotebookButton from '../components/buttons/AddNotebookButton';
 import AddNotebookModal from '../components/modals/AddNotebookModal';
-import Navbar from '../components/navbar/Navbar';
+import Navbar from '../components/navbars/Navbar';
 import NotebookGrid from '../components/grids/NotebookGrid';
 
  function Dashboard() {
