@@ -1,4 +1,5 @@
 import { X } from 'lucide-react';
+import { useRef, useEffect, useState } from 'react';
 
 interface BulletBlockProps {
   block: {
@@ -7,10 +8,29 @@ interface BulletBlockProps {
   };
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
+  autoFocus: string;
 }
 
-function BulletBlock({ block, onChange, onDelete }: BulletBlockProps) {
+function BulletBlock({ block, onChange, onDelete, autoFocus }: BulletBlockProps) {
   const lines = block.content.split('\n');
+  const textareaRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
+  const [focusedLineIndex, setFocusedLineIndex] = useState<number | null>(null);
+
+  // Focus on the block when it's first created
+  useEffect(() => {
+    if (autoFocus === block._id && textareaRefs.current[0]) {
+      textareaRefs.current[0].focus();
+    }
+  }, [autoFocus, block._id]);
+
+  useEffect(() => {
+    if (focusedLineIndex !== null && textareaRefs.current[focusedLineIndex]) {
+      setTimeout(() => {
+        textareaRefs.current[focusedLineIndex]?.focus();
+        setFocusedLineIndex(null); // Reset after focusing
+      }, 0);
+    }
+  }, [focusedLineIndex, lines.length]);
 
   return (
     <div className="relative group ml-4">
@@ -24,6 +44,9 @@ function BulletBlock({ block, onChange, onDelete }: BulletBlockProps) {
 
             {/* Text */}
             <textarea
+              ref={(el) => {
+                if (el) textareaRefs.current[index] = el;
+              }}
               rows={1}
               className="flex-1 w-full text-base leading-relaxed outline-none resize-none bg-transparent border-transparent focus:border-pink-400 focus:bg-pink-50/40 px-2 pt-1 mr-2 rounded-sm transition-all no-scrollbar"
               value={line}
@@ -53,6 +76,9 @@ function BulletBlock({ block, onChange, onDelete }: BulletBlockProps) {
                   newLines.splice(index + 1, 0, afterCursor);
                   
                   onChange(block._id, newLines.join('\n'));
+                  
+                  // Set focus to the newly created bullet line
+                  setFocusedLineIndex(index + 1);
                 }
               }}
             />
