@@ -1,11 +1,30 @@
 import type { Block, BlockType } from "../types/block";
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { useGetNotebookById, useUpdateNotebookBlock } from "./useNotebooks";
 
-export const useEditorStore = () => {
+export const useEditorStore = (notebookId : string | undefined) => {
     const [blocks, setBlocks] = useState<Block[]>([]);
-    const getNotebookMutation = useGetNotebookById();
-    const updateBlockMutation = useUpdateNotebookBlock();
+
+    const {data, isError, isPending} = useGetNotebookById(notebookId);
+  
+    
+  
+
+    useEffect(() => {
+        if (!data?.blocks) return;
+
+        const blocksWithIds = data.blocks.map((block: Block) => ({
+        _id: crypto.randomUUID(),
+        type: block.type,
+        content: block.content
+        }))
+
+        setBlocks(blocksWithIds)
+        
+    }, [data]);
+
+
+   
 
     const addBlock = (type : BlockType ) => {
         setBlocks(prev => [
@@ -39,6 +58,8 @@ export const useEditorStore = () => {
         setBlocks,
         addBlock,
         updateBlock,
-        deleteBlock
+        deleteBlock,
+        isError,
+        isPending
     }
 }
