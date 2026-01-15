@@ -35,7 +35,7 @@ export const deleteNotebook = async (id:string) => {
     return res.data.data;
 }
 
-export const getNotebookById = async (notebookId: string) => {
+export const getNotebookById = async (notebookId: string | undefined) => {
     const res = await api.get(`/notebooks/${notebookId}`);
     return res.data.data;
 }
