@@ -1,4 +1,5 @@
 import { X } from 'lucide-react';
+import { useRef, useEffect } from 'react';
 
 interface Heading1BlockProps {
   block: {
@@ -7,13 +8,23 @@ interface Heading1BlockProps {
   };
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
+  autoFocus: string;
 }
 
 
-function Heading1Block({ block, onChange, onDelete }: Heading1BlockProps) {
+function Heading1Block({ block, onChange, onDelete, autoFocus }: Heading1BlockProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (autoFocus === block._id) {
+      textareaRef.current?.focus();
+    }
+  }, [autoFocus, block._id]);
+  
   return (
     <div className="relative mb-1 group">
       <textarea
+        ref={textareaRef}
         className="text-2xl sm:text-2xl font-bold w-full py-2 px-4 pr-14 border-2 border-transparent rounded-lg border-pink-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden bg-transparent hover:bg-pink-50/30 "
         placeholder="Heading..."
         value={block.content}
