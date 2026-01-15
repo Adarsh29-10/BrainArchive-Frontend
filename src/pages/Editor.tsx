@@ -6,7 +6,7 @@ import { useUpdateNotebookBlock } from '../hooks/useNotebooks';
 
 function Editor() {
     const { notebookId } = useParams<{ notebookId: string | undefined}>();
-    const {blocks, addBlock, updateBlock, deleteBlock, isError, isPending} = useEditorStore(notebookId);
+    const {blocks, addBlock, updateBlock, deleteBlock, isError, isPending, focusedBlockId} = useEditorStore(notebookId);
     const updateBlockMutation = useUpdateNotebookBlock();
   
 
@@ -32,7 +32,7 @@ function Editor() {
         </div>
 
         {/* Main editor content  */}
-        <main className="flex-1 px-6 py-3 overflow-y-auto">
+        <main className="flex-1 px-6 py-3 overflow-y-auto pb-[60vh]">
 
           {/* Header */}
           <div className="flex justify-between items-center">
@@ -62,6 +62,7 @@ function Editor() {
               block={block}
               onChange={updateBlock}
               onDelete={deleteBlock}
+              autoFocus={focusedBlockId}
             />
           ))}
         </main>
