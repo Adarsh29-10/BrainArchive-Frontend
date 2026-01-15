@@ -4,31 +4,36 @@ import { useGetNotebookById } from "./useNotebooks";
 
 export const useEditorStore = (notebookId : string | undefined) => {
     const [blocks, setBlocks] = useState<Block[]>([]);
+    const [focusedBlockId, setFocusedBlockId] = useState<string | null>(null);
     const {data, isError, isPending} = useGetNotebookById(notebookId);
   
     useEffect(() => {
         if (!data?.blocks) return;
 
         const blocksWithIds = data.blocks.map((block: Block) => ({
-        _id: crypto.randomUUID(),
-        type: block.type,
-        content: block.content
+            _id: crypto.randomUUID(),
+            type: block.type,
+            content: block.content
         }))
 
         setBlocks(blocksWithIds)
         
     }, [data]);
 
-    
+
     const addBlock = (type : BlockType ) => {
+        const id = crypto.randomUUID();
+
         setBlocks(prev => [
             ...prev,
             {
-                _id: crypto.randomUUID(),
+                _id: id,
                 type: type,
                 content: '',
             },
         ]);
+
+        setFocusedBlockId(id);
     };
 
     const updateBlock = (id: string, value: string) => {
@@ -54,6 +59,7 @@ export const useEditorStore = (notebookId : string | undefined) => {
         updateBlock,
         deleteBlock,
         isError,
-        isPending
+        isPending,
+        focusedBlockId
     }
 }
