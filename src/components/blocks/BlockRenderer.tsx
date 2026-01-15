@@ -9,7 +9,7 @@ interface BlockRendererProps {
   block: Block;
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
-  autoFocus: string;
+  autoFocus: string | null;
 }
 
 function BlockRenderer({ block, onChange, onDelete, autoFocus }: BlockRendererProps) {

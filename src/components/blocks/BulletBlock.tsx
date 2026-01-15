@@ -8,7 +8,7 @@ interface BulletBlockProps {
   };
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
-  autoFocus: string;
+  autoFocus: string | null;
 }
 
 function BulletBlock({ block, onChange, onDelete, autoFocus }: BulletBlockProps) {

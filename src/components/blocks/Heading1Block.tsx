@@ -8,7 +8,7 @@ interface Heading1BlockProps {
   };
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
-  autoFocus: string;
+  autoFocus: string | null;
 }
 
 
@@ -20,7 +20,7 @@ function Heading1Block({ block, onChange, onDelete, autoFocus }: Heading1BlockPr
       textareaRef.current?.focus();
     }
   }, [autoFocus, block._id]);
-  
+
   return (
     <div className="relative mb-1 group">
       <textarea
