@@ -2,12 +2,14 @@ import { ChevronDown } from "lucide-react"
 import {useState} from 'react';
 import type { BlockType } from "../../types/block";
 import { SIDEBAR_SECTIONS } from "./SidebarPalette";
+import { useEditorStore } from "../../hooks/useEditorStore";
 
 type Props = {
     addBlock: (type: BlockType) => void;
 }
 
 function EditorSidebar({addBlock} : Props) {
+    // const {addBlock} = useEditorStore()
 
     const [expandedSections, setExpandedSections] = useState<string[]>([SIDEBAR_SECTIONS[0].title])
 
@@ -20,7 +22,7 @@ function EditorSidebar({addBlock} : Props) {
     }
 
     return (
-        <aside className="w-64 h-full bg-gray-50 border-r border-gray-200 flex flex-col flex-shrink-0">
+        <aside className="sm:w-36 md:w-48 h-full bg-gray-50 border-r border-gray-200 flex flex-col flex-shrink-0">
             
             {/* Header */}
             <div className="px-4 py-4 border-b border-gray-200 bg-white flex-shrink-0">
@@ -48,18 +50,16 @@ function EditorSidebar({addBlock} : Props) {
 
                         {/* Block Items */}
                         {expandedSections.includes(section.title) && (
-                            <div className="space-y-2 pl-6">
+                            <div className="space-y-2 sm:pl-0 md:pl-6">
                                 {section.blocks.map((block) => (
                                     <button
                                         key={block.label}
                                         onClick={() => addBlock(block.type as BlockType)}
-                                        className="w-full flex items-center gap-3 px-3 py-2.5 bg-white border-2 border-gray-200 rounded-lg hover:border-pink-400 hover:bg-pink-50 active:scale-95 transition-all duration-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 group"
+                                        className="mx-1 px-3 py-2.5 bg-white border-2 border-gray-200 rounded-lg hover:border-pink-400 hover:bg-pink-50 active:scale-95 transition-all duration-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 group"
                                         title={`Add ${block.label}`}
                                     >
                                         <block.Icon size={18} className="text-pink-600 group-hover:scale-110 transition-transform" />
-                                        <span className="text-sm font-medium text-gray-700 group-hover:text-pink-600 capitalize">
-                                            {block.label}
-                                        </span>
+                                        
                                     </button>
                                 ))}
                             </div>
