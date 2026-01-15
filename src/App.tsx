@@ -2,17 +2,16 @@ import AuthAxiosBridge from "./auth/AuthAxiosBridge"
 import AuthBootstrap from "./auth/AuthBootstrap"
 import AuthRedirectHandler from "./auth/AuthRedirectHandler"
 import ProtectedRoute from "./auth/ProtectedRoute"
-import DesktopOnly from "./components/common/DesktopOnly"
 import Dashboard from "./pages/Dashboard"
 import LandingPage from "./pages/LandingPage"
-import LearningSession from "./pages/LearningSession"
 import { Route, Routes } from "react-router-dom"
+import Editor from "./pages/Editor"
+import AppLayout from "./components/layouts/AppLayout"
 
 function App() {
   return (
     <>
 
-    <DesktopOnly>
       <AuthBootstrap />        {/*  //sync frontend-backend user (/user/me)   */}
       <AuthAxiosBridge />      {/*  //attach Auth0 token to axios globally    */}
       <AuthRedirectHandler />  {/*  //redirect user after auth state settles  */}
@@ -22,12 +21,13 @@ function App() {
 
         {/* Authenticated Routes */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/nb/:notebookId" element={<LearningSession />} />
+          <Route element={<AppLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/nb/:notebookId" element={<Editor />} />
+          </Route>
         </Route>
 
       </Routes>
-    </DesktopOnly>
     </>
   )
 }
