@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import Editor from "@monaco-editor/react";
+import { useRef, useEffect } from 'react';
 
 interface CodeBlockProps {
   block: {
@@ -9,10 +10,18 @@ interface CodeBlockProps {
   };
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
+  autoFocus: string;
 }
 
-function CodeBlock({ block, onChange, onDelete }: CodeBlockProps) {
-  const language = block.language || 'JavaScript' ;
+function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
+  const language = block.language || 'JavaScript';
+  const editorRef = useRef<{ focus: () => void } | null>(null);
+
+  useEffect(() => {
+    if (autoFocus === block._id && editorRef.current) {
+      editorRef.current.focus?.();
+    }
+  }, [autoFocus, block._id]);
 
   return (
     <div className="relative group mb-4">
