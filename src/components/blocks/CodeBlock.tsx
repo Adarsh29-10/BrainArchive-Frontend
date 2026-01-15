@@ -17,11 +17,17 @@ function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
   const language = block.language || 'JavaScript';
   const editorRef = useRef<{ focus: () => void } | null>(null);
 
+  const isMobile = window.innerWidth < 640; 
+  const fontSize = isMobile ? 12 : 16;
+  const lineHeight = isMobile ? 18 : 20;
+
+
   useEffect(() => {
     if (autoFocus === block._id && editorRef.current) {
       editorRef.current.focus?.();
     }
   }, [autoFocus, block._id]);
+
 
   return (
     <div className="relative group mb-4">
@@ -41,8 +47,8 @@ function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
             minimap: { enabled: false },
             scrollBeyondLastLine: false,
             wordWrap: "on",
-            fontSize: 16,
-            lineHeight: 20,
+            fontSize: fontSize,
+            lineHeight: lineHeight,
             padding: { top: 12, bottom: 12 },
           }}
         />

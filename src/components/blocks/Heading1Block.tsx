@@ -21,6 +21,27 @@ function Heading1Block({ block, onChange, onDelete, autoFocus }: Heading1BlockPr
     }
   }, [autoFocus, block._id]);
 
+   useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+
+    el.style.height = "auto";               
+    el.style.height = `${el.scrollHeight}px`; 
+  }, [block.content]);
+
+  useEffect(() => {
+    const el = textareaRef.current;
+
+    const handleResize = () => {
+      if (!el) return;
+      el.style.height = "auto";
+      el.style.height = `${el.scrollHeight}px`;
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="relative mb-1 group">
       <textarea
