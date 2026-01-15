@@ -13,7 +13,7 @@ function HeadingBlock({ block, onChange, onDelete }: HeadingBlockProps) {
   return (
     <div className="relative mb-1 group">
       <textarea
-        className="text-4xl font-bold w-full py-2 px-4 pr-14 border-2 border-transparent rounded-lg border-pink-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden bg-transparent hover:bg-pink-50/30 "
+        className="text-4xl sm:text-4xl font-bold w-full py-2 px-4 pr-14 mt-4 mb-2 border-2 border-transparent rounded-lg border-pink-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden bg-yellow-50/30 "
         placeholder="Heading..."
         value={block.content}
         onChange={(e) => {

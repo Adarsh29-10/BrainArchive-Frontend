@@ -13,25 +13,47 @@ function BulletBlock({ block, onChange, onDelete }: BulletBlockProps) {
   const lines = block.content.split('\n');
 
   return (
-    <div className="relative group  ml-4">
+    <div className="relative group ml-4">
 
-      <div className=" p-3 rounded-lg bg-transparent hover:bg-pink-50/20 transition-all">
+      <div className=" px-3 rounded-lg bg-transparent hover:bg-pink-50/20 transition-all">
         {lines.map((line, index) => (
           <div key={index} className="flex items-start gap-3 group/bullet">
 
             {/* Bullet */}
-            <div className="pt-[4px] select-none text-gray-600 font-medium flex-shrink-0">•</div>
+            <div className="pt-[6px] select-none text-gray-600 font-medium flex-shrink-0">•</div>
 
             {/* Text */}
             <textarea
               rows={1}
-              className="flex-1 text-base leading-relaxed outline-none resize-none bg-transparent border-transparent focus:border-pink-400 focus:bg-pink-50/40 px-2 py-1 mr-2 rounded-sm transition-all"
+              className="flex-1 w-full text-base leading-relaxed outline-none resize-none bg-transparent border-transparent focus:border-pink-400 focus:bg-pink-50/40 px-2 pt-1 mr-2 rounded-sm transition-all no-scrollbar"
               value={line}
               placeholder="Bullet point..."
               onChange={(e) => {
                 const newLines = [...lines];
                 newLines[index] = e.target.value;
                 onChange(block._id, newLines.join('\n'));
+
+                e.target.style.height = 'auto';
+                e.target.style.height = Math.min(e.target.scrollHeight, 80) + 'px';
+
+              }}
+              
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  const newLines = [...lines];
+                  const currentValue = newLines[index];
+                  const cursorPosition = e.currentTarget.selectionStart;
+                  
+                  // Split at cursor position
+                  const beforeCursor = currentValue.substring(0, cursorPosition);
+                  const afterCursor = currentValue.substring(cursorPosition);
+                  
+                  newLines[index] = beforeCursor;
+                  newLines.splice(index + 1, 0, afterCursor);
+                  
+                  onChange(block._id, newLines.join('\n'));
+                }
               }}
             />
 

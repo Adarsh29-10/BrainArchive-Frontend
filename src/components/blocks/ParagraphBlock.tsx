@@ -13,7 +13,7 @@ function ParagraphBlock({block, onChange, onDelete}:ParagraphBlockProps) {
   return (
     <div className="relative mb-1 group">
       <textarea
-        className="w-full text-lg leading-normal pl-6 py-1 px-4 pr-14 border-2 border-transparent rounded-lg focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden hover:bg-pink-50/30 bg-pink-50/30"
+        className="w-full text-base sm:text-lg leading-normal pl-6 py-1 px-4 pr-14 border-2 border-transparent rounded-lg focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden hover:bg-pink-50/30 bg-pink-50/30"
         placeholder="Write something..."
         value={block.content}
         onChange={(e) => {

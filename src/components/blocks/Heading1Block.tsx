@@ -14,7 +14,7 @@ function Heading1Block({ block, onChange, onDelete }: Heading1BlockProps) {
   return (
     <div className="relative mb-1 group">
       <textarea
-        className="text-2xl font-bold w-full py-2 px-4 pr-14 border-2 border-transparent rounded-lg border-pink-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden bg-transparent hover:bg-pink-50/30 "
+        className="text-2xl sm:text-2xl font-bold w-full py-2 px-4 pr-14 border-2 border-transparent rounded-lg border-pink-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden bg-transparent hover:bg-pink-50/30 "
         placeholder="Heading..."
         value={block.content}
         onChange={(e) => {
