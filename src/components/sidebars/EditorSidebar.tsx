@@ -2,14 +2,12 @@ import { ChevronDown } from "lucide-react"
 import {useState} from 'react';
 import type { BlockType } from "../../types/block";
 import { SIDEBAR_SECTIONS } from "./SidebarPalette";
-import { useEditorStore } from "../../hooks/useEditorStore";
 
 type Props = {
     addBlock: (type: BlockType) => void;
 }
 
 function EditorSidebar({addBlock} : Props) {
-    // const {addBlock} = useEditorStore()
 
     const [expandedSections, setExpandedSections] = useState<string[]>([SIDEBAR_SECTIONS[0].title])
 
