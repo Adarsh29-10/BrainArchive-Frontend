@@ -1,15 +1,11 @@
 import type { Block, BlockType } from "../types/block";
 import {useState, useEffect} from 'react'
-import { useGetNotebookById, useUpdateNotebookBlock } from "./useNotebooks";
+import { useGetNotebookById } from "./useNotebooks";
 
 export const useEditorStore = (notebookId : string | undefined) => {
     const [blocks, setBlocks] = useState<Block[]>([]);
-
     const {data, isError, isPending} = useGetNotebookById(notebookId);
   
-    
-  
-
     useEffect(() => {
         if (!data?.blocks) return;
 
@@ -23,9 +19,7 @@ export const useEditorStore = (notebookId : string | undefined) => {
         
     }, [data]);
 
-
-   
-
+    
     const addBlock = (type : BlockType ) => {
         setBlocks(prev => [
             ...prev,
