@@ -52,9 +52,11 @@ export const useDeleteNotebook = () => {
     });
 }
 
-export const useGetNotebookById = () => {
-    return useMutation({
-        mutationFn: getNotebookById
+export const useGetNotebookById = (notebookId: string | undefined) => {
+    return useQuery({
+        queryKey: ['notebooks', notebookId],
+        queryFn: () =>  getNotebookById(notebookId),
+        enabled: !!notebookId
     })
 }
 
