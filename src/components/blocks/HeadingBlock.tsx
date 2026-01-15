@@ -1,4 +1,5 @@
 import { X } from 'lucide-react';
+import {useRef, useEffect} from 'react';
 
 interface HeadingBlockProps {
   block: {
@@ -7,18 +8,28 @@ interface HeadingBlockProps {
   };
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
+  autoFocus: string
 }
 
-function HeadingBlock({ block, onChange, onDelete }: HeadingBlockProps) {
+function HeadingBlock({ block, onChange, onDelete, autoFocus }: HeadingBlockProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (autoFocus === block._id) {
+      textareaRef.current?.focus();
+    }
+  }, [autoFocus, block._id]);
+
   return (
     <div className="relative mb-1 group">
       <textarea
+        ref={textareaRef}
         className="text-4xl sm:text-4xl font-bold w-full py-2 px-4 pr-14 mt-4 mb-2 border-2 border-transparent rounded-lg border-pink-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden bg-yellow-50/30 "
         placeholder="Heading..."
         value={block.content}
+        
         onChange={(e) => {
           onChange(block._id, e.target.value);
-          // Auto-adjust textarea height
           e.target.style.height = 'auto';
           e.target.style.height = Math.min(e.target.scrollHeight, 300) + 'px';
         }}
