@@ -8,18 +8,13 @@ import NotebookGrid from '../components/grids/NotebookGrid';
     
 
     return (
-        <div className="h-full bg-gradient-to-br from-slate-50 to-slate-100 overflow-y-auto">
+        <div className="h-full bg-zinc-950 overflow-y-auto">
             
             {/* Main Content */}
             <div className="px-6 sm:px-16 py-4">
                 <div className='flex items-center justify-between'>
-                    {/* Heading */}
-                    <div className="mb-12">
-                        <h1 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-2">My Notebooks</h1>
-                    </div>
-                    
                     {/* Add Button Section */}
-                    <div className="mb-12">
+                    <div className="mt-2 mb-10">
                         <AddNotebookButton onClick={() => setIsModalOpen(true)} />
                     </div>
                 </div>
