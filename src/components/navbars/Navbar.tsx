@@ -3,13 +3,14 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import SignInButton from "../buttons/SignInButton";
 import LogoutButton from "../buttons/LogoutButton";
+import { AuthLoadingState } from "../loaders/LoaderStates";
 
 function Navbar() {
   const { isAuthenticated, user, isLoading } = useAuth0();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   if (isLoading) {
-    return null; 
+    return <AuthLoadingState fullScreen={false} />;
   }
 
 

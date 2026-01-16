@@ -4,6 +4,7 @@ import NotebookCard from '../cards/NotebookCard';
 import DeleteModal from '../modals/DeleteModal';
 import EditNotebookModal from '../modals/EditNotebookModal';
 import { useNotebooks, useDeleteNotebook } from '../../hooks/useNotebooks';
+import { LoadingState, ErrorState } from '../loaders/LoaderStates';
 import type { Notebook } from '../../types/notebook';
 
 function NotebookGrid() {
@@ -13,8 +14,8 @@ function NotebookGrid() {
   const [deleteTarget, setDeleteTarget] = useState<Notebook | null>(null);
   const [updateTarget, setUpdateTarget] = useState<Notebook | null>(null);
 
-  if (isLoading) return <div>Loading..</div>;
-  if (isError) return <div>{error.message}</div>;
+  if (isLoading) return <LoadingState message="Loading notebooks..." />;
+  if (isError) return <ErrorState message={error?.message || 'Failed to load notebooks'} />;
 
   if (!data || data.length === 0) {
     return (

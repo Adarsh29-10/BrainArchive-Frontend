@@ -4,6 +4,7 @@ import EditorSidebar from '../components/sidebars/EditorSidebar';
 import {useEditorStore} from '../hooks/useEditorStore';
 import { useUpdateNotebookBlock } from '../hooks/useNotebooks';
 import { EditorSidebarMobile } from '../components/sidebars/EditorSidebarMobile';
+import { NotebookLoadingState, NotebookErrorState } from '../components/loaders/LoaderStates';
 
 function Editor() {
     const { notebookId } = useParams<{ notebookId: string | undefined}>();
@@ -19,8 +20,8 @@ function Editor() {
         });
     }
 
-    if (isPending) return <div className='text-center'>Loading your notebook...</div>;
-    if (isError) return <div>Error loading notebook</div>;
+    if (isPending) return <NotebookLoadingState />;
+    if (isError) return <NotebookErrorState />;
   
   
     return (
