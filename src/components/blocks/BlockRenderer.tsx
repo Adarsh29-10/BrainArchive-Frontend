@@ -2,6 +2,7 @@ import type { Block } from "../../types/block";
 import BulletBlock from "./BulletBlock";
 import CodeBlock from "./CodeBlock";
 import Heading1Block from "./Heading1Block";
+import Heading2Block from "./Heading2Block";
 import HeadingBlock from "./HeadingBlock";
 import ParagraphBlock from "./ParagraphBlock";
 
@@ -19,6 +20,9 @@ function BlockRenderer({ block, onChange, onDelete, autoFocus }: BlockRendererPr
 
     case "heading1":
       return <Heading1Block block={block} onChange={onChange} onDelete={onDelete} autoFocus={autoFocus} />;
+
+    case "heading2":
+      return <Heading2Block block={block} onChange={onChange} onDelete={onDelete} autoFocus={autoFocus} />;
 
     case "paragraph":
       return <ParagraphBlock block={block} onChange={onChange} onDelete={onDelete} autoFocus={autoFocus} />;

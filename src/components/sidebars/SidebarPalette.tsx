@@ -1,4 +1,4 @@
-import { Code2, FileText, Heading, Heading1, List } from "lucide-react";
+import { Code2, FileText, Heading, Heading1, Heading2, List } from "lucide-react";
 
 export const SIDEBAR_SECTIONS = [
     {
@@ -6,6 +6,7 @@ export const SIDEBAR_SECTIONS = [
         blocks: [
             { type: 'heading', label: 'Heading', Icon: Heading },
             { type: 'heading1', label: 'Heading 1', Icon: Heading1 },
+            { type: 'heading2', label: 'Heading 2', Icon: Heading2 },
         ] 
     },
     {
