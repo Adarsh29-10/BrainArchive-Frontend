@@ -19,10 +19,10 @@ function NotebookGrid() {
   if (!data || data.length === 0) {
     return (
       <div className="text-center py-16 px-10">
-        <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-4">
-          <BookOpen size={40} className="text-gray-300" />
+        <div className="inline-flex items-center justify-center w-20 h-20 bg-zinc-800 rounded-full mb-4">
+          <BookOpen size={40} className="text-zinc-300" />
         </div>
-        <h3 className="text-2xl font-semibold text-gray-600 mb-2">
+        <h3 className="text-2xl font-semibold text-zinc-600 mb-2">
           No notebooks yet
         </h3>
         <p className="text-gray-500 text-lg">
@@ -34,7 +34,7 @@ function NotebookGrid() {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      <div className=" space-y-1 ">
         {data.map((notebook) => (
           <NotebookCard
             key={notebook._id}
