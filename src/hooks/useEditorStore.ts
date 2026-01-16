@@ -1,11 +1,11 @@
 import type { Block, BlockType } from "../types/block";
-import {useState, useEffect} from 'react'
+import {useState, useEffect } from 'react'
 import { useGetNotebookById } from "./useNotebooks";
 
 export const useEditorStore = (notebookId: string | undefined) => {
     const [blocks, setBlocks] = useState<Block[]>([]);
     const [focusedBlockId, setFocusedBlockId] = useState<string | null>(null);
-    const {data, isError, isPending} = useGetNotebookById(notebookId);
+    const {data, isError, isPending} = useGetNotebookById(notebookId); 
   
     useEffect(() => {
         if (!data?.blocks) return;
@@ -16,7 +16,9 @@ export const useEditorStore = (notebookId: string | undefined) => {
             content: block.content
         }))
 
-        setBlocks(blocksWithIds)
+        requestAnimationFrame(() => {
+            setBlocks(blocksWithIds);
+        });
         
     }, [data]);
    
