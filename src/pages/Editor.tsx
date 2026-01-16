@@ -28,7 +28,7 @@ function Editor() {
       <div className="h-full flex overflow-hidden bg-zinc-950">
 
         
-        <div className="fixed bottom-0 left-0 right-0 z-50 block sm:hidden">
+        <div className="block sm:hidden">
           <EditorSidebarMobile addBlock={addBlock}/>
         </div>
         
@@ -38,10 +38,10 @@ function Editor() {
         </div>
 
         {/* Main editor content  */}
-        <main className="flex-1 px-6 py-3 overflow-y-auto pb-[60vh]">
+        <main className="flex-1 px-6 py-3 overflow-y-auto pb-[60vh] scrollbar-hide">
 
           {/* Header */}
-          <div className="flex justify-between items-center">
+          <div className="mt-10 flex justify-between items-center">
             <p className="text-zinc-500 text-sm font-medium">
               <span className='text-zinc-600'>Last Edit: </span>
               {new Date().toLocaleDateString('en-US', {
