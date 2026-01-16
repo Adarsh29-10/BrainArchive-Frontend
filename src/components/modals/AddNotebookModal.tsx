@@ -59,16 +59,16 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl animate-fadeIn">
+      <div className="relative w-full max-w-md mx-6 bg-zinc-950 rounded-2xl shadow-2xl animate-fadeIn border border-zinc-800">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-900">Create Notebook</h2>
+        <div className="flex items-center justify-between p-6 border-b border-zinc-800">
+          <h2 className="text-2xl font-bold text-white">Create Notebook</h2>
           <button
             onClick={handleClose}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-200"
+            className="p-2 rounded-lg hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-600"
             aria-label="Close modal"
           >
-            <X size={24} className="text-gray-600" />
+            <X size={24} className="text-zinc-400 hover:text-zinc-200" />
           </button>
         </div>
 
@@ -76,7 +76,7 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Title Input */}
           <div>
-            <label htmlFor="title" className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="title" className="block text-sm font-semibold text-zinc-100 mb-2">
               Notebook Title
             </label>
             <input
@@ -90,20 +90,20 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
                 }
               }}
               placeholder="e.g., Machine Learning Basics"
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-100 ${
+              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50 bg-zinc-900 text-white placeholder-zinc-500 ${
                 errors.title
-                  ? 'border-red-500 bg-red-50'
-                  : 'border-gray-300 bg-white hover:border-gray-400'
+                  ? 'border-red-600 bg-red-950/20'
+                  : 'border-zinc-700 hover:border-zinc-600'
               }`}
             />
             {errors.title && (
-              <p className="mt-2 text-sm text-red-600 font-medium">{errors.title}</p>
+              <p className="mt-2 text-sm text-red-400 font-medium">{errors.title}</p>
             )}
           </div>
 
           {/* Description Input */}
           <div>
-            <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="description" className="block text-sm font-semibold text-zinc-100 mb-2">
               Description
             </label>
             <textarea
@@ -117,19 +117,19 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
               }}
               placeholder="Add a description for your notebook..."
               rows={4}
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-100 resize-none ${
+              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50 resize-none bg-zinc-900 text-white placeholder-zinc-500 ${
                 errors.description
-                  ? 'border-red-500 bg-red-50'
-                  : 'border-gray-300 bg-white hover:border-gray-400'
+                  ? 'border-red-600 bg-red-950/20'
+                  : 'border-zinc-700 hover:border-zinc-600'
               }`}
             />
             {errors.description && (
-              <p className="mt-2 text-sm text-red-600 font-medium">{errors.description}</p>
+              <p className="mt-2 text-sm text-red-400 font-medium">{errors.description}</p>
             )}
           </div>
 
           {/* Character count */}
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-zinc-500">
             Description: {description.length} characters
           </div>
 
@@ -138,13 +138,13 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
             <button
                 type="button"
                 onClick={handleClose}
-                className="flex-1 px-4 py-3 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold hover:bg-gray-50 hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                className="flex-1 px-4 py-3 rounded-lg border-2 border-zinc-700 text-zinc-200 font-semibold hover:bg-zinc-800 hover:border-zinc-600 hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-600"
               >
                 Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-3 rounded-lg bg-pink-400 text-black font-semibold hover:bg-pink-500 hover:scale-105 transition-all duration-300  active:scale-95"
+              className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-pink-600 to-pink-500 text-white font-semibold hover:from-pink-500 hover:to-pink-400 hover:scale-105 transition-all duration-300 active:scale-95"
             >
               Create
             </button>
