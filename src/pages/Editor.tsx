@@ -41,7 +41,7 @@ function Editor() {
         <main className="flex-1 px-6 py-3 overflow-y-auto pb-[60vh] scrollbar-hide">
 
           {/* Header */}
-          <div className="mt-10 flex justify-between items-center">
+          <div className="mt-12 flex justify-between items-center">
             <p className="text-zinc-500 text-sm font-medium">
               <span className='text-zinc-600'>Last Edit: </span>
               {new Date().toLocaleDateString('en-US', {

@@ -13,7 +13,7 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
   return (
     <>
       {/* Minimal Bottom Toolbar */}
-      <div className="fixed top-14 left-0 right-0 z-40 bg-zinc-900 border-t border-zinc-800 py-2">
+      <div className="fixed top-15 left-0 right-0 z-40 bg-zinc-900 border-y border-zinc-500 py-2">
         <div className="flex items-center justify-start overflow-x-auto scrollbar-hide">
           {SIDEBAR_SECTIONS.map((section, index) => (
             <button
