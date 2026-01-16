@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import BlockRenderer from '../components/blocks/BlockRenderer';
-// import EditorSidebar from '../components/sidebars/EditorSidebar';
+import EditorSidebar from '../components/sidebars/EditorSidebar';
 import {useEditorStore} from '../hooks/useEditorStore';
 import { useUpdateNotebookBlock } from '../hooks/useNotebooks';
 import { EditorSidebarMobile } from '../components/sidebars/EditorSidebarMobile';
@@ -9,9 +9,6 @@ function Editor() {
     const { notebookId } = useParams<{ notebookId: string | undefined}>();
     const {blocks, addBlock, updateBlock, deleteBlock, isPending, isError, focusedBlockId} = useEditorStore(notebookId);
     const updateBlockMutation = useUpdateNotebookBlock();
-
-    // const isMobile = window.innerWidth < 640;
-
 
     const handleSaveBlocks = () => {
         if (!notebookId) return;
@@ -26,27 +23,26 @@ function Editor() {
     if (isError) return <div>Error loading notebook</div>;
   
   
-
     return (
-      <div className="h-full flex overflow-hidden ">
+      <div className="h-full flex overflow-hidden bg-zinc-950">
 
         
-        <div className="fixed bottom-0 left-0 right-0 z-50 ">
+        <div className="fixed bottom-0 left-0 right-0 z-50 block sm:hidden">
           <EditorSidebarMobile addBlock={addBlock}/>
         </div>
         
 
-        {/* <div className="block sm:hidden">
+        <div className="hidden sm:block">
           <EditorSidebar addBlock={addBlock} />
-        </div> */}
+        </div>
 
         {/* Main editor content  */}
         <main className="flex-1 px-6 py-3 overflow-y-auto pb-[60vh]">
 
           {/* Header */}
           <div className="flex justify-between items-center">
-            <p className="text-gray-500 text-sm font-medium">
-              <span className='text-gray-600'>Last Edit: </span>
+            <p className="text-zinc-500 text-sm font-medium">
+              <span className='text-zinc-600'>Last Edit: </span>
               {new Date().toLocaleDateString('en-US', {
                 weekday: 'long',
                 year: 'numeric',
