@@ -2,7 +2,7 @@ import type { Block, BlockType } from "../types/block";
 import {useState, useEffect} from 'react'
 import { useGetNotebookById } from "./useNotebooks";
 
-export const useEditorStore = (notebookId : string | undefined) => {
+export const useEditorStore = (notebookId: string | undefined) => {
     const [blocks, setBlocks] = useState<Block[]>([]);
     const [focusedBlockId, setFocusedBlockId] = useState<string | null>(null);
     const {data, isError, isPending} = useGetNotebookById(notebookId);
@@ -19,8 +19,7 @@ export const useEditorStore = (notebookId : string | undefined) => {
         setBlocks(blocksWithIds)
         
     }, [data]);
-
-
+   
     const addBlock = (type : BlockType ) => {
         const id = crypto.randomUUID();
 
@@ -58,8 +57,9 @@ export const useEditorStore = (notebookId : string | undefined) => {
         addBlock,
         updateBlock,
         deleteBlock,
+        focusedBlockId,
+        setFocusedBlockId,
         isError,
-        isPending,
-        focusedBlockId
+        isPending
     }
 }
