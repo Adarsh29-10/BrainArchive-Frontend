@@ -36,7 +36,7 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
         <div className="fixed inset-0 z-50 pointer-events-none">
           
           {/* Blocks panel on right side */}
-          <div className="absolute top-14 w-full py-1 bg-zinc-900 border-l border-zinc-800 pointer-events-auto flex gap-2">
+          <div className="fixed top-16 w-full py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto ">
             
             {/* Close button */}
             <div className="flex justify-end p-2 border-b border-zinc-800">
@@ -50,7 +50,7 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
 
             {/* Icons grid */}
             
-              <div className="flex gap-2">
+              <div className="flex gap-3">
                 {SIDEBAR_SECTIONS[activeSection].blocks.map((block) => (
                   <button
                     key={block.label}
