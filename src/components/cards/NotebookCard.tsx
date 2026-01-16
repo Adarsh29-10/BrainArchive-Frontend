@@ -12,64 +12,62 @@ function NotebookCard({ notebook, onDeleteClick, onUpdateClick}: NotebookCardPro
   const navigate = useNavigate();
   
   return (
-    <div className="group bg-white rounded-lg shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-gray-200 hover:border-pink-300 cursor-pointer"
-    >
+    <div className="group w-full bg-zinc-950 text-white rounded-lg border border-gray-700 hover:border-pink-400 hover:bg-zinc-800 transition-all duration-200 cursor-pointer overflow-hidden">
+      {/* Main clickable row */}
       <div 
-        className="p-6" 
-        onClick={()=> navigate(`/nb/${notebook._id}`)}>
+        className="flex items-center justify-between px-4 py-3 hover:bg-gray-800/50 transition-colors"
+        onClick={() => navigate(`/nb/${notebook._id}`)}
+      >
+        {/* Left section: Icon + Content */}
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          {/* Icon */}
+          <div className="p-2 bg-gradient-to-br from-pink-900 to-pink-800 rounded-lg group-hover:from-pink-800 group-hover:to-pink-700 transition-all flex-shrink-0">
+            <BookOpen size={20} className="text-pink-400" />
+          </div>
 
-        {/* title and description */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="p-3 bg-gradient-to-br from-pink-100 to-pink-200 rounded-lg group-hover:from-pink-200 group-hover:to-pink-300 transition-all flex-shrink-0">
-              <BookOpen size={24} className="text-pink-600" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <h3 className="text-lg font-bold text-gray-900 truncate group-hover:text-pink-600 transition-colors">
+          {/* Title, Description, Date */}
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="text-sm font-bold text-white truncate transition-colors">
                 {notebook.title}
               </h3>
-              <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-                {notebook.description}
-              </p>
+              <span className="text-xs text-zinc-500 flex-shrink-0">
+                {new Date(notebook.createdAt).toLocaleDateString()}
+              </span>
             </div>
+            <p className="text-xs text-zinc-400 truncate mt-0.5">
+              {notebook.description || 'No description'}
+            </p>
           </div>
         </div>
 
-        {/* Date */}
-        <div className="flex items-center justify-between text-xs text-gray-400 mb-4">
-          <span>Created {new Date(notebook.createdAt).toLocaleDateString()}</span>
+        {/* Right section: Action links */}
+        <div className="flex items-center gap-4 flex-shrink-0 ml-3">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onUpdateClick(notebook)
+            }}
+            className="text-zinc-400 hover:text-blue-400 transition-colors text-xs font-medium flex items-center gap-1 hover:underline"
+            aria-label="Edit notebook"
+          >
+            <Edit size={14} />
+            <span>Edit</span>
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onDeleteClick(notebook)
+            }}
+            className="text-zinc-400 hover:text-red-400 transition-colors text-xs font-medium flex items-center gap-1 hover:underline"
+            aria-label="Delete notebook"
+          >
+            <Trash2 size={14} />
+            <span>Delete</span>
+          </button>
         </div>
       </div>
-
-        {/* Action Buttons */}
-      <div className="flex gap-2 pt-4 border-t border-gray-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-6">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onUpdateClick(notebook)
-          }}
-          className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-95"
-          aria-label="Edit notebook"
-        >
-          <Edit size={18} />
-          <span className="text-sm">Edit</span>
-        </button>
-        
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onDeleteClick(notebook)
-          }}
-          className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95"
-          aria-label="Delete notebook"
-        >
-          <Trash2 size={18} />
-          <span className="text-sm">Delete</span>
-        </button>
-      </div>
-      
-
-      
     </div>
   );
 }
