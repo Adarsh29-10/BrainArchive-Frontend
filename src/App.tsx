@@ -7,6 +7,7 @@ import LandingPage from "./pages/LandingPage"
 import { Route, Routes } from "react-router-dom"
 import Editor from "./pages/Editor"
 import AppLayout from "./components/layouts/AppLayout"
+import Profile from "./pages/Profile"
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/nb/:notebookId" element={<Editor />} />
           </Route>
+          <Route path="/profile" element={<Profile />} />
         </Route>
 
       </Routes>
