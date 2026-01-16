@@ -23,13 +23,13 @@ function EditorSidebar({addBlock} : Props) {
         <aside className="sm:w-36 md:w-48 h-full bg-gray-50 border-r border-gray-200 flex flex-col flex-shrink-0">
             
             {/* Header */}
-            <div className="px-4 py-4 border-b border-gray-200 bg-white flex-shrink-0">
+            <div className="px-4 pb-4 pt-4 border-b border-gray-200  flex-shrink-0">
                 <h2 className="text-lg font-bold text-gray-900">Add Content</h2>
-                <p className="text-xs text-gray-500 mt-1">Click to insert blocks</p>
+                <p className="text-xs text-gray-500 ">Click to insert blocks</p>
             </div>
 
             {/* Sections - Scrollable only this part*/}
-            <div className="flex-1 p-3 space-y-3 overflow-y-auto">
+            <div className="flex-1 pt-6 space-y-3 overflow-y-auto">
                 {SIDEBAR_SECTIONS.map((section) => (
                     <div key={section.title} className="space-y-2">
                         {/* Section Header */}
