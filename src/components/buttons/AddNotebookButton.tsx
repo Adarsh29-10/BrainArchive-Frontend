@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react';
 
 type AddNotebookButtonProps = {
-    onClick : () => void
+    onClick: () => void;
 }
 
-function AddNotebookButton({onClick}:AddNotebookButtonProps) {
+function AddNotebookButton({ onClick }: AddNotebookButtonProps) {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -13,28 +13,27 @@ function AddNotebookButton({onClick}:AddNotebookButtonProps) {
             onClick={onClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={`
-                relative px-3 py-3 sm:px-4 sm:py-4 rounded-full 
-                transition-all duration-300 ease-in-out
-                ${isHovered 
-                    ? 'border-pink-500 bg-pink-500 shadow-xl scale-105' 
-                    : 'border-gray-300 bg-pink-400 shadow-md hover:shadow-lg'
-                }
-            `}
+            className="group relative w-full sm:w-auto px-6 py-3 rounded-lg font-semibold text-white transition-all duration-300 overflow-hidden"
             aria-label="Add a new notebook"
         >
-            <div className="flex flex-col items-center gap-3">
-                <Plus 
-                    size={36} 
+            <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-pink-500 opacity-100 group-hover:opacity-90 transition-opacity duration-300" />
+            
+            <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-500 ${isHovered ? 'animate-pulse' : ''}`} />
+
+            {/* Content */}
+            <div className="relative flex items-center justify-center gap-2">
+                <Plus
+                    size={20}
                     strokeWidth={2.5}
-                    className={`transition-all duration-300 ${isHovered ? 'scale-105' : 'text-black'}`}
+                    className={`transition-all duration-300 ${isHovered ? 'rotate-90 scale-110' : ''}`}
                 />
-                {/* <span className={`font-bold text-lg transition-colors duration-300 ${isHovered ? 'text-blue-700' : 'text-gray-700'}`}>
+                <span className="text-sm font-bold tracking-wide">
                     Add Notebook
-                </span> */}
+                </span>
+                
             </div>
         </button>
     );
 }
 
-export default AddNotebookButton
+export default AddNotebookButton;
