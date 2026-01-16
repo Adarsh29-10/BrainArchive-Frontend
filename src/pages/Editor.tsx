@@ -1,14 +1,17 @@
 import { useParams } from 'react-router-dom';
 import BlockRenderer from '../components/blocks/BlockRenderer';
-import EditorSidebar from '../components/sidebars/EditorSidebar';
+// import EditorSidebar from '../components/sidebars/EditorSidebar';
 import {useEditorStore} from '../hooks/useEditorStore';
 import { useUpdateNotebookBlock } from '../hooks/useNotebooks';
+import { EditorSidebarMobile } from '../components/sidebars/EditorSidebarMobile';
 
 function Editor() {
     const { notebookId } = useParams<{ notebookId: string | undefined}>();
-    const {blocks, addBlock, updateBlock, deleteBlock, isError, isPending, focusedBlockId} = useEditorStore(notebookId);
+    const {blocks, addBlock, updateBlock, deleteBlock, isPending, isError, focusedBlockId} = useEditorStore(notebookId);
     const updateBlockMutation = useUpdateNotebookBlock();
-  
+
+    // const isMobile = window.innerWidth < 640;
+
 
     const handleSaveBlocks = () => {
         if (!notebookId) return;
@@ -27,9 +30,15 @@ function Editor() {
     return (
       <div className="h-full flex overflow-hidden ">
 
-        <div className="hidden sm:block">
-          <EditorSidebar addBlock={addBlock} />
+        
+        <div className="fixed bottom-0 left-0 right-0 z-50 ">
+          <EditorSidebarMobile addBlock={addBlock}/>
         </div>
+        
+
+        {/* <div className="block sm:hidden">
+          <EditorSidebar addBlock={addBlock} />
+        </div> */}
 
         {/* Main editor content  */}
         <main className="flex-1 px-6 py-3 overflow-y-auto pb-[60vh]">
