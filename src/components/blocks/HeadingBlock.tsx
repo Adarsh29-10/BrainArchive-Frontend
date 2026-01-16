@@ -45,7 +45,7 @@ function HeadingBlock({ block, onChange, onDelete, autoFocus }: HeadingBlockProp
     <div className="relative mb-1 group">
       <textarea
         ref={textareaRef}
-        className="text-4xl sm:text-4xl font-bold w-full py-2 px-4 pr-14 mt-4 mb-2 border-2 border-transparent rounded-lg border-pink-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden bg-yellow-50/30 "
+        className="text-4xl sm:text-4xl font-bold w-full pr-14 mt-1 focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white"
         placeholder="Heading..."
         value={block.content}
         
@@ -59,7 +59,7 @@ function HeadingBlock({ block, onChange, onDelete, autoFocus }: HeadingBlockProp
       
       <button
         onClick={() => onDelete?.(block._id)}
-        className="absolute right-2 top-2 p-2 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95"
+        className="absolute right-0 top-5 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95"
         aria-label="Delete heading block"
       >
         <X size={20} />

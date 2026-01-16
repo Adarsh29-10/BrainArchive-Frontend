@@ -42,10 +42,10 @@ function ParagraphBlock({block, onChange, onDelete, autoFocus}: ParagraphBlockPr
   }, []);
   
   return (
-    <div className="relative mb-1 group">
+    <div className="relative mb-0.5 group">
       <textarea
         ref={textareaRef}
-        className="w-full text-base sm:text-lg leading-normal pl-6 py-1 px-4 pr-14 border-2 border-transparent rounded-lg focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden hover:bg-pink-50/30 bg-pink-50/30"
+        className="w-full text-base sm:text-lg leading-relaxed px-1.5 pr-14 focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white "
         placeholder="Write something..."
         value={block.content}
         onChange={(e) => {
@@ -59,7 +59,7 @@ function ParagraphBlock({block, onChange, onDelete, autoFocus}: ParagraphBlockPr
       
       <button
         onClick={() => onDelete?.(block._id)}
-        className="absolute right-2 top-2 p-2 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95"
+        className="absolute right-0 top-2 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95"
         aria-label="Delete paragraph block"
       >
         <X size={20} />

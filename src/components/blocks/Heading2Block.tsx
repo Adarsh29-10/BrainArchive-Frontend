@@ -46,7 +46,7 @@ function Heading2Block({ block, onChange, onDelete, autoFocus }: Heading2BlockPr
     <div className="relative mb-1 group">
       <textarea
         ref={textareaRef}
-        className="text-lg sm:text-xl font-bold w-full py-2 px-4 pr-14 border-2 border-transparent rounded-lg border-pink-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition-all resize-none overflow-hidden bg-transparent hover:bg-pink-50/30 "
+        className="text-lg sm:text-xl font-bold w-full px-0.5 pr-14 mt-0.5  focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white  "
         placeholder="Heading..."
         value={block.content}
         onChange={(e) => {
@@ -60,7 +60,7 @@ function Heading2Block({ block, onChange, onDelete, autoFocus }: Heading2BlockPr
       
       <button
         onClick={() => onDelete?.(block._id)}
-        className="absolute right-2 top-2 p-2 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95"
+        className="absolute right-0 top-2 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95"
         aria-label="Delete heading block"
       >
         <X size={20} />
