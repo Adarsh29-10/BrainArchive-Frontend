@@ -1,71 +1,28 @@
 import { useState } from 'react';
 import { SIDEBAR_SECTIONS } from './SidebarPalette';
 import type { BlockType } from '../../types/block';
-import { ChevronUp } from 'lucide-react';
+import { X } from 'lucide-react';
 
 type Props = {
-    addBlock: (type: BlockType) => void;
-}
+  addBlock: (type: BlockType) => void;
+};
 
 export const EditorSidebarMobile = ({ addBlock }: Props) => {
-  const [activeSection, setActiveSection] = useState(SIDEBAR_SECTIONS[0]);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [activeSection, setActiveSection] = useState<number | null>(null);
 
   return (
     <>
-      
-      {isExpanded && (
-        <div className='fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-2xl max-h-[70vh] overflow-y-auto'>
-          {/* Header with section name and close button */}
-          <div className='sticky top-0 bg-white border-b-2 border-gray-200 px-4 py-3 flex items-center justify-between rounded-t-2xl'>
-
-            <h3 className='text-lg font-bold text-gray-900'>{activeSection.title}</h3>
-
-            <button
-              onClick={() => setIsExpanded(false)}
-              className='p-1 hover:bg-gray-100 rounded-lg transition-colors'
-              aria-label='Close panel'
-            >
-              <ChevronUp size={24} className='text-gray-600' />
-            </button>
-          </div>
-
-          {/* Blocks grid */}
-          <div className='grid grid-cols-2 gap-3 p-4'>
-            {activeSection.blocks.map((block) => (
-              <button
-                key={block.label}
-                onClick={() => {
-                  addBlock(block.type as BlockType);
-                  setIsExpanded(false);
-                }}
-                className='p-4 bg-gradient-to-br from-pink-50 to-yellow-50 border-2 border-pink-200 rounded-lg hover:border-pink-400 hover:shadow-md transition-all active:scale-95 flex flex-col items-center justify-center gap-2'
-              >
-                <block.Icon size={28} className='text-pink-500' />
-                <span className='text-sm font-semibold text-gray-700'>{block.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Sticky bottom bar - always visible */}
-      <div className='fixed bottom-0 left-0 right-0 z-40 bg-pink-200/40 border-t-2 border-gray-200 px-2 py-2 safe-area-inset-bottom'>
-        
-        {/* Section tabs - horizontal scroll on mobile */}
-        <div className='flex gap-2 overflow-x-auto pb-2 scrollbar-hide'>
-         
-          {SIDEBAR_SECTIONS.map((section) => (
+      {/* Minimal Bottom Toolbar */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-zinc-900 border-t border-zinc-800 py-2">
+        <div className="flex items-center justify-start overflow-x-auto scrollbar-hide">
+          {SIDEBAR_SECTIONS.map((section, index) => (
             <button
               key={section.title}
-              onClick={() => {
-                setActiveSection(section);
-                setIsExpanded(true);
-              }}
-              className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition-all flex-shrink-0 ${
-                activeSection.title === section.title
-                  ? 'bg-gradient-to-b from-pink-700 to-pink-500 text-white shadow-md'
-                  : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-pink-300'
+              onClick={() => setActiveSection(activeSection === index ? null : index)}
+              className={`px-3 py-2 text-xs whitespace-nowrap border-r border-zinc-500 last:border-r-0 transition-colors ${
+                activeSection === index
+                  ? 'text-zinc-100 bg-zinc-800'
+                  : 'text-zinc-300 font-semibold hover:text-zinc-100 hover:bg-zinc-800'
               }`}
             >
               {section.title}
@@ -74,14 +31,44 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
         </div>
       </div>
 
-      {/* Backdrop when expanded */}
-      {isExpanded && (
-        <div
-          className='fixed inset-0 bg-black/40 z-30'
-          onClick={() => setIsExpanded(false)}
-          aria-label='Close panel backdrop'
-        />
+      {/* Blocks Panel  */}
+      {activeSection !== null && (
+        <div className="fixed inset-0 z-50 pointer-events-none">
+          
+          {/* Blocks panel on right side */}
+          <div className="absolute bottom-0 w-full py-1 bg-zinc-900 border-l border-zinc-800 pointer-events-auto flex gap-2">
+            
+            {/* Close button */}
+            <div className="flex justify-end p-2 border-b border-zinc-800">
+              <button
+                onClick={() => setActiveSection(null)}
+                className="p-1 text-zinc-400 hover:text-zinc-100"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {/* Icons grid */}
+            
+              <div className="flex gap-2">
+                {SIDEBAR_SECTIONS[activeSection].blocks.map((block) => (
+                  <button
+                    key={block.label}
+                    onClick={() => {
+                      addBlock(block.type as BlockType);
+                      setActiveSection(null);
+                    }}
+                    className="w-full aspect-square px-1 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
+                    title={block.label}
+                  >
+                    <block.Icon size={24} className="text-white" />
+                  </button>
+                ))}
+              </div>
+            
+          </div>
+        </div>
       )}
     </>
   );
-}
+};
