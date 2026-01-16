@@ -54,10 +54,16 @@ function Editor() {
           
             <button
               onClick={handleSaveBlocks}
-              className="px-4 py-1 bg-blue-500 text-white rounded-lg font-semibold"
+              disabled={updateBlockMutation.isPending || blocks.length === 0}
+              className={`px-4 py-1 rounded-lg font-semibold
+                ${updateBlockMutation.isPending || blocks.length === 0
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 text-white"
+                }`}
             >
               {updateBlockMutation.isPending ? "Saving..." : "Save"}
             </button>
+
           </div>
             
 
