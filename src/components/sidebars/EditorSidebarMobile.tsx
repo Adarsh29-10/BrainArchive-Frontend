@@ -13,7 +13,7 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
   return (
     <>
       {/* Minimal Bottom Toolbar */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-zinc-900 border-t border-zinc-800 py-2">
+      <div className="fixed top-14 left-0 right-0 z-40 bg-zinc-900 border-t border-zinc-800 py-2">
         <div className="flex items-center justify-start overflow-x-auto scrollbar-hide">
           {SIDEBAR_SECTIONS.map((section, index) => (
             <button
@@ -36,7 +36,7 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
         <div className="fixed inset-0 z-50 pointer-events-none">
           
           {/* Blocks panel on right side */}
-          <div className="absolute bottom-0 w-full py-1 bg-zinc-900 border-l border-zinc-800 pointer-events-auto flex gap-2">
+          <div className="absolute top-14 w-full py-1 bg-zinc-900 border-l border-zinc-800 pointer-events-auto flex gap-2">
             
             {/* Close button */}
             <div className="flex justify-end p-2 border-b border-zinc-800">
