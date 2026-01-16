@@ -7,7 +7,7 @@ export const api = axios.create({
 
 
 let getToken: (() => Promise<string>) | null = null;
-
+let tokenPromise: Promise<string> | null = null; 
 
 export const setAuthTokenGetter = (fn: () => Promise<string>) => {
   getToken = fn;
@@ -17,10 +17,16 @@ export const setAuthTokenGetter = (fn: () => Promise<string>) => {
 api.interceptors.request.use(
   async (config) => {
     if (getToken) {
-      const token = await getToken();
+      if (!tokenPromise) {
+        tokenPromise = getToken().finally(() => {
+          tokenPromise = null;
+        });
+      }
+
+      const token = await tokenPromise;
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
   (error) => Promise.reject(error)
-);
+)
