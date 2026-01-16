@@ -1,108 +1,87 @@
-import { ChevronDown, X } from "lucide-react"
-import {useState} from 'react';
-import type { BlockType } from "../../types/block";
-import { SIDEBAR_SECTIONS } from "./SidebarPalette";
+import { useState } from 'react';
+import { SIDEBAR_SECTIONS } from './SidebarPalette';
+import type { BlockType } from '../../types/block';
+import { ChevronUp } from 'lucide-react';
 
 type Props = {
     addBlock: (type: BlockType) => void;
-    isOpen: boolean;
-    onClose: () => void;
 }
 
-function EditorSidebarMobile({addBlock, isOpen, onClose} : Props) {
+export const EditorSidebarMobile = ({ addBlock }: Props) => {
+  const [activeSection, setActiveSection] = useState(SIDEBAR_SECTIONS[0]);
+  const [isExpanded, setIsExpanded] = useState(false);
 
-    const [expandedSections, setExpandedSections] = useState<string[]>([SIDEBAR_SECTIONS[0].title])
+  return (
+    <>
+      
+      {isExpanded && (
+        <div className='fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-2xl max-h-[70vh] overflow-y-auto'>
+          {/* Header with section name and close button */}
+          <div className='sticky top-0 bg-white border-b-2 border-gray-200 px-4 py-3 flex items-center justify-between rounded-t-2xl'>
 
-    const toggleSection = (title: string) => {
-        setExpandedSections(prev => 
-            prev.includes(title) 
-                ? prev.filter(t => t !== title)
-                : [...prev, title]
-        )
-    }
+            <h3 className='text-lg font-bold text-gray-900'>{activeSection.title}</h3>
 
-    const handleAddBlock = (type: BlockType) => {
-        addBlock(type);
-        onClose();
-    }
+            <button
+              onClick={() => setIsExpanded(false)}
+              className='p-1 hover:bg-gray-100 rounded-lg transition-colors'
+              aria-label='Close panel'
+            >
+              <ChevronUp size={24} className='text-gray-600' />
+            </button>
+          </div>
 
-    if (!isOpen) return null;
+          {/* Blocks grid */}
+          <div className='grid grid-cols-2 gap-3 p-4'>
+            {activeSection.blocks.map((block) => (
+              <button
+                key={block.label}
+                onClick={() => {
+                  addBlock(block.type as BlockType);
+                  setIsExpanded(false);
+                }}
+                className='p-4 bg-gradient-to-br from-pink-50 to-yellow-50 border-2 border-pink-200 rounded-lg hover:border-pink-400 hover:shadow-md transition-all active:scale-95 flex flex-col items-center justify-center gap-2'
+              >
+                <block.Icon size={28} className='text-pink-500' />
+                <span className='text-sm font-semibold text-gray-700'>{block.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
-    return (
-        <>
-            {/* Backdrop */}
-            <div 
-                className="fixed inset-0 bg-black/50 z-30"
-                onClick={onClose}
-            />
+      {/* Sticky bottom bar - always visible */}
+      <div className='fixed bottom-0 left-0 right-0 z-40 bg-pink-200/40 border-t-2 border-gray-200 px-2 py-2 safe-area-inset-bottom'>
+        
+        {/* Section tabs - horizontal scroll on mobile */}
+        <div className='flex gap-2 overflow-x-auto pb-2 scrollbar-hide'>
+         
+          {SIDEBAR_SECTIONS.map((section) => (
+            <button
+              key={section.title}
+              onClick={() => {
+                setActiveSection(section);
+                setIsExpanded(true);
+              }}
+              className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition-all flex-shrink-0 ${
+                activeSection.title === section.title
+                  ? 'bg-gradient-to-b from-pink-700 to-pink-500 text-white shadow-md'
+                  : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-pink-300'
+              }`}
+            >
+              {section.title}
+            </button>
+          ))}
+        </div>
+      </div>
 
-            {/* Mobile Drawer */}
-            <div className="fixed left-0 top-0 h-screen w-80 bg-gradient-to-b from-gray-50 to-white border-l-2 border-gray-200 flex flex-col z-40 shadow-lg animate-slideIn">
-                
-                {/* Header */}
-                <div className="px-4 py-4 border-b border-gray-200 bg-white flex-shrink-0 flex items-center justify-between">
-                    <div>
-                        <h2 className="text-lg font-bold text-gray-900">Add Content</h2>
-                        <p className="text-xs text-gray-500 mt-1">Click to insert blocks</p>
-                    </div>
-                    <button
-                        onClick={onClose}
-                        className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                        aria-label="Close sidebar"
-                    >
-                        <X size={20} className="text-gray-600" />
-                    </button>
-                </div>
-
-                {/* Sections - Scrollable */}
-                <div className="flex-1 p-4 space-y-3 overflow-y-auto">
-                    {SIDEBAR_SECTIONS.map((section) => (
-                        <div key={section.title} className="space-y-2">
-                            {/* Section Header */}
-                            <button
-                                onClick={() => toggleSection(section.title)}
-                                className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors group"
-                            >
-                                <span className={`font-semibold text-sm ${expandedSections.includes(section.title) ? 'text-gray-900' : 'text-gray-600'}`}>
-                                    {section.title}
-                                </span>
-                                <ChevronDown 
-                                    size={16} 
-                                    className={`text-gray-500 transition-transform duration-200 ${expandedSections.includes(section.title) ? 'rotate-180' : ''}`}
-                                />
-                            </button>
-
-                            {/* Block Items */}
-                            {expandedSections.includes(section.title) && (
-                                <div className="space-y-2 pl-2">
-                                    {section.blocks.map((block) => (
-                                        <button
-                                            key={block.label}
-                                            onClick={() => handleAddBlock(block.type as BlockType)}
-                                            className="w-full flex items-center gap-3 px-3 py-3 bg-white border-2 border-gray-200 rounded-lg hover:border-pink-400 hover:bg-pink-50 active:scale-95 transition-all duration-200 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 group"
-                                            title={`Add ${block.label}`}
-                                        >
-                                            <block.Icon size={20} className="text-pink-600 group-hover:scale-110 transition-transform flex-shrink-0" />
-                                            <span className="text-sm font-medium text-gray-700 group-hover:text-pink-600 capitalize">
-                                                {block.label}
-                                            </span>
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
-
-                {/* Footer Info */}
-                <div className="px-4 py-3 border-t border-gray-200 bg-gray-50 text-xs text-gray-500 flex-shrink-0">
-                    <p>💡 Tap to add blocks to your notes</p>
-                </div>
-            </div>
-
-
-        </>
-    )
+      {/* Backdrop when expanded */}
+      {isExpanded && (
+        <div
+          className='fixed inset-0 bg-black/40 z-30'
+          onClick={() => setIsExpanded(false)}
+          aria-label='Close panel backdrop'
+        />
+      )}
+    </>
+  );
 }
-
-export default EditorSidebarMobile
