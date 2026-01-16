@@ -62,7 +62,14 @@ export const useGetNotebookById = (notebookId: string | undefined) => {
 
 
 export const useUpdateNotebookBlock = () => {
+    const queryClient = useQueryClient();
+
     return useMutation({
         mutationFn: updateNotebookBlock,
+        onSuccess: (_data, variables) => {
+            queryClient.invalidateQueries({ 
+                queryKey: ['notebook', variables.notebookId]
+            })
+        },
     });
 }
