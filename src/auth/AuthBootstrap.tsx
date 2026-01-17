@@ -25,7 +25,7 @@ function AuthBootstrap() {
 
         syncUser();
 
-    }, [isAuthenticated])
+    }, [isAuthenticated, user])
 
     return null;
 }
