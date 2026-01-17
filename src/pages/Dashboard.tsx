@@ -2,9 +2,12 @@ import { useState } from 'react';
 import AddNotebookButton from '../components/buttons/AddNotebookButton';
 import AddNotebookModal from '../components/modals/AddNotebookModal';
 import NotebookGrid from '../components/grids/NotebookGrid';
+import AiSummaryButton from '../components/buttons/AiSummaryButton';
+import ComingSoonModal from '../components/modals/ComingSoonModal';
 
  function Dashboard() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isComingSoonModalOpen, setIsComingSoonModalOpen] = useState(false);
     
 
     return (
@@ -12,10 +15,13 @@ import NotebookGrid from '../components/grids/NotebookGrid';
             
             {/* Main Content */}
             <div className="px-6 sm:px-16 py-4">
-                <div className='flex items-center justify-between'>
+                <div className='flex items-center gap-3'>
                     {/* Add Button Section */}
                     <div className="mt-2 mb-10">
                         <AddNotebookButton onClick={() => setIsModalOpen(true)} />
+                    </div>
+                    <div className="mt-2 mb-10">
+                        <AiSummaryButton onClick={() => setIsComingSoonModalOpen(true)} />
                     </div>
                 </div>
 
@@ -28,6 +34,12 @@ import NotebookGrid from '../components/grids/NotebookGrid';
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
             />
+
+            <ComingSoonModal
+                isOpen={isComingSoonModalOpen}
+                onClose={() => setIsComingSoonModalOpen(false)}
+            />
+
         </div>
     );
 }
