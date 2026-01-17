@@ -4,7 +4,7 @@ import { api } from "../apis/axios.api";
 
 
 function AuthBootstrap() {
-    const {isAuthenticated} = useAuth0();
+    const {user, isAuthenticated} = useAuth0();
     const ranRef = useRef(false);
 
     useEffect(()=>{
@@ -13,7 +13,11 @@ function AuthBootstrap() {
 
         const syncUser = async () => {
             try {
-                await api.get('/user/me')
+                await api.post('/user/me', {
+                    email: user?.email,
+                    name: user?.name,
+                    picture: user?.picture
+                })
             } catch (error) {
                 console.log("Auth bootstrap failed", error)
             }
