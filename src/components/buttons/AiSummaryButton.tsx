@@ -23,21 +23,24 @@ function AiSummaryButton({ onClick, isLoading = false, disabled = false }: AiSum
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         disabled={disabled || isLoading}
-        className="relative px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold transition-all duration-300 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 flex items-center justify-center gap-2 group"
+        className="relative px-3 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold transition-all duration-300 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 flex items-center justify-center gap-1 group"
         title="Generate AI summary"
     >
         {isLoading ? (
             <>
-            <Loader2 size={18} className="animate-spin" />
-            <span>Generating...</span>
+                <Loader2 size={18} className="animate-spin" />
+                <span>Generating...</span>
             </>
         ) : (
             <>
-            <Sparkles 
-                size={20} 
-                className={`transition-all duration-300 ${isHovered ? 'rotate-90 scale-110' : ''}`}
-            />
-            <span>AI Summary</span>
+                <Sparkles 
+                    size={20} 
+                    strokeWidth={2.5}
+                    className={`transition-all duration-300 ${isHovered ? 'rotate-90 scale-110' : ''}`}
+                />
+                <span className="text-sm font-bold tracking-wide">
+                    AI Summary
+                </span>
             </>
         )}
 
