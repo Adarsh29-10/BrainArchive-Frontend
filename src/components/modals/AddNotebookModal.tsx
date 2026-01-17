@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Lock, Globe } from 'lucide-react';
 import { useCreateNotebook } from '../../hooks/useNotebooks';
 
 interface AddNotebookModalProps {
@@ -10,6 +10,7 @@ interface AddNotebookModalProps {
 function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [isPublic, setIsPublic] = useState(false);
   const [errors, setErrors] = useState<{ title?: string; description?: string }>({});
 
   const createNotebookMutation = useCreateNotebook();
@@ -31,12 +32,13 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
       title, 
       description,
       blocks: [],
-      isPublic: false,
+      isPublic,
       lastActivityAt: new Date(),
       totalTimeSpent: 0
     });
     setTitle('');
     setDescription('');
+    setIsPublic(false);
     setErrors({});
     onClose();
   };
@@ -44,6 +46,7 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
   const handleClose = () => {
     setTitle('');
     setDescription('');
+    setIsPublic(false);
     setErrors({});
     onClose();
   };
@@ -131,6 +134,49 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
           {/* Character count */}
           <div className="text-xs text-zinc-500">
             Description: {description.length} characters
+          </div>
+
+          {/* Public/Private Toggle */}
+          <div className="space-y-3 bg-zinc-800/30 rounded-lg p-4 border border-zinc-700">
+            <label className="block text-sm font-semibold text-zinc-100 mb-3">
+              Notebook Privacy
+            </label>
+            
+            <div className="flex gap-3">
+              {/* Private Option */}
+              <button
+                type="button"
+                onClick={() => setIsPublic(false)}
+                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  !isPublic
+                    ? 'bg-pink-600 text-white border-2 border-pink-500'
+                    : 'bg-zinc-700 text-zinc-300 border-2 border-zinc-600 hover:bg-zinc-600'
+                }`}
+              >
+                <Lock size={16} />
+                Private
+              </button>
+
+              {/* Public Option */}
+              <button
+                type="button"
+                onClick={() => setIsPublic(true)}
+                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  isPublic
+                    ? 'bg-pink-600 text-white border-2 border-pink-500'
+                    : 'bg-zinc-700 text-zinc-300 border-2 border-zinc-600 hover:bg-zinc-600'
+                }`}
+              >
+                <Globe size={16} />
+                Public
+              </button>
+            </div>
+
+            <p className="text-xs text-zinc-400 mt-2">
+              {isPublic 
+                ? 'This notebook can be shared and viewed by others' 
+                : 'This notebook is only visible to you'}
+            </p>
           </div>
 
           {/* Buttons */}
