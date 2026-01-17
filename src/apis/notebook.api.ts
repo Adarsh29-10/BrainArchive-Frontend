@@ -24,6 +24,7 @@ export const updateNotebook = async (data: {
     notebookId: string,
     title: string,
     description?: string,
+    isPublic: boolean
 }) => {
     const {notebookId, ...payload} = data;
     const res = await api.put(`/notebooks/${notebookId}`, payload);
