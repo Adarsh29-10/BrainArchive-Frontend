@@ -28,26 +28,26 @@ function LandingPage() {
   
 
   return (
-    <div className="min-h-screen bg-yellow-50/60 ">
+    <div className="min-h-screen bg-zinc-950 ">
       {/* Navigation Bar */}
       <NavbarLandingPage />
 
       {/* Hero Section */}
-      <div className="flex items-center justify-center min-h-screen bg-pink-900 px-4 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-100/30 rounded-full -mr-48 -mt-48"></div>
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-orange-100/30 rounded-full -ml-36 -mb-36"></div>
+      <div className="flex items-center justify-center min-h-screen bg-zinc-950 px-4 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-pink-600/20 rounded-full -mr-48 -mt-48 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-pink-500/10 rounded-full -ml-36 -mb-36 blur-3xl"></div>
         
         <div className="text-center max-w-5xl mx-auto relative z-10">
           {/* Headline */}
-          <h1 className="text-6xl sm:text-7xl font-black text-yellow-50 mb-6 leading-tight drop-shadow-lg  px-6 py-3 rounded-lg">
+          <h1 className="text-6xl sm:text-7xl font-black text-white mb-1 leading-tight drop-shadow-lg px-6 py-3 rounded-lg">
             Learn Smarter,
             <br />
-            <span className="text-orange-200">Not Harder</span>
+            <span className="bg-gradient-to-r from-pink-600 to-pink-400 bg-clip-text text-transparent">Not Harder</span>
             
           </h1>
 
           {/* Subheading */}
-          <p className="text-xl sm:text-md text-white/90 mb-12 max-w-3xl mx-auto leading-normal bg-transparent">
+          <p className="text-xl sm:text-md text-zinc-400 mb-12 max-w-3xl mx-auto leading-normal bg-transparent">
             Create, organize, and master your learning with intelligent note-taking and rich content support.
           </p>
                     
@@ -55,13 +55,13 @@ function LandingPage() {
       </div>
 
       {/* Features Section */}
-      <div className="bg-gradient-to-b from-yellow-50/90 to-white py-28 px-4 ">
+      <div className="min-h-screen bg-zinc-900 py-28 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
               Why Choose BrainArchive?
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
               Everything you need to master your learning in one beautiful platform
             </p>
           </div>
@@ -69,18 +69,18 @@ function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {
               Items.map((item, index) => (
-                <div key={index} className="group relative p-8 rounded-2xl bg-white border-2 border-gray-100 hover:border-pink-300 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                <div key={index} className="group relative p-8 rounded-2xl bg-zinc-800 border-2 border-zinc-700 hover:border-pink-500 hover:shadow-2xl hover:shadow-pink-600/20 transition-all duration-300 transform hover:-translate-y-2">
                   
                   {/* Icon Container */}
-                  <div className="w-14 h-14 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="w-14 h-14 bg-gradient-to-br from-pink-600 to-pink-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-pink-600/50">
                     <item.Icon size={28} className="text-white" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-pink-600 transition-colors">
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-pink-400 transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed mb-4">
+                  <p className="text-zinc-400 leading-relaxed mb-4">
                     {item.description}
                   </p>
                 </div>
@@ -91,15 +91,16 @@ function LandingPage() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-gradient-to-b from-white to-orange-100/90  py-24 px-4 relative overflow-hidden">
+      <div className="bg-gradient-to-b from-zinc-900 to-black py-24 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl sm:text-5xl font-bold text-black mb-6">
+          <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-pink-600 to-pink-400 bg-clip-text text-transparent mb-1 py-2">
             Start Learning Today
           </h2>
-          <p className="text-xl text-black mb-4 max-w-2xl mx-auto">
+          <p className="text-xl text-zinc-400 mb-4 max-w-2xl mx-auto">
             Your notebook awaits. Click the Sign In button in the top navigation to get started.
           </p>
-          <p className="text-sm text-black mb-8">
+          <p className="text-sm text-zinc-400 mb-8">
             No credit card required. Start free, upgrade anytime.
           </p>
         </div>
