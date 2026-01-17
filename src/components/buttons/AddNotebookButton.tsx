@@ -13,7 +13,7 @@ function AddNotebookButton({ onClick }: AddNotebookButtonProps) {
             onClick={onClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="group relative w-full sm:w-auto px-6 py-3 rounded-lg font-semibold text-white transition-all duration-300 overflow-hidden"
+            className="group relative w-full sm:w-auto px-4 py-3 rounded-lg font-semibold text-white transition-all duration-300 overflow-hidden"
             aria-label="Add a new notebook"
         >
             <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-pink-500 opacity-100 group-hover:opacity-90 transition-opacity duration-300" />
