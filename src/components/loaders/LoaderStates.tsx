@@ -6,7 +6,7 @@ interface LoaderProps {
 }
 
 export function LoadingState({ message = 'Loading...', fullScreen = true }: LoaderProps) {
-  const baseClasses = 'flex items-center justify-center gap-3';
+  const baseClasses = 'flex items-center justify-center gap-3 h-screen';
   const containerClasses = fullScreen ? 'h-full w-full' : '';
 
   return (
@@ -54,6 +54,6 @@ interface AuthLoadingProps {
   fullScreen?: boolean;
 }
 
-export function AuthLoadingState({ fullScreen = false }: AuthLoadingProps) {
+export function AuthLoadingState({ fullScreen = true }: AuthLoadingProps) {
   return <LoadingState message="Authenticating..." fullScreen={fullScreen} />;
 }
