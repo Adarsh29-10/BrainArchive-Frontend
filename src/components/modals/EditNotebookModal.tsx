@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { Globe, Lock, X } from 'lucide-react';
 import { useUpdateNotebook } from '../../hooks/useNotebooks';
 import type { Notebook } from '../../types/notebook';
 
@@ -13,6 +13,7 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [isPublic, setIsPublic] = useState(false);
   const [titleError, setTitleError] = useState('');
 
   useEffect(() => {
@@ -20,6 +21,7 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
       requestAnimationFrame(() => {
         setTitle(notebook.title || '');
         setDescription(notebook.description || '');
+        setIsPublic(notebook.isPublic === true);
         setTitleError('');
       });
     }
@@ -42,6 +44,7 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
         notebookId: notebook._id,
         title,
         description,
+        isPublic
       },
       {
         onSuccess: () => onClose(),
@@ -54,8 +57,8 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
       <div className="fixed inset-0 bg-black/50" onClick={onClose} />
 
       <div className="relative w-full max-w-md mx-6 bg-zinc-950 rounded-2xl shadow-2xl animate-fadeIn border border-zinc-800">
-        <div className="flex justify-between items-center p-6 border-b border-zinc-800">
-          <h2 className="text-2xl font-bold text-white">Edit Notebook</h2>
+        <div className="flex justify-between items-center p-3 sm:p-6 border-b border-zinc-800">
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Edit Notebook</h2>
           <button 
             onClick={onClose}
             className="p-2 rounded-lg hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-600"
@@ -64,9 +67,9 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-5">
           <div>
-            <label htmlFor="title" className="block text-sm font-semibold text-zinc-100 mb-2">
+            <label htmlFor="title" className="block text-sm font-semibold text-zinc-100 mb-1 sm:mb-2">
               Notebook Title
             </label>
             <input
@@ -87,7 +90,7 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
           </div>
 
           <div>
-            <label htmlFor="description" className="block text-sm font-semibold text-zinc-100 mb-2">
+            <label htmlFor="description" className="block text-sm font-semibold text-zinc-100 mb-1 sm:mb-2">
               Description
             </label>
             <textarea
@@ -96,8 +99,48 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
               onChange={(e) => setDescription(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border-2 border-zinc-700 hover:border-zinc-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50 resize-none bg-zinc-900 text-white placeholder-zinc-500"
               placeholder="Notebook description..."
-              rows={4}
+              rows={2}
             />
+          </div>
+
+          {/* Public/Private Toggle */}
+          <div className="space-y-3 bg-zinc-800/30 rounded-lg p-2 border border-zinc-700">
+            
+            <div className="flex gap-3">
+              {/* Private Option */}
+              <button
+                type="button"
+                onClick={() => setIsPublic(false)}
+                className={`flex-1 flex items-center justify-center gap-2 px-1 py-1.5 rounded-lg font-medium transition-all duration-200 ${
+                  !isPublic
+                    ? 'bg-blue-600 text-white border-2 border-blue-500'
+                    : 'bg-zinc-700 text-zinc-300 border-2 border-zinc-600 hover:bg-zinc-600'
+                }`}
+              >
+                <Lock size={16} />
+                Private
+              </button>
+
+              {/* Public Option */}
+              <button
+                type="button"
+                onClick={() => setIsPublic(true)}
+                className={`flex-1 flex items-center justify-center gap-2 px-1 py-1.5 rounded-lg font-medium transition-all duration-200 ${
+                  isPublic
+                    ? 'bg-blue-600 text-white border-2 border-blue-500'
+                    : 'bg-zinc-700 text-zinc-300 border-2 border-zinc-600 hover:bg-zinc-600'
+                }`}
+              >
+                <Globe size={16} />
+                Public
+              </button>
+            </div>
+
+            <p className="text-xs text-zinc-400 mt-2">
+              {isPublic 
+                ? 'This notebook can be shared and viewed by others' 
+                : 'This notebook is only visible to you'}
+            </p>
           </div>
 
           <div className="flex gap-3 pt-4">
