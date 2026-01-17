@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Mail, Edit2, Copy, Check } from "lucide-react";
 import { useState } from "react";
-import { AuthLoadingState } from "../components/loaders/LoaderStates";
+import { LoadingState } from "../components/loaders/LoaderStates";
 import LogoutButton from "../components/buttons/LogoutButton";
 
 function Profile() {
@@ -9,7 +9,7 @@ function Profile() {
   const [copied, setCopied] = useState(false);
 
   if (isLoading) {
-    return <AuthLoadingState />;
+    return <LoadingState message="Loading profile..." fullScreen={true} />;
   }
 
   const handleCopyEmail = () => {

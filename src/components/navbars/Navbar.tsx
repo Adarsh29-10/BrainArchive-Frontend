@@ -1,6 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
-import { AuthLoadingState } from "../loaders/LoaderStates";
 
 function Navbar() {
   const { user, isLoading } = useAuth0();
@@ -8,7 +7,7 @@ function Navbar() {
   const navigate = useNavigate()
 
   if (isLoading) {
-    return <AuthLoadingState fullScreen={false} />;
+    return null;
   }
 
 

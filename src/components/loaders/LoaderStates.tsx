@@ -5,13 +5,14 @@ interface LoaderProps {
   fullScreen?: boolean;
 }
 
-export function LoadingState({ message = 'Loading...', fullScreen = true }: LoaderProps) {
-  const baseClasses = 'flex items-center justify-center gap-3 h-screen';
-  const containerClasses = fullScreen ? 'h-full w-full' : '';
+export function LoadingState({ message = 'Loading...', fullScreen = false }: LoaderProps) {
+  const baseClasses = fullScreen 
+    ? 'flex items-center justify-center gap-3 w-full min-h-screen'
+    : 'flex items-center justify-center gap-3 w-full py-8';
 
   return (
-    <div className={`${baseClasses} ${containerClasses} bg-zinc-950 text-white py-8`}>
-      <Loader2 size={24} className="animate-spin text-pink-500" />
+    <div className={`${baseClasses} bg-zinc-950 text-white`}>
+      <Loader2 size={24} className="animate-spin text-pink-500 flex-shrink-0" />
       <span className="text-sm font-medium text-zinc-300">{message}</span>
     </div>
   );
@@ -22,14 +23,19 @@ interface ErrorProps {
   fullScreen?: boolean;
 }
 
-export function ErrorState({ message = 'Error loading data', fullScreen = true }: ErrorProps) {
+export function ErrorState({ message = 'Error loading data', fullScreen = false }: ErrorProps) {
+  const containerClasses = fullScreen 
+    ? 'flex items-center justify-center w-full min-h-screen'
+    : 'w-full';
+    
   const baseClasses = 'flex items-center justify-center gap-3 rounded-lg bg-red-950/20 border border-red-900/50 p-4';
-  const containerClasses = fullScreen ? 'h-full w-full' : 'w-full';
 
   return (
-    <div className={`${baseClasses} ${containerClasses}`}>
-      <AlertCircle size={20} className="text-red-500 flex-shrink-0" />
-      <span className="text-sm font-medium text-red-400">{message}</span>
+    <div className={`${containerClasses}`}>
+      <div className={baseClasses}>
+        <AlertCircle size={20} className="text-red-500 flex-shrink-0" />
+        <span className="text-sm font-medium text-red-400">{message}</span>
+      </div>
     </div>
   );
 }
@@ -48,12 +54,4 @@ interface NotebookErrorProps {
 
 export function NotebookErrorState({ fullScreen = true }: NotebookErrorProps) {
   return <ErrorState message="Error loading notebook" fullScreen={fullScreen} />;
-}
-
-interface AuthLoadingProps {
-  fullScreen?: boolean;
-}
-
-export function AuthLoadingState({ fullScreen = true }: AuthLoadingProps) {
-  return <LoadingState message="Authenticating..." fullScreen={fullScreen} />;
 }

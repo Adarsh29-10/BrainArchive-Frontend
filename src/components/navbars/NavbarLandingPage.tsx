@@ -1,13 +1,12 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import SignInButton from "../buttons/SignInButton";
 import LogoutButton from "../buttons/LogoutButton";
-import { AuthLoadingState } from "../loaders/LoaderStates";
 
 function NavbarLandingPage() {
   const { isAuthenticated, user, isLoading, } = useAuth0();
 
   if (isLoading) {
-    return <AuthLoadingState fullScreen={false} />;
+    return null;
   }
 
   return (
