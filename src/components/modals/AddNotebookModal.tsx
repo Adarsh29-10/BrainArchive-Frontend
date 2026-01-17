@@ -64,8 +64,8 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
       {/* Modal */}
       <div className="relative w-full max-w-md mx-6 bg-zinc-950 rounded-2xl shadow-2xl animate-fadeIn border border-zinc-800">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-zinc-800">
-          <h2 className="text-2xl font-bold text-white">Create Notebook</h2>
+        <div className="flex items-center justify-between p-3 sm:p-6 border-b border-zinc-800">
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Create Notebook</h2>
           <button
             onClick={handleClose}
             className="p-2 rounded-lg hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-600"
@@ -76,10 +76,10 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-5">
           {/* Title Input */}
           <div>
-            <label htmlFor="title" className="block text-sm font-semibold text-zinc-100 mb-2">
+            <label htmlFor="title" className="block text-sm font-semibold text-zinc-100 mb-1 sm:mb-2">
               Notebook Title
             </label>
             <input
@@ -92,7 +92,7 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
                   setErrors({ ...errors, title: undefined });
                 }
               }}
-              placeholder="e.g., Machine Learning Basics"
+              placeholder="e.g., Python Basics"
               className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50 bg-zinc-900 text-white placeholder-zinc-500 ${
                 errors.title
                   ? 'border-red-600 bg-red-950/20'
@@ -106,7 +106,7 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
 
           {/* Description Input */}
           <div>
-            <label htmlFor="description" className="block text-sm font-semibold text-zinc-100 mb-2">
+            <label htmlFor="description" className="block text-sm font-semibold text-zinc-100 mb-1 sm:mb-2">
               Description
             </label>
             <textarea
@@ -119,7 +119,7 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
                 }
               }}
               placeholder="Add a description for your notebook..."
-              rows={4}
+              rows={2}
               className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50 resize-none bg-zinc-900 text-white placeholder-zinc-500 ${
                 errors.description
                   ? 'border-red-600 bg-red-950/20'
@@ -131,25 +131,22 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
             )}
           </div>
 
-          {/* Character count */}
+          {/* Character count
           <div className="text-xs text-zinc-500">
             Description: {description.length} characters
-          </div>
+          </div> */}
 
           {/* Public/Private Toggle */}
-          <div className="space-y-3 bg-zinc-800/30 rounded-lg p-4 border border-zinc-700">
-            <label className="block text-sm font-semibold text-zinc-100 mb-3">
-              Notebook Privacy
-            </label>
+          <div className="space-y-3 bg-zinc-800/30 rounded-lg p-2 border border-zinc-700">
             
             <div className="flex gap-3">
               {/* Private Option */}
               <button
                 type="button"
                 onClick={() => setIsPublic(false)}
-                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`flex-1 flex items-center justify-center gap-2 px-1 py-1.5 rounded-lg font-medium transition-all duration-200 ${
                   !isPublic
-                    ? 'bg-pink-600 text-white border-2 border-pink-500'
+                    ? 'bg-blue-600 text-white border-2 border-blue-500'
                     : 'bg-zinc-700 text-zinc-300 border-2 border-zinc-600 hover:bg-zinc-600'
                 }`}
               >
@@ -161,9 +158,9 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
               <button
                 type="button"
                 onClick={() => setIsPublic(true)}
-                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`flex-1 flex items-center justify-center gap-2 px-1 py-1.5 rounded-lg font-medium transition-all duration-200 ${
                   isPublic
-                    ? 'bg-pink-600 text-white border-2 border-pink-500'
+                    ? 'bg-blue-600 text-white border-2 border-blue-500'
                     : 'bg-zinc-700 text-zinc-300 border-2 border-zinc-600 hover:bg-zinc-600'
                 }`}
               >
