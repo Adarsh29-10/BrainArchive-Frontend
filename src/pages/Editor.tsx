@@ -38,7 +38,7 @@ function Editor() {
         </div>
 
         {/* Main editor content  */}
-        <main className="flex-1 pl-5 pr-2 sm:px-6 py-3 overflow-y-auto pb-[60vh] scrollbar-hide">
+        <main className="flex-1 pl-5 pr-2 sm:px-6 py-3 overflow-y-auto pb-[10vh] sm:pb-[60vh] scrollbar-hide">
 
           {/* Header */}
           <div className="mt-12 flex justify-between items-center">
