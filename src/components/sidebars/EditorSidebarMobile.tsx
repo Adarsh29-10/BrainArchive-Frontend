@@ -2,20 +2,19 @@ import { useState } from 'react';
 import { SIDEBAR_SECTIONS } from './SidebarPalette';
 import type { BlockType } from '../../types/block';
 import { X } from 'lucide-react';
-import { useUpdateNotebookBlock } from '../../hooks/useNotebooks';
 import { useParams } from 'react-router-dom';
 import { useEditorStore } from '../../hooks/useEditorStore';
 
 type Props = {
   addBlock: (type: BlockType) => void;
   handleSaveBlocks: () => void;
+  isSaving: boolean;
 };
 
-export const EditorSidebarMobile = ({ addBlock, handleSaveBlocks }: Props) => {
+export const EditorSidebarMobile = ({ addBlock, handleSaveBlocks, isSaving }: Props) => {
   const { notebookId } = useParams<{ notebookId: string | undefined}>();
   const [activeSection, setActiveSection] = useState<number | null>(null);
-  const {blocks, isPending} = useEditorStore(notebookId);
-  const updateBlockMutation = useUpdateNotebookBlock();
+  const {blocks} = useEditorStore(notebookId);
  
   return (
     <>
@@ -40,14 +39,14 @@ export const EditorSidebarMobile = ({ addBlock, handleSaveBlocks }: Props) => {
 
           <button
             onClick={handleSaveBlocks}
-            disabled={isPending || updateBlockMutation.isPending || blocks.length === 0}
+            disabled={isSaving || blocks.length === 0}
             className={`px-4 py-1 rounded-lg font-semibold
-              ${isPending || updateBlockMutation.isPending || blocks.length === 0
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-500 text-white"
-              }`}
+                ${isSaving || blocks.length === 0
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 text-white"
+                }`}
           >
-            {isPending ? "Loading..." : updateBlockMutation.isPending ? "Saving..." : "Save"}
+            {isSaving ? "Saving..." : "Save"}
           </button>
         </div>
       </div>
