@@ -3,7 +3,7 @@ export type BlockType =
 
 
 export interface Block {
-    _id: string;
+    _id?: string;
     type: BlockType;
     content: string;
 }
