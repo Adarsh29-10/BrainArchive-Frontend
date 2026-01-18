@@ -8,22 +8,15 @@ import { useEditorStore } from '../../hooks/useEditorStore';
 
 type Props = {
   addBlock: (type: BlockType) => void;
+  handleSaveBlocks: () => void;
 };
 
-export const EditorSidebarMobile = ({ addBlock }: Props) => {
+export const EditorSidebarMobile = ({ addBlock, handleSaveBlocks }: Props) => {
   const { notebookId } = useParams<{ notebookId: string | undefined}>();
   const [activeSection, setActiveSection] = useState<number | null>(null);
   const {blocks, isPending} = useEditorStore(notebookId);
   const updateBlockMutation = useUpdateNotebookBlock();
-  const handleSaveBlocks = () => {
-    if (!notebookId) return;
-
-    updateBlockMutation.mutate({
-      notebookId,
-      blocks
-    });
-  }
-
+ 
   return (
     <>
       {/* Minimal Bottom Toolbar */}
