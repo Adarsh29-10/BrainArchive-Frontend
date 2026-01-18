@@ -1,11 +1,9 @@
 import { X } from 'lucide-react';
 import {useRef, useEffect} from 'react';
+import type { Block } from '../../types/block';
 
 interface HeadingBlockProps {
-  block: {
-    _id: string;
-    content: string;
-  };
+  block: Block
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
   autoFocus: string | null;
@@ -45,20 +43,26 @@ function HeadingBlock({ block, onChange, onDelete, autoFocus }: HeadingBlockProp
     <div className="relative mb-1 group">
       <textarea
         ref={textareaRef}
-        className="text-4xl sm:text-4xl font-bold w-full pr-14 mt-1 focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white"
+        className="text-4xl sm:text-4xl font-bold w-full pr-6 mt-8 focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white"
         placeholder="Heading..."
         value={block.content}
         
         onChange={(e) => {
-          onChange(block._id, e.target.value);
-          e.target.style.height = 'auto';
-          e.target.style.height = Math.min(e.target.scrollHeight, 300) + 'px';
+          if (block._id){
+            onChange(block._id, e.target.value);
+            e.target.style.height = 'auto';
+            e.target.style.height = Math.min(e.target.scrollHeight, 300) + 'px';
+          }
         }}
         rows={1}
       />
       
       <button
-        onClick={() => onDelete?.(block._id)}
+        onClick={() => {
+          if(block._id){
+            onDelete?.(block._id)}
+          }
+        }
         className="absolute right-0 top-5 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95"
         aria-label="Delete heading block"
       >

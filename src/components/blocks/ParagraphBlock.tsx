@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 
 interface ParagraphBlockProps {
   block: {
-    _id: string;
+    _id?: string;
     content: string;
   };
   onChange: (id: string, value: string) => void;
@@ -45,11 +45,13 @@ function ParagraphBlock({block, onChange, onDelete, autoFocus}: ParagraphBlockPr
     <div className="relative mb-0.5 group">
       <textarea
         ref={textareaRef}
-        className="w-full text-base sm:text-lg leading-relaxed px-1.5 pr-14 focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white "
+        className="w-full text-base sm:text-lg leading-relaxed pl-2 pr-6 mt-1 focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white "
         placeholder="Write something..."
         value={block.content}
         onChange={(e) => {
-          onChange(block._id, e.target.value);
+          if (block._id) {
+            onChange(block._id, e.target.value);
+          }
           // Auto-adjust textarea height
           e.target.style.height = 'auto';
           e.target.style.height = Math.min(e.target.scrollHeight, 400) + 'px';
@@ -58,7 +60,11 @@ function ParagraphBlock({block, onChange, onDelete, autoFocus}: ParagraphBlockPr
       />
       
       <button
-        onClick={() => onDelete?.(block._id)}
+        onClick={() => {
+          if (block._id) {
+            onDelete?.(block._id);
+          }
+        }}
         className="absolute right-0 top-2 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95"
         aria-label="Delete paragraph block"
       >

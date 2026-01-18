@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 
 interface CodeBlockProps {
   block: {
-    _id: string;
+    _id?: string;
     content: string;
     language?: string;
   };
@@ -53,7 +53,7 @@ function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
   }, [autoFocus, block._id]);
 
   return (
-    <div className="relative group mb-4">
+    <div className="relative group mb-4 pr-4">
       <div className="border-2 border-transparent rounded-lg overflow-hidden ">
 
         {/* Header */}
@@ -78,10 +78,14 @@ function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
 
         {/* Monaco Editor */}
         <Editor
-          height="300px"
+          height="30vh"
           language={selectedLang || undefined}
           value={block.content}
-          onChange={(value) => onChange(block._id, value || "")}
+          onChange={(value) => {
+            if (block._id) {
+              onChange(block._id, value || "");
+            }
+          }}
           theme="vs-dark"
           options={{
             minimap: { enabled: false },
@@ -96,7 +100,11 @@ function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
 
       {/* Delete button */}
       <button
-        onClick={() => onDelete?.(block._id)}
+        onClick={() => {
+          if (block._id) {
+            onDelete?.(block._id);
+          }
+        }}
         className="absolute top-2 right-0 opacity-0 group-hover:opacity-100 p-2 text-red-600 hover:bg-red-100 rounded-lg transition-all z-10"
         aria-label="Delete code block"
       >

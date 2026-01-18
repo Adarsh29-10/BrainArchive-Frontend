@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 interface BulletBlockProps {
   block: {
-    _id: string;
+    _id?: string;
     content: string;
   };
   onChange: (id: string, value: string) => void;
@@ -55,8 +55,8 @@ function BulletBlock({ block, onChange, onDelete, autoFocus }: BulletBlockProps)
     <div className="relative group ml-2 mb-0.5">
       <div className="rounded-lg">
         {lines.map((line, index) => (
-          <div key={index} className="flex items-start gap-3 group/bullet">
-            <div className="pt-[6px] select-none text-white">•</div>
+          <div key={index} className="flex items-start gap-2 group/bullet">
+            <div className="select-none ml-2 text-3xl text-white">•</div>
 
             <textarea
               ref={el => {
@@ -65,11 +65,13 @@ function BulletBlock({ block, onChange, onDelete, autoFocus }: BulletBlockProps)
               rows={1}
               value={line}
               placeholder="Bullet point..."
-              className="flex-1 resize-none outline-none px-2 pt-1 pb-3 overflow-hidden bg-zinc-950 text-white"
+              className="flex-1 resize-none outline-none pl-2 pt-2 pb-1 pr-6 overflow-hidden bg-zinc-950 text-white"
               onChange={e => {
                 const newLines = [...lines];
                 newLines[index] = e.target.value;
-                onChange(block._id, newLines.join("\n"));
+                if (block._id) {
+                  onChange(block._id, newLines.join("\n"));
+                }
               }}
               onKeyDown={e => {
                 if (e.key === "Enter" && !e.shiftKey) {
@@ -83,7 +85,9 @@ function BulletBlock({ block, onChange, onDelete, autoFocus }: BulletBlockProps)
                   newLines[index] = before;
                   newLines.splice(index + 1, 0, after);
 
-                  onChange(block._id, newLines.join("\n"));
+                  if (block._id) {
+                    onChange(block._id, newLines.join("\n"));
+                  }
                   setFocusIndex(index + 1);
                 }
               }}
@@ -93,7 +97,9 @@ function BulletBlock({ block, onChange, onDelete, autoFocus }: BulletBlockProps)
               <button
                 onClick={() => {
                   const newLines = lines.filter((_, i) => i !== index);
-                  onChange(block._id, newLines.join("\n"));
+                  if (block._id) {
+                    onChange(block._id, newLines.join("\n"));
+                  }
                 }}
                 className="opacity-0 group-hover/bullet:opacity-100 px-1 text-red-600 hover:bg-red-100 rounded"
               >
@@ -105,7 +111,11 @@ function BulletBlock({ block, onChange, onDelete, autoFocus }: BulletBlockProps)
       </div>
 
       <button
-        onClick={() => onDelete?.(block._id)}
+        onClick={() => {
+          if (block._id) {
+            onDelete?.(block._id);
+          }
+        }}
         className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 text-red-600 hover:bg-red-100 rounded-lg"
       >
         <X size={20} />
