@@ -66,10 +66,15 @@ export const useUpdateNotebookBlock = () => {
 
     return useMutation({
         mutationFn: updateNotebookBlock,
+
+        retry: 3,
+        retryDelay:1500,
+
         onSuccess: (_data, variables) => {
             queryClient.invalidateQueries({ 
                 queryKey: ['notebook', variables.notebookId]
             })
+            
         },
     });
 }
