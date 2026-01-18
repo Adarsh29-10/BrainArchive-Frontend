@@ -38,7 +38,7 @@ function Editor() {
         </div>
 
         {/* Main editor content  */}
-        <main className="flex-1 px-6 py-3 overflow-y-auto pb-[60vh] scrollbar-hide">
+        <main className="flex-1 pl-5 pr-2 sm:px-6 py-3 overflow-y-auto pb-[60vh] scrollbar-hide">
 
           {/* Header */}
           <div className="mt-12 flex justify-between items-center">
@@ -55,7 +55,7 @@ function Editor() {
             <button
               onClick={handleSaveBlocks}
               disabled={updateBlockMutation.isPending || blocks.length === 0}
-              className={`px-4 py-1 rounded-lg font-semibold
+              className={`px-4 py-1 rounded-lg font-semibold hidden sm:block
                 ${updateBlockMutation.isPending || blocks.length === 0
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-blue-500 text-white"
