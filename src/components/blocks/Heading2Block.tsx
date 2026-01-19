@@ -43,10 +43,10 @@ function Heading2Block({ block, onChange, onDelete, autoFocus }: Heading2BlockPr
   }, []);
 
   return (
-    <div className="relative mb-1 group">
+    <div className="relative mb-1 group select-text">
       <textarea
         ref={textareaRef}
-        className="text-lg sm:text-xl font-bold w-full px-0.5 pr-6 mt-3  focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white  "
+        className="text-lg sm:text-xl font-bold w-full px-0.5 pr-6 mt-3  focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white select-text"
         placeholder="Heading..."
         value={block.content}
         onChange={(e) => {
