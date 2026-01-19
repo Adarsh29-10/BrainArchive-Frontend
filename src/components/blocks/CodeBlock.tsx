@@ -14,11 +14,11 @@ interface CodeBlockProps {
 }
 
 const LANGUAGES = [
+  { label: "JavaScript", value: "javascript" },
   { label: "C", value: "c" },
   { label: "C++", value: "cpp" },  // monaco recognizes "cpp"
   { label: "Java", value: "java" },
   { label: "Python", value: "python" },
-  { label: "JavaScript", value: "javascript" },
   { label: "TypeScript", value: "typescript" },
   { label: "JSON", value: "json" },
   { label: "HTML", value: "html" },
@@ -53,7 +53,7 @@ function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
   }, [autoFocus, block._id]);
 
   return (
-    <div className="relative group mb-4 pr-4">
+    <div className="relative group mb-4 pr-4 select-none">
       <div className="border-2 border-transparent rounded-lg overflow-hidden ">
 
         {/* Header */}
