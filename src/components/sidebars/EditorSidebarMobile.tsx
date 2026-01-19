@@ -1,20 +1,17 @@
 import { useState } from 'react';
 import { SIDEBAR_SECTIONS } from './SidebarPalette';
-import type { BlockType } from '../../types/block';
+import type { Block, BlockType } from '../../types/block';
 import { X } from 'lucide-react';
-import { useParams } from 'react-router-dom';
-import { useEditorStore } from '../../hooks/useEditorStore';
 
 type Props = {
   addBlock: (type: BlockType) => void;
   handleSaveBlocks: () => void;
   isSaving: boolean;
+  blocks: Block[]
 };
 
-export const EditorSidebarMobile = ({ addBlock, handleSaveBlocks, isSaving }: Props) => {
-  const { notebookId } = useParams<{ notebookId: string | undefined}>();
+export const EditorSidebarMobile = ({ addBlock, handleSaveBlocks, isSaving, blocks }: Props) => {
   const [activeSection, setActiveSection] = useState<number | null>(null);
-  const {blocks} = useEditorStore(notebookId);
  
   return (
     <>

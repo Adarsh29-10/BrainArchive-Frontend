@@ -29,7 +29,12 @@ function Editor() {
 
         
         <div className="block sm:hidden">
-          <EditorSidebarMobile addBlock={addBlock} handleSaveBlocks={handleSaveBlocks} isSaving={updateBlockMutation.isPending}/>
+          <EditorSidebarMobile 
+            addBlock={addBlock} 
+            handleSaveBlocks={handleSaveBlocks} 
+            isSaving={updateBlockMutation.isPending}
+            blocks={blocks}
+          />
         </div>
         
 
