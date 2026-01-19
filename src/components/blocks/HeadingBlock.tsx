@@ -40,10 +40,10 @@ function HeadingBlock({ block, onChange, onDelete, autoFocus }: HeadingBlockProp
   }, []);
 
   return (
-    <div className="relative mb-1 group">
+    <div className="relative mb-1 group select-text">
       <textarea
         ref={textareaRef}
-        className="text-4xl sm:text-4xl font-bold w-full pr-6 mt-8 focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white"
+        className="text-4xl sm:text-4xl font-bold w-full pr-6 mt-8 focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white select-text"
         placeholder="Heading..."
         value={block.content}
         
