@@ -42,10 +42,10 @@ function ParagraphBlock({block, onChange, onDelete, autoFocus}: ParagraphBlockPr
   }, []);
   
   return (
-    <div className="relative mb-0.5 group">
+    <div className="relative mb-0.5 group select-text">
       <textarea
         ref={textareaRef}
-        className="w-full text-base sm:text-lg leading-relaxed pl-2 pr-6 mt-1 focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white "
+        className="w-full text-base sm:text-lg leading-relaxed pl-2 pr-6 mt-1 focus:outline-none resize-none overflow-hidden bg-zinc-950 text-white select-text"
         placeholder="Write something..."
         value={block.content}
         onChange={(e) => {
