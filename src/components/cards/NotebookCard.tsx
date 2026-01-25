@@ -1,4 +1,4 @@
-import { Trash2, BookOpen, Edit } from 'lucide-react';
+import { Trash2, Edit } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { Notebook } from '../../types/notebook';
 
@@ -15,15 +15,15 @@ function NotebookCard({ notebook, onDeleteClick, onUpdateClick}: NotebookCardPro
     <div className="group w-full bg-zinc-950 text-white rounded-lg border border-gray-700 hover:border-pink-400 hover:bg-zinc-800 transition-all duration-200 cursor-pointer overflow-hidden">
       {/* Main clickable row */}
       <div 
-        className="flex items-center justify-between px-4 py-3 hover:bg-gray-800/50 transition-colors"
+        className="flex items-center justify-between px-4 py-4 hover:bg-gray-800/50 transition-colors"
         onClick={() => navigate(`/nb/${notebook._id}`)}
       >
         {/* Left section: Icon + Content */}
         <div className="flex items-center gap-3 flex-1 min-w-0">
           {/* Icon */}
-          <div className="p-2 bg-gradient-to-br from-pink-900 to-pink-800 rounded-lg group-hover:from-pink-800 group-hover:to-pink-700 transition-all flex-shrink-0">
+          {/* <div className="p-2 bg-gradient-to-br from-pink-900 to-pink-800 rounded-lg group-hover:from-pink-800 group-hover:to-pink-700 transition-all flex-shrink-0">
             <BookOpen size={20} className="text-pink-400" />
-          </div>
+          </div> */}
 
           {/* Title, Description, Date */}
           <div className="min-w-0 flex-1">
