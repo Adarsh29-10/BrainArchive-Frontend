@@ -42,15 +42,33 @@ function Profile() {
                 />
                 <div className="flex-1">
                   <h2 className="text-2xl sm:text-3xl font-bold text-white">{user?.name}</h2>
-                  <p className="text-zinc-400 text-sm mt-1">Account member</p>
                 </div>
+
+                <button className="px-4 py-3 bg-blue-700 hover:bg-blue-800 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2">
+                    <Edit2 size={18} />
+                    Edit Profile
+                </button>
               </div>
 
               {/* Divider */}
-              <div className="h-px bg-zinc-800 my-6"></div>
+              <div className="h-px bg-zinc-800 "></div>
+
+              <h3 className="text-lg font-semibold text-white flex items-center gap-2 my-6">
+                <Edit2 size={18} />
+                Account Information
+              </h3>
 
               {/* User Details Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+
+                {/* User ID */}
+                <div className="space-y-2">
+                  <label className="text-zinc-400 text-sm font-medium">User ID</label>
+                  <div className="bg-zinc-800/50 rounded-lg px-4 py-3 border border-zinc-700">
+                    <p className="text-white font-mono text-sm truncate">{user?.sub}</p>
+                  </div>
+                </div>
+
                 {/* Email */}
                 <div className="space-y-2">
                   <label className="text-zinc-400 text-sm font-medium flex items-center gap-2">
@@ -73,14 +91,6 @@ function Profile() {
                   </div>
                 </div>
 
-                {/* User ID */}
-                <div className="space-y-2">
-                  <label className="text-zinc-400 text-sm font-medium">User ID</label>
-                  <div className="bg-zinc-800/50 rounded-lg px-4 py-3 border border-zinc-700">
-                    <p className="text-white font-mono text-sm truncate">{user?.sub}</p>
-                  </div>
-                </div>
-
                 {/* Account Created */}
                 <div className="space-y-2">
                   <label className="text-zinc-400 text-sm font-medium">Account Created</label>
@@ -96,17 +106,6 @@ function Profile() {
                     </p>
                   </div>
                 </div>
-
-                {/* Provider */}
-                <div className="space-y-2">
-                  <label className="text-zinc-400 text-sm font-medium">Login Provider</label>
-                  <div className="bg-zinc-800/50 rounded-lg px-4 py-3 border border-zinc-700">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <p className="text-white capitalize">{user?.identities?.[0]?.provider || 'Auth0'}</p>
-                    </div>
-                  </div>
-                </div>
               </div>
 
               {/* Divider */}
@@ -114,25 +113,14 @@ function Profile() {
 
               {/* Additional Info */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <Edit2 size={18} />
-                  Account Information
-                </h3>
+                
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                  <div className="bg-zinc-800/30 rounded-lg px-4 py-3 border border-zinc-800">
-                    <p className="text-zinc-400 mb-1">Full Name</p>
-                    <p className="text-white font-medium">{user?.name || 'Not provided'}</p>
-                  </div>
+                  
                   <div className="bg-zinc-800/30 rounded-lg px-4 py-3 border border-zinc-800">
                     <p className="text-zinc-400 mb-1">Nickname</p>
                     <p className="text-white font-medium">{user?.nickname || 'Not provided'}</p>
                   </div>
-                  <div className="bg-zinc-800/30 rounded-lg px-4 py-3 border border-zinc-800">
-                    <p className="text-zinc-400 mb-1">Authentication Method</p>
-                    <p className="text-white font-medium capitalize">
-                      {user?.identities?.[0]?.connection || 'Default'}
-                    </p>
-                  </div>
+                  
                   <div className="bg-zinc-800/30 rounded-lg px-4 py-3 border border-zinc-800">
                     <p className="text-zinc-400 mb-1">Email Verified</p>
                     <p className="text-white font-medium flex items-center gap-2">
@@ -156,35 +144,12 @@ function Profile() {
               <div className="h-px bg-zinc-800 my-6"></div>
 
               {/* Actions */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <button className="flex-1 px-6 py-3 bg-pink-600 hover:bg-pink-500 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2">
-                  <Edit2 size={18} />
-                  Edit Profile
-                </button>
+              <div>
                 <LogoutButton />
               </div>
             </div>
           </div>
 
-          {/* Additional Sections */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            {/* Security */}
-            <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Security</h3>
-              <div className="space-y-3">
-                <button className="w-full px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
-                  Change Password
-                </button>
-                <button className="w-full px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
-                  Manage Sessions
-                </button>
-                <button className="w-full px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
-                  Two-Factor Authentication
-                </button>
-              </div>
-            </div>
-
-          </div>
 
           {/* Danger Zone */}
           <div className="bg-red-950/20 border border-red-900/50 rounded-lg p-6 mt-6">
