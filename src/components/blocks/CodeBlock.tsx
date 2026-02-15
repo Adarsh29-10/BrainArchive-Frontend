@@ -11,6 +11,7 @@ interface CodeBlockProps {
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
   autoFocus: string | null;
+  setFocusedBlockId: (id: string | null) => void;
 }
 
 const LANGUAGES = [
@@ -25,7 +26,7 @@ const LANGUAGES = [
   { label: "CSS", value: "css" },
 ];
 
-function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
+function CodeBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId }: CodeBlockProps) {
   const editorRef = useRef<{ focus: () => void } | null>(null);
 
   // Local state but synced with block.language
@@ -53,7 +54,7 @@ function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
   }, [autoFocus, block._id]);
 
   return (
-    <div className="relative group mb-4 pr-4 select-none">
+    <div className="relative group mt-5 mb-6 pr-4 select-none">
       <div className="border-2 border-transparent rounded-lg overflow-hidden ">
 
         {/* Header */}
@@ -86,6 +87,12 @@ function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
               onChange(block._id, value || "");
             }
           }}
+          onMount={(editor) => {
+            editor.onDidFocusEditorText(() => {
+              setFocusedBlockId(block._id ?? null);
+            });
+          }}
+            
           theme="vs-dark"
           options={{
             minimap: { enabled: false },
