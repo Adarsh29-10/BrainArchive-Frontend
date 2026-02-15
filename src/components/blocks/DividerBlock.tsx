@@ -17,27 +17,28 @@ function DividerBlock({block, onDelete, autoFocus}: DividerBlockProps) {
             dividerRef.current?.focus()
         }
     }, [autoFocus, block._id])
-  return (
-    <>
-        <div 
-            ref={dividerRef}
-            tabIndex={-1}
-            className="relative my-6 group "
-        >
-            <hr className="border-zinc-700" />
-            <button
-                onClick={() => {
-                    if (block._id) {
-                        onDelete?.(block._id);
-                    }
-                }}
-                className="absolute -bottom-2.5 right-0 opacity-100 group-hover:opacity-100 text-red-600 hover:bg-red-100 rounded-lg"
+    
+    return (
+        <>
+            <div 
+                ref={dividerRef}
+                tabIndex={-1}
+                className="relative my-6 group "
             >
-                <X size={20} />
-            </button>
-        </div>
-    </>
-  )
+                <hr className="border-zinc-700" />
+                <button
+                    onClick={() => {
+                        if (block._id) {
+                            onDelete?.(block._id);
+                        }
+                    }}
+                    className="absolute -bottom-2.5 right-0 opacity-100 group-hover:opacity-100 text-red-600 hover:bg-red-100 rounded-lg"
+                >
+                    <X size={20} />
+                </button>
+            </div>
+        </>
+    )
 }
 
 export default DividerBlock
