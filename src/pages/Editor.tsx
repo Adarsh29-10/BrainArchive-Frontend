@@ -8,7 +8,7 @@ import { NotebookLoadingState, NotebookErrorState } from '../components/loaders/
 
 function Editor() {
     const { notebookId } = useParams<{ notebookId: string | undefined}>();
-    const {blocks, addBlock, updateBlock, deleteBlock, isPending, isError, focusedBlockId} = useEditorStore(notebookId);
+    const {blocks, addBlock, updateBlock, deleteBlock, isPending, isError, focusedBlockId, setFocusedBlockId, moveBlockFocus} = useEditorStore(notebookId);
     const updateBlockMutation = useUpdateNotebookBlock();
 
     const handleSaveBlocks = () => {
@@ -80,6 +80,8 @@ function Editor() {
               onChange={updateBlock}
               onDelete={deleteBlock}
               autoFocus={focusedBlockId}
+              setFocusedBlockId={setFocusedBlockId}
+              moveBlockFocus={moveBlockFocus}
             />
           ))}
         </main>
