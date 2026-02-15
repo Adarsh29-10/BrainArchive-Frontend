@@ -7,6 +7,8 @@ export interface TextBlockProps {
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
   autoFocus: string | null;
+  setFocusedBlockId: (id: string | null) => void;
+  moveBlockFocus: (currentId: string | undefined, direction: "up" | "down") => void;
 }
 
 export interface TextBlockVariant {
@@ -20,7 +22,7 @@ interface BaseBlockProps extends TextBlockProps {
 }
 
 
-function BaseBlock({ block, onChange, onDelete, autoFocus, variant }: BaseBlockProps) {
+function BaseBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, moveBlockFocus, variant }: BaseBlockProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const maxHeight = 300;
 
@@ -66,7 +68,27 @@ function BaseBlock({ block, onChange, onDelete, autoFocus, variant }: BaseBlockP
           e.target.style.height = 'auto';
           e.target.style.height = `${Math.min(e.target.scrollHeight, maxHeight)}px`;
         }}
+        onKeyDown={(e)=>{
+          const el = e.currentTarget;
+
+          const isAtStart = el.selectionStart === 0;
+          const isAtEnd = el.selectionStart === el.value.length;
+
+          if (e.key === "ArrowUp" && isAtStart) {
+            e.preventDefault();
+            moveBlockFocus(block._id, "up");
+          }
+
+          if (e.key === "ArrowDown" && isAtEnd) {
+            e.preventDefault();
+            moveBlockFocus(block._id, "down");
+          }
+        }}
         rows={1}
+
+        onFocus={()=>{
+          setFocusedBlockId(block._id ?? null)
+        }}
       />
 
       <button
