@@ -75,7 +75,7 @@ function BaseBlock({ block, onChange, onDelete, autoFocus, variant }: BaseBlockP
             onDelete?.(block._id);
           }
         }}
-        className='absolute right-0 top-2 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95'
+        className='absolute right-0 bottom-3 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95'
         aria-label={`Delete ${block.type} block`}
       >
         <X size={20} />
