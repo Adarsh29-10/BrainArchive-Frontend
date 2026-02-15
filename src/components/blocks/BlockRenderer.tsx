@@ -10,6 +10,8 @@ interface BlockRendererProps {
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
   autoFocus: string | null;
+  setFocusedBlockId: (id: string | null) => void;
+  moveBlockFocus: (currentId: string | undefined, direction: "up" | "down") => void;
 }
 
 const SPECIALIZED_BLOCKS = {
