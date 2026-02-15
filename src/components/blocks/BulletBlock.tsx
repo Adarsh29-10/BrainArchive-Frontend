@@ -9,9 +9,11 @@ interface BulletBlockProps {
   onChange: (id: string, value: string) => void;
   onDelete?: (id: string) => void;
   autoFocus: string | null;
+  setFocusedBlockId: (id: string | null) => void;
+  moveBlockFocus: (currentId: string | undefined, direction: "up" | "down") => void;
 }
 
-function BulletBlock({ block, onChange, onDelete, autoFocus }: BulletBlockProps) {
+function BulletBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, moveBlockFocus }: BulletBlockProps) {
   const lines = block.content.split("\n");
   const textareaRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
   const [focusIndex, setFocusIndex] = useState<number | null>(null);
@@ -73,7 +75,38 @@ function BulletBlock({ block, onChange, onDelete, autoFocus }: BulletBlockProps)
                   onChange(block._id, newLines.join("\n"));
                 }
               }}
+
               onKeyDown={e => {
+                const el = e.currentTarget;
+                const isAtStart = el.selectionStart === 0;
+                const isAtEnd = el.selectionStart === el.value.length
+
+                if (e.key === "ArrowUp") {
+                  if (index > 0) {
+                    e.preventDefault();
+                    setFocusIndex(index - 1);
+                    return;
+                  }
+                  if (index === 0 && isAtStart) {
+                    e.preventDefault();
+                    moveBlockFocus(block._id, "up");
+                    return;
+                  }
+                }
+
+                if (e.key === "ArrowDown") {
+                  if (index < lines.length - 1) {
+                    e.preventDefault();
+                    setFocusIndex(index + 1);
+                    return;
+                  }
+                  if (index === lines.length - 1 && isAtEnd) {
+                    e.preventDefault();
+                    moveBlockFocus(block._id, "down");
+                    return;
+                  }
+                }
+
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
                   const cursor = e.currentTarget.selectionStart;
@@ -91,6 +124,11 @@ function BulletBlock({ block, onChange, onDelete, autoFocus }: BulletBlockProps)
                   setFocusIndex(index + 1);
                 }
               }}
+
+              onFocus={()=>{
+                setFocusedBlockId(block._id ?? null)
+              }}
+              
             />
 
             {lines.length > 1 && (
