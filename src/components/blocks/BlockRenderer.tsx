@@ -2,6 +2,7 @@ import type { Block } from '../../types/block';
 import BaseBlock from './BaseBlock';
 import BulletBlock from './BulletBlock';
 import CodeBlock from './CodeBlock';
+import DividerBlock from './DividerBlock';
 import { TEXT_BLOCK_VARIANTS } from './textBlockVariants';
 
 interface BlockRendererProps {
@@ -14,6 +15,7 @@ interface BlockRendererProps {
 const SPECIALIZED_BLOCKS = {
   bullet: BulletBlock,
   code: CodeBlock,
+  divider: DividerBlock
 };
 
 function BlockRenderer(props: BlockRendererProps) {
