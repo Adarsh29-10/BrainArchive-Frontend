@@ -105,7 +105,7 @@ function CodeBlock({ block, onChange, onDelete, autoFocus }: CodeBlockProps) {
             onDelete?.(block._id);
           }
         }}
-        className="absolute top-2 right-0 opacity-0 group-hover:opacity-100 p-2 text-red-600 hover:bg-red-100 rounded-lg transition-all z-10"
+        className="absolute top-2 right-6 opacity-0 group-hover:opacity-100 p-2 text-red-600 hover:scale-110 hover:text-red-800 rounded-lg transition-all z-10"
         aria-label="Delete code block"
       >
         <X size={20} />
