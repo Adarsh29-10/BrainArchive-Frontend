@@ -1,10 +1,8 @@
-import type { Block } from "../../types/block";
-import BulletBlock from "./BulletBlock";
-import CodeBlock from "./CodeBlock";
-import Heading1Block from "./Heading1Block";
-import Heading2Block from "./Heading2Block";
-import HeadingBlock from "./HeadingBlock";
-import ParagraphBlock from "./ParagraphBlock";
+import type { Block } from '../../types/block';
+import BaseBlock from './BaseBlock';
+import BulletBlock from './BulletBlock';
+import CodeBlock from './CodeBlock';
+import { TEXT_BLOCK_VARIANTS } from './textBlockVariants';
 
 interface BlockRendererProps {
   block: Block;
@@ -13,29 +11,34 @@ interface BlockRendererProps {
   autoFocus: string | null;
 }
 
-function BlockRenderer({ block, onChange, onDelete, autoFocus }: BlockRendererProps) {
-  switch (block.type) {
-    case "heading":
-      return <HeadingBlock block={block} onChange={onChange} onDelete={onDelete} autoFocus={autoFocus} />;
+const SPECIALIZED_BLOCKS = {
+  bullet: BulletBlock,
+  code: CodeBlock,
+};
 
-    case "heading1":
-      return <Heading1Block block={block} onChange={onChange} onDelete={onDelete} autoFocus={autoFocus} />;
+function BlockRenderer(props: BlockRendererProps) {
+  const { block } = props;
 
-    case "heading2":
-      return <Heading2Block block={block} onChange={onChange} onDelete={onDelete} autoFocus={autoFocus} />;
-
-    case "paragraph":
-      return <ParagraphBlock block={block} onChange={onChange} onDelete={onDelete} autoFocus={autoFocus} />;
-
-    case "bullet":
-      return <BulletBlock block={block} onChange={onChange} onDelete={onDelete} autoFocus={autoFocus} />;
-
-    case "code":
-      return <CodeBlock block={block} onChange={onChange} onDelete={onDelete} autoFocus={autoFocus} />;
-
-    default:
-      return null;
+  if (block.type in TEXT_BLOCK_VARIANTS) {
+    return <BaseBlock 
+      {...props} 
+      variant={
+        TEXT_BLOCK_VARIANTS[
+          block.type as keyof typeof TEXT_BLOCK_VARIANTS
+        ]
+      } 
+    />;
   }
+
+  const SpecializedBlock = SPECIALIZED_BLOCKS[
+    block.type as keyof typeof SPECIALIZED_BLOCKS
+  ];
+
+  if (SpecializedBlock) {
+    return <SpecializedBlock {...props} />;
+  }
+
+  return <BaseBlock {...props} variant={TEXT_BLOCK_VARIANTS.paragraph} />;
 }
 
 export default BlockRenderer;
