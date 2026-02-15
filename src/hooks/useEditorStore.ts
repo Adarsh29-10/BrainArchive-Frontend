@@ -22,20 +22,30 @@ export const useEditorStore = (notebookId: string | undefined) => {
         
     }, [data]);
    
-    const addBlock = (type : BlockType ) => {
+    const addBlock = (type: BlockType) => {
         const id = crypto.randomUUID();
 
-        setBlocks(prev => [
-            ...prev,
-            {
+        setBlocks(prev => {
+            const index = prev.findIndex(b => b._id === focusedBlockId);
+
+            const newBlock = {
                 _id: id,
-                type: type,
-                content: '',
-            },
-        ]);
+                type,
+                content: "",
+            };
+
+            if (index === -1) {
+                return [...prev, newBlock];
+            }
+
+            const newBlocks = [...prev];
+            newBlocks.splice(index + 1, 0, newBlock);
+            return newBlocks;
+        });
 
         setFocusedBlockId(id);
     };
+
 
     const updateBlock = (id: string, value: string) => {
         setBlocks(prev =>
@@ -53,6 +63,26 @@ export const useEditorStore = (notebookId: string | undefined) => {
         )
     }
 
+    const moveBlockFocus = (currentId: string | undefined, direction: "up" | "down") => {
+        const index = blocks.findIndex(b => b._id === currentId)
+
+        if(index === -1) return;
+
+        if(direction == "up" && index > 0) {
+            const prevBlock = blocks[index - 1]._id
+            if(prevBlock){
+                setFocusedBlockId(prevBlock)
+            }
+        }
+
+        if(direction == "down" && index < blocks.length - 1) {
+            const nextBlock = blocks[index + 1]._id
+            if (nextBlock){
+                setFocusedBlockId(nextBlock)
+            }
+        }
+    }
+
     return {
         blocks,
         setBlocks,
@@ -62,6 +92,7 @@ export const useEditorStore = (notebookId: string | undefined) => {
         focusedBlockId,
         setFocusedBlockId,
         isError,
-        isPending
+        isPending,
+        moveBlockFocus
     }
 }
