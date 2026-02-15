@@ -1,4 +1,4 @@
-import { Code2, FileText, Heading, Heading1, Heading2, List } from "lucide-react";
+import { AlignVerticalJustifyCenterIcon, Code2, FileText, Heading, Heading1, Heading2, List } from "lucide-react";
 
 export const SIDEBAR_SECTIONS = [
     {
@@ -27,4 +27,10 @@ export const SIDEBAR_SECTIONS = [
             { type: 'code', label: 'Code Block', Icon: Code2 },
         ] 
     },
+    {
+        title: 'Divider',
+        blocks: [
+            { type: 'divider', label: 'Divider', Icon: AlignVerticalJustifyCenterIcon }
+        ]
+    }
 ]
