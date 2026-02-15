@@ -1,4 +1,5 @@
-import { AlignVerticalJustifyCenterIcon, Code2, FileText, Heading, Heading1, Heading2, List } from "lucide-react";
+import { AlignVerticalJustifyCenterIcon, Code2, Heading, Heading1, Heading2, List } from "lucide-react";
+import {P1Icon, PIcon} from './icons/Icons'
 
 export const SIDEBAR_SECTIONS = [
     {
@@ -12,7 +13,8 @@ export const SIDEBAR_SECTIONS = [
     {
         title: 'Content',
         blocks: [
-            { type: 'paragraph', label: 'Paragraph', Icon: FileText },
+            { type: 'paragraph', label: 'Paragraph', Icon: PIcon },
+            { type: 'paragraph1', label: 'Paragraph1', Icon: P1Icon },
         ] 
     },
     {

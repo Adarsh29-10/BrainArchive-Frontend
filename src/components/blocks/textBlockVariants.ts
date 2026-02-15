@@ -33,4 +33,10 @@ export const TEXT_BLOCK_VARIANTS = {
     textareaClassName: `${BASE_TEXTAREA} text-base sm:text-lg leading-relaxed mt-1 pl-2`,
     placeholder: 'Write something...',
   },
+
+  paragraph1: {
+    containerClassName: 'relative -mb-2 group select-text',
+    textareaClassName: `${BASE_TEXTAREA} text-lg sm:text-xl leading-relaxed mt-1 pl-2`,
+    placeholder: 'Write something...',
+  },
 };
