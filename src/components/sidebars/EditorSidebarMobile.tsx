@@ -16,7 +16,7 @@ export const EditorSidebarMobile = ({ addBlock, handleSaveBlocks, isSaving, bloc
   return (
     <>
       {/* Minimal Bottom Toolbar */}
-      <div className="fixed top-15 left-0 right-0 z-40 bg-zinc-900 border-y border-zinc-500 py-2">
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-zinc-900 border-y border-zinc-500 py-2">
         <div className='flex items-center justify-between pl-2 pr-4'>
           <div className="flex items-center justify-start overflow-x-auto scrollbar-hide">
             {SIDEBAR_SECTIONS.map((section, index) => (
@@ -53,7 +53,7 @@ export const EditorSidebarMobile = ({ addBlock, handleSaveBlocks, isSaving, bloc
         <div className="fixed inset-0 z-50 pointer-events-none">
           
           {/* Blocks panel on right side */}
-          <div className="fixed top-16 w-full py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto ">
+          <div className="fixed bottom-12 w-full py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto ">
             
             {/* Close button */}
             <div className="flex justify-end p-2 border-b border-zinc-800">
