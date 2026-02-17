@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SIDEBAR_SECTIONS } from './SidebarPalette';
 import type { BlockType } from '../../types/block';
 import { X } from 'lucide-react';
@@ -9,11 +9,37 @@ type Props = {
 
 export const EditorSidebarMobile = ({ addBlock }: Props) => {
   const [activeSection, setActiveSection] = useState<number | null>(null);
- 
+  const [keyboardInset, setKeyboardInset] = useState(0);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.visualViewport) return;
+
+    const viewport = window.visualViewport;
+
+    const updateKeyboardInset = () => {
+      const inset = Math.max(0, window.innerHeight - (viewport.height + viewport.offsetTop));
+      setKeyboardInset(inset);
+    };
+
+    updateKeyboardInset();
+    viewport.addEventListener('resize', updateKeyboardInset);
+    viewport.addEventListener('scroll', updateKeyboardInset);
+    window.addEventListener('resize', updateKeyboardInset);
+
+    return () => {
+      viewport.removeEventListener('resize', updateKeyboardInset);
+      viewport.removeEventListener('scroll', updateKeyboardInset);
+      window.removeEventListener('resize', updateKeyboardInset);
+    };
+  }, []);
+
   return (
     <>
-      {/* Minimal Bottom Toolbar */}
-      <div className="absolute top-0 left-0 right-0 z-40 bg-zinc-900 border-y border-zinc-500 py-2">
+      {/* Mobile toolbar anchored above keyboard */}
+      <div
+        className="fixed left-0 right-0 z-40 bg-zinc-900 border-y border-zinc-500 py-2"
+        style={{ bottom: `calc(${keyboardInset}px + env(safe-area-inset-bottom, 0px))` }}
+      >
         <div className='flex items-center justify-between pl-2 pr-4'>
           <div className="flex items-center justify-start overflow-x-auto scrollbar-hide">
             {SIDEBAR_SECTIONS.map((section, index) => (
@@ -37,8 +63,11 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
       {activeSection !== null && (
         <div className="fixed inset-0 z-50 pointer-events-none">
           
-          {/* Blocks panel on right side */}
-          <div className="fixed top-16 w-full py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto ">
+          {/* Blocks panel floating above the toolbar */}
+          <div
+            className="fixed left-0 right-0 py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto"
+            style={{ bottom: `calc(${keyboardInset + 56}px + env(safe-area-inset-bottom, 0px))` }}
+          >
             
             {/* Close button */}
             <div className="flex justify-end p-2 border-b border-zinc-800">
