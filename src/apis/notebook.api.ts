@@ -41,8 +41,31 @@ export const getNotebookById = async (notebookId: string | undefined) => {
     return res.data.data;
 }
 
+export const addNotebookBlock = async (data: {
+    notebookId: string | undefined;
+    _id: string;
+    type: string;
+    prevBlockId: string;
+}) => {
+    const {notebookId} = data;
+
+    const res = await api.post(`/notebooks/${notebookId}/block`, data);
+    return res.data.data;
+}
+
+export const deleteNotebookBlock = async (data: {
+    notebookId:string | undefined;
+    _id: string;
+}) => {
+    const { notebookId, _id } = data;
+
+    const res = await api.delete(`/notebooks/${notebookId}/block/${_id}`);
+
+    return res.data.data;
+}
+
 export const updateNotebookBlock = async (params: {
-  notebookId: string;
+  notebookId: string | undefined;
   blocks: Block[];
 }) => {
   const { notebookId, blocks } = params;
