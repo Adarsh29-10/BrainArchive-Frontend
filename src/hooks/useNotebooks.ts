@@ -5,7 +5,9 @@ import {
     updateNotebook, 
     deleteNotebook,
     getNotebookById,
-    updateNotebookBlock
+    updateNotebookBlock,
+    addNotebookBlock,
+    deleteNotebookBlock
 } from "../apis/notebook.api";
 
 
@@ -60,6 +62,27 @@ export const useGetNotebookById = (notebookId: string | undefined) => {
     })
 }
 
+export const useAddNotebookBlock = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: addNotebookBlock,
+        onSuccess: ()=> {
+            queryClient.invalidateQueries({ queryKey: ["notebooks"] });
+        },
+    });
+}
+
+export const useDeleteNotebookBlock = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: deleteNotebookBlock,
+        onSuccess: ()=> {
+            queryClient.invalidateQueries({ queryKey: ["notebooks"] });
+        },
+    })
+}
 
 export const useUpdateNotebookBlock = () => {
     const queryClient = useQueryClient();
