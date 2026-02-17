@@ -16,7 +16,7 @@ function AddNotebookButton({ onClick }: AddNotebookButtonProps) {
             className="group relative w-full sm:w-auto px-3 py-3 rounded-lg font-semibold text-white transition-all duration-300 overflow-hidden"
             aria-label="Add a new notebook"
         >
-            <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-pink-500 opacity-100 group-hover:opacity-90 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-green-700 opacity-100 group-hover:opacity-90 transition-opacity duration-300" />
             
             <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-500 ${isHovered ? 'animate-pulse' : ''}`} />
 
