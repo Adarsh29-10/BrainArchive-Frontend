@@ -1,13 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AddNotebookButton from '../components/buttons/AddNotebookButton';
 import AddNotebookModal from '../components/modals/AddNotebookModal';
 import NotebookGrid from '../components/grids/NotebookGrid';
 import AiSummaryButton from '../components/buttons/AiSummaryButton';
 import ComingSoonModal from '../components/modals/ComingSoonModal';
+import PublicNotebooksButton from '../components/buttons/PublicNotebooksButton';
 
  function Dashboard() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isComingSoonModalOpen, setIsComingSoonModalOpen] = useState(false);
+    const navigate = useNavigate();
     
 
     return (
@@ -19,6 +22,9 @@ import ComingSoonModal from '../components/modals/ComingSoonModal';
                     {/* Add Button Section */}
                     <div className="mt-2 mb-10">
                         <AddNotebookButton onClick={() => setIsModalOpen(true)} />
+                    </div>
+                    <div className="mt-2 mb-10">
+                        <PublicNotebooksButton onClick={() => navigate('/notebooks')} />
                     </div>
                     <div className="mt-2 mb-10">
                         <AiSummaryButton onClick={() => setIsComingSoonModalOpen(true)} />
