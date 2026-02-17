@@ -1,6 +1,6 @@
 import type { Block, BlockType } from "../types/block";
-import {useState, useEffect } from 'react'
-import { useAddNotebookBlock, useDeleteNotebookBlock, useGetNotebookById } from "./useNotebooks";
+import {useState, useEffect, useRef, useCallback } from 'react'
+import { useAddNotebookBlock, useDeleteNotebookBlock, useGetNotebookById, useUpdateNotebookBlockContent } from "./useNotebooks";
 
 export const useEditorStore = (notebookId: string | undefined) => {
     const [blocks, setBlocks] = useState<Block[]>([]);
@@ -9,7 +9,11 @@ export const useEditorStore = (notebookId: string | undefined) => {
   
     const addBlockMutation = useAddNotebookBlock();
     const deleteBlockMutation = useDeleteNotebookBlock();
-
+    const updateBlockMutation = useUpdateNotebookBlockContent();
+    
+    const debounceTimerRef = useRef<
+      Record<string, ReturnType<typeof setTimeout>>
+    >({});
   
     useEffect(() => {
       if (!data?.blocks) return;
@@ -18,6 +22,13 @@ export const useEditorStore = (notebookId: string | undefined) => {
           setBlocks(data.blocks);
       });
     }, [data]);
+
+  
+    useEffect(() => {
+        return () => {
+          Object.values(debounceTimerRef.current).forEach(clearTimeout);   
+        };
+    }, []);
 
   
     const addBlock = async (type: BlockType) => {
@@ -58,17 +69,6 @@ export const useEditorStore = (notebookId: string | undefined) => {
       }
     };
 
-   
-    const updateBlock = (id: string, value: string) => {
-        setBlocks(prev =>
-        prev.map(block =>
-            block._id === id
-            ? { ...block, content: value }
-            : block
-        )
-        );
-    };
-
     const deleteBlock = async (id:string) => {
         setBlocks(prev => 
         prev.filter(block => block._id!==id)
@@ -83,6 +83,34 @@ export const useEditorStore = (notebookId: string | undefined) => {
           console.error("Failed to delete block", err);
         }
     }
+
+    const updateBlock = useCallback((id: string, value: string) => {
+      setBlocks(prev =>
+        prev.map(block =>
+            block._id === id
+            ? { ...block, content: value }
+            : block
+        )
+      );
+
+      if (debounceTimerRef.current[id]) {
+        clearTimeout(debounceTimerRef.current[id]);
+      }
+
+      debounceTimerRef.current[id] = setTimeout(async () => {
+        try {
+          if (!notebookId) return;
+
+          await updateBlockMutation.mutateAsync({
+              notebookId,
+              _id: id,
+              content: value,
+          });
+        } catch (err) {
+          console.error("Failed to update block content", err);
+        }
+      }, 800); 
+    }, [notebookId, updateBlockMutation]);
 
     const moveBlockFocus = (currentId: string | undefined, direction: "up" | "down") => {
         const index = blocks.findIndex(b => b._id === currentId)
