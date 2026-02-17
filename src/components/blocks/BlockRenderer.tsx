@@ -12,6 +12,7 @@ interface BlockRendererProps {
   autoFocus: string | null;
   setFocusedBlockId: (id: string | null) => void;
   moveBlockFocus: (currentId: string | undefined, direction: "up" | "down") => void;
+  readOnly?: boolean;
 }
 
 const SPECIALIZED_BLOCKS = {
