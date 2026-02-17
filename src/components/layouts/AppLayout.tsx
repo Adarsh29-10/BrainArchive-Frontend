@@ -8,7 +8,7 @@ function AppLayout() {
         <Navbar />
         <div className="flex-1 min-h-0 flex overflow-hidden">
           <AppPrimaryNav />
-          <div className="flex-1 min-h-0 overflow-hidden pb-16 md:pb-0">
+          <div className="flex-1 min-h-0 overflow-hidden pb-14 md:pb-0">
             <Outlet />
           </div>
         </div>
