@@ -7,7 +7,7 @@ function PublicNotebooks() {
   const navigate = useNavigate();
   const { data, isLoading, isError, error } = usePublicNotebooks();
 
-  if (isLoading) return <LoadingState message="Loading public notebooks..." />;
+  if (isLoading) return <LoadingState message="Loading public notebooks..." fullScreen={true} />;
   if (isError) return <ErrorState message={error?.message || 'Failed to load public notebooks'} />;
 
   if (!data || data.length === 0) {
