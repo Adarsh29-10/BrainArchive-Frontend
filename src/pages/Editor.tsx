@@ -29,7 +29,7 @@ function Editor() {
         </div>
 
         {/* Main editor content  */}
-        <main className="flex-1 min-h-0 pl-5 pr-2 sm:px-6 py-3 overflow-y-auto pb-20 scrollbar-hide">
+        <main className="flex-1 min-h-0 pl-5 pr-2 sm:px-6 py-3 overflow-y-auto pb-20 scrollbar-hide flex flex-col">
 
           {/* Header */}
           <div className="mt-2 flex justify-between items-center">
@@ -45,19 +45,20 @@ function Editor() {
 
           </div>
             
-
-          {/* Blocks */}
-          {blocks.map(block => (
-            <BlockRenderer
-              key={block._id}
-              block={block}
-              onChange={updateBlock}
-              onDelete={deleteBlock}
-              autoFocus={focusedBlockId}
-              setFocusedBlockId={setFocusedBlockId}
-              moveBlockFocus={moveBlockFocus}
-            />
-          ))}
+          <div className="flex-1">
+            {/* Blocks */}
+            {blocks.map(block => (
+              <BlockRenderer
+                key={block._id}
+                block={block}
+                onChange={updateBlock}
+                onDelete={deleteBlock}
+                autoFocus={focusedBlockId}
+                setFocusedBlockId={setFocusedBlockId}
+                moveBlockFocus={moveBlockFocus}
+              />
+            ))}
+          </div>    
         </main>
 
       </div>
