@@ -5,7 +5,7 @@ interface LoaderProps {
   fullScreen?: boolean;
 }
 
-export function LoadingState({ message = 'Loading...', fullScreen = true }: LoaderProps) {
+export function LoadingState({ message = 'Loading...', fullScreen = false }: LoaderProps) {
   const baseClasses = fullScreen 
     ? 'flex items-center justify-center gap-3 w-full min-h-screen'
     : 'flex items-center justify-center gap-3 w-full py-8';
