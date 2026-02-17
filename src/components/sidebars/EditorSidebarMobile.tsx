@@ -12,8 +12,8 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
  
   return (
     <>
-      {/* Minimal Bottom Toolbar - stays above keyboard */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-zinc-900 border-y border-zinc-500 py-2" style={{ position: 'fixed', bottom: 0 }}>
+      {/* Minimal Bottom Toolbar */}
+      <div className="absolute top-0 left-0 right-0 z-40 bg-zinc-900 border-y border-zinc-500 py-2">
         <div className='flex items-center justify-between pl-2 pr-4'>
           <div className="flex items-center justify-start overflow-x-auto scrollbar-hide">
             {SIDEBAR_SECTIONS.map((section, index) => (
@@ -37,11 +37,11 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
       {activeSection !== null && (
         <div className="fixed inset-0 z-50 pointer-events-none">
           
-          {/* Blocks panel on right side - stays above keyboard */}
-          <div className="fixed w-full py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto overflow-y-auto" style={{ bottom: '3rem', maxHeight: '50vh' }}>
+          {/* Blocks panel on right side */}
+          <div className="fixed top-16 w-full py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto ">
             
             {/* Close button */}
-            <div className="flex justify-end p-2 border-b border-zinc-800 w-full">
+            <div className="flex justify-end p-2 border-b border-zinc-800">
               <button
                 onClick={() => setActiveSection(null)}
                 className="p-1 text-zinc-400 hover:text-zinc-100"
@@ -52,7 +52,7 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
 
             {/* Icons grid */}
             
-              <div className="flex gap-3 px-2 pb-2">
+              <div className="flex gap-3">
                 {SIDEBAR_SECTIONS[activeSection].blocks.map((block) => (
                   <button
                     key={block.label}
@@ -60,7 +60,7 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
                       addBlock(block.type as BlockType);
                       setActiveSection(null);
                     }}
-                    className="w-16 h-16 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors flex-shrink-0"
+                    className="w-full aspect-square px-1 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
                     title={block.label}
                   >
                     <block.Icon size={24} className="text-white" />
