@@ -1,7 +1,5 @@
 import { api } from "./axios.api";
 import type { Notebook } from "../types/notebook";
-import type { Block } from "../types/block";
-
 
 export const getNotebooks = async (): Promise<Notebook[]> => {
     const res = await api.get('/notebooks');
@@ -64,15 +62,14 @@ export const deleteNotebookBlock = async (data: {
     return res.data.data;
 }
 
-export const updateNotebookBlock = async (params: {
+export const updateNotebookBlockContent = async (data: {
   notebookId: string | undefined;
-  blocks: Block[];
+  _id: string; 
+  content: string;
 }) => {
-  const { notebookId, blocks } = params;
+  const { notebookId, ...payload } = data;
 
-  const res = await api.patch(`/notebooks/${notebookId}/blocks`, {
-    blocks,
-  });
+  const res = await api.patch(`/notebooks/${notebookId}/block`, payload);
 
   return res.data.data;
 };
