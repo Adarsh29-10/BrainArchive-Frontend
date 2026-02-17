@@ -11,9 +11,10 @@ interface BulletBlockProps {
   autoFocus: string | null;
   setFocusedBlockId: (id: string | null) => void;
   moveBlockFocus: (currentId: string | undefined, direction: "up" | "down") => void;
+  readOnly?: boolean;
 }
 
-function BulletBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, moveBlockFocus }: BulletBlockProps) {
+function BulletBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, moveBlockFocus, readOnly = false }: BulletBlockProps) {
   const lines = block.content.split("\n");
   const textareaRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
   const [focusIndex, setFocusIndex] = useState<number | null>(null);
@@ -66,9 +67,12 @@ function BulletBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, 
               }}
               rows={1}
               value={line}
+              readOnly={readOnly}
               placeholder="Bullet point..."
               className="flex-1 resize-none outline-none pl-2 pt-2 pb-1 pr-6 overflow-hidden bg-zinc-950 text-white select-text"
               onChange={e => {
+                if (readOnly) return;
+
                 const newLines = [...lines];
                 newLines[index] = e.target.value;
                 if (block._id) {
@@ -77,6 +81,8 @@ function BulletBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, 
               }}
 
               onKeyDown={e => {
+                if (readOnly) return;
+
                 const el = e.currentTarget;
                 const isAtStart = el.selectionStart === 0;
                 const isAtEnd = el.selectionStart === el.value.length
@@ -131,7 +137,7 @@ function BulletBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, 
               
             />
 
-            {lines.length > 1 && (
+            {!readOnly && lines.length > 1 && (
               <button
                 onClick={() => {
                   const newLines = lines.filter((_, i) => i !== index);
@@ -148,16 +154,18 @@ function BulletBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, 
         ))}
       </div>
 
-      <button
-        onClick={() => {
-          if (block._id) {
-            onDelete?.(block._id);
-          }
-        }}
-        className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 text-red-600 hover:bg-red-100 rounded-lg"
-      >
-        <X size={20} />
-      </button>
+      {!readOnly && (
+        <button
+          onClick={() => {
+            if (block._id) {
+              onDelete?.(block._id);
+            }
+          }}
+          className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 text-red-600 hover:bg-red-100 rounded-lg"
+        >
+          <X size={20} />
+        </button>
+      )}
     </div>
   );
 }

@@ -9,6 +9,7 @@ export interface TextBlockProps {
   autoFocus: string | null;
   setFocusedBlockId: (id: string | null) => void;
   moveBlockFocus: (currentId: string | undefined, direction: "up" | "down") => void;
+  readOnly?: boolean;
 }
 
 export interface TextBlockVariant {
@@ -22,7 +23,7 @@ interface BaseBlockProps extends TextBlockProps {
 }
 
 
-function BaseBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, moveBlockFocus, variant }: BaseBlockProps) {
+function BaseBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, moveBlockFocus, variant, readOnly = false }: BaseBlockProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const maxHeight = 300;
 
@@ -60,7 +61,10 @@ function BaseBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, mo
         className={variant.textareaClassName}
         placeholder={variant.placeholder}
         value={block.content}
+        readOnly={readOnly}
         onChange={(e) => {
+          if (readOnly) return;
+
           if (block._id) {
             onChange(block._id, e.target.value);
           }
@@ -69,6 +73,8 @@ function BaseBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, mo
           e.target.style.height = `${Math.min(e.target.scrollHeight, maxHeight)}px`;
         }}
         onKeyDown={(e)=>{
+          if (readOnly) return;
+
           const el = e.currentTarget;
 
           const isAtStart = el.selectionStart === 0;
@@ -91,17 +97,19 @@ function BaseBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, mo
         }}
       />
 
-      <button
-        onClick={() => {
-          if (block._id) {
-            onDelete?.(block._id);
-          }
-        }}
-        className='absolute right-0 bottom-3 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95'
-        aria-label={`Delete ${block.type} block`}
-      >
-        <X size={20} />
-      </button>
+      {!readOnly && (
+        <button
+          onClick={() => {
+            if (block._id) {
+              onDelete?.(block._id);
+            }
+          }}
+          className='absolute right-0 bottom-3 opacity-0 group-hover:opacity-100 rounded-lg hover:bg-red-100 text-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 active:scale-95'
+          aria-label={`Delete ${block.type} block`}
+        >
+          <X size={20} />
+        </button>
+      )}
     </div>
   );
 }

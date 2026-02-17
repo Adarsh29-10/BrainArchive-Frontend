@@ -12,6 +12,7 @@ interface CodeBlockProps {
   onDelete?: (id: string) => void;
   autoFocus: string | null;
   setFocusedBlockId: (id: string | null) => void;
+  readOnly?: boolean;
 }
 
 const LANGUAGES = [
@@ -26,7 +27,7 @@ const LANGUAGES = [
   { label: "CSS", value: "css" },
 ];
 
-function CodeBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId }: CodeBlockProps) {
+function CodeBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, readOnly = false }: CodeBlockProps) {
   const editorRef = useRef<{ focus: () => void } | null>(null);
 
   // Local state but synced with block.language
@@ -61,6 +62,7 @@ function CodeBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId }: 
         <div className="bg-zinc-800 rounded-t-lg px-4 py-2 flex items-center justify-between">
           <select
             value={selectedLang}
+            disabled={readOnly}
             onChange={(e) => {
               const lang = e.target.value;
               setSelectedLang(lang);                     // update UI instantly
@@ -101,22 +103,25 @@ function CodeBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId }: 
             fontSize,
             lineHeight,
             padding: { top: 12, bottom: 12 },
+            readOnly,
           }}
         />
       </div>
 
       {/* Delete button */}
-      <button
-        onClick={() => {
-          if (block._id) {
-            onDelete?.(block._id);
-          }
-        }}
-        className="absolute top-2 right-6 opacity-0 group-hover:opacity-100 p-2 text-red-600 hover:scale-110 hover:text-red-800 rounded-lg transition-all z-10"
-        aria-label="Delete code block"
-      >
-        <X size={20} />
-      </button>
+      {!readOnly && (
+        <button
+          onClick={() => {
+            if (block._id) {
+              onDelete?.(block._id);
+            }
+          }}
+          className="absolute top-2 right-6 opacity-0 group-hover:opacity-100 p-2 text-red-600 hover:scale-110 hover:text-red-800 rounded-lg transition-all z-10"
+          aria-label="Delete code block"
+        >
+          <X size={20} />
+        </button>
+      )}
     </div>
   );
 }
