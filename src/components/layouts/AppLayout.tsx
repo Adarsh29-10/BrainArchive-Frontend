@@ -5,7 +5,7 @@ function AppLayout() {
   return (
     <div className="h-dvh flex flex-col overflow-hidden">
         <Navbar />
-        <div className="flex-1 overflow-hidden"><Outlet /></div>
+        <div className="flex-1 min-h-0 overflow-hidden"><Outlet /></div>
         
     </div>
   )

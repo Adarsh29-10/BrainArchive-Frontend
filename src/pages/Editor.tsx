@@ -14,7 +14,7 @@ function Editor() {
   
   
     return (
-      <div className="h-full flex overflow-hidden bg-zinc-950">
+      <div className="h-full flex min-h-0 overflow-hidden bg-zinc-950">
 
         
         <div className="block sm:hidden">
@@ -29,7 +29,7 @@ function Editor() {
         </div>
 
         {/* Main editor content  */}
-        <main className="flex-1 pl-5 pr-2 sm:px-6 py-3 overflow-y-auto pb-20 scrollbar-hide">
+        <main className="flex-1 min-h-0 pl-5 pr-2 sm:px-6 py-3 overflow-y-auto pb-20 scrollbar-hide">
 
           {/* Header */}
           <div className="mt-2 flex justify-between items-center">
