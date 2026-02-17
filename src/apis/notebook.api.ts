@@ -6,6 +6,11 @@ export const getNotebooks = async (): Promise<Notebook[]> => {
     return res.data.data;
 }
 
+export const getPublicNotebooks = async (): Promise<Notebook[]> => {
+    const res = await api.get('/public/notebooks');
+    return res.data.data;
+}
+
 export const createNotebook = async (data: {
     title: string;
     description?: string;
