@@ -66,7 +66,7 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
           {/* Blocks panel floating above the toolbar */}
           <div
             className="fixed left-0 right-0 py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto"
-            style={{ bottom: `calc(${keyboardInset + 56}px + env(safe-area-inset-bottom, 0px))` }}
+            style={{ bottom: `calc(${keyboardInset + 50}px + env(safe-area-inset-bottom, 0px))` }}
           >
             
             {/* Close button */}
