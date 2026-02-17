@@ -1,16 +1,13 @@
 import { useState } from 'react';
 import { SIDEBAR_SECTIONS } from './SidebarPalette';
-import type { Block, BlockType } from '../../types/block';
+import type { BlockType } from '../../types/block';
 import { X } from 'lucide-react';
 
 type Props = {
   addBlock: (type: BlockType) => void;
-  handleSaveBlocks: () => void;
-  isSaving: boolean;
-  blocks: Block[]
 };
 
-export const EditorSidebarMobile = ({ addBlock, handleSaveBlocks, isSaving, blocks }: Props) => {
+export const EditorSidebarMobile = ({ addBlock }: Props) => {
   const [activeSection, setActiveSection] = useState<number | null>(null);
  
   return (
@@ -33,18 +30,6 @@ export const EditorSidebarMobile = ({ addBlock, handleSaveBlocks, isSaving, bloc
               </button>
             ))}
           </div>
-
-          <button
-            onClick={handleSaveBlocks}
-            disabled={isSaving || blocks.length === 0}
-            className={`px-4 py-1 rounded-lg font-semibold
-                ${isSaving || blocks.length === 0
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-500 text-white"
-                }`}
-          >
-            {isSaving ? "Saving..." : "Save"}
-          </button>
         </div>
       </div>
 
