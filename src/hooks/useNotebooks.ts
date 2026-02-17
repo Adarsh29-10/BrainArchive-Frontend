@@ -5,9 +5,9 @@ import {
     updateNotebook, 
     deleteNotebook,
     getNotebookById,
-    updateNotebookBlock,
     addNotebookBlock,
-    deleteNotebookBlock
+    deleteNotebookBlock,
+    updateNotebookBlockContent
 } from "../apis/notebook.api";
 
 
@@ -84,11 +84,11 @@ export const useDeleteNotebookBlock = () => {
     })
 }
 
-export const useUpdateNotebookBlock = () => {
+export const useUpdateNotebookBlockContent = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: updateNotebookBlock,
+        mutationFn: updateNotebookBlockContent,
 
         retry: 3,
         retryDelay:1500,
