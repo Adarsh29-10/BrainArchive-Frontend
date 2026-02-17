@@ -68,7 +68,7 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
           <h2 className="text-xl sm:text-2xl font-bold text-white">Create Notebook</h2>
           <button
             onClick={handleClose}
-            className="p-2 rounded-lg hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-600"
+            className="p-2 rounded-lg hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-600"
             aria-label="Close modal"
           >
             <X size={24} className="text-zinc-400 hover:text-zinc-200" />
@@ -93,7 +93,7 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
                 }
               }}
               placeholder="e.g., Python Basics"
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50 bg-zinc-900 text-white placeholder-zinc-500 ${
+              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-600/50 bg-zinc-900 text-white placeholder-zinc-500 ${
                 errors.title
                   ? 'border-red-600 bg-red-950/20'
                   : 'border-zinc-700 hover:border-zinc-600'
@@ -120,7 +120,7 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
               }}
               placeholder="Add a description for your notebook..."
               rows={2}
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50 resize-none bg-zinc-900 text-white placeholder-zinc-500 ${
+              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-600/50 resize-none bg-zinc-900 text-white placeholder-zinc-500 ${
                 errors.description
                   ? 'border-red-600 bg-red-950/20'
                   : 'border-zinc-700 hover:border-zinc-600'
@@ -187,7 +187,7 @@ function AddNotebookModal({ isOpen, onClose }: AddNotebookModalProps) {
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-pink-600 to-pink-500 text-white font-semibold hover:from-pink-500 hover:to-pink-400 hover:scale-105 transition-all duration-300 active:scale-95"
+              className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold hover:from-green-500 hover:to-green-400 hover:scale-105 transition-all duration-300 active:scale-95"
             >
               Create
             </button>

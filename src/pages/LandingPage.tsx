@@ -34,15 +34,15 @@ function LandingPage() {
 
       {/* Hero Section */}
       <div className="flex items-center justify-center min-h-screen bg-zinc-950 px-4 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-pink-600/20 rounded-full -mr-48 -mt-48 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-pink-500/10 rounded-full -ml-36 -mb-36 blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-green-600/20 rounded-full -mr-48 -mt-48 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-green-500/10 rounded-full -ml-36 -mb-36 blur-3xl"></div>
         
         <div className="text-center max-w-5xl mx-auto relative z-10">
           {/* Headline */}
           <h1 className="text-6xl sm:text-7xl font-black text-white mb-1 leading-tight drop-shadow-lg px-6 py-3 rounded-lg">
             Learn Smarter,
             <br />
-            <span className="bg-gradient-to-r from-pink-600 to-pink-400 bg-clip-text text-transparent">Not Harder</span>
+            <span className="bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">Not Harder</span>
             
           </h1>
 
@@ -69,15 +69,15 @@ function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {
               Items.map((item, index) => (
-                <div key={index} className="group relative p-8 rounded-2xl bg-zinc-800 border-2 border-zinc-700 hover:border-pink-500 hover:shadow-2xl hover:shadow-pink-600/20 transition-all duration-300 transform hover:-translate-y-2">
+                <div key={index} className="group relative p-8 rounded-2xl bg-zinc-800 border-2 border-zinc-700 hover:border-green-500 hover:shadow-2xl hover:shadow-green-600/20 transition-all duration-300 transform hover:-translate-y-2">
                   
                   {/* Icon Container */}
-                  <div className="w-14 h-14 bg-gradient-to-br from-pink-600 to-pink-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-pink-600/50">
+                  <div className="w-14 h-14 bg-gradient-to-br from-green-600 to-green-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-green-600/50">
                     <item.Icon size={28} className="text-white" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-pink-400 transition-colors">
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-green-400 transition-colors">
                     {item.title}
                   </h3>
                   <p className="text-zinc-400 leading-relaxed mb-4">
@@ -94,7 +94,7 @@ function LandingPage() {
       <div className="bg-gradient-to-b from-zinc-900 to-black py-24 px-4 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-pink-600 to-pink-400 bg-clip-text text-transparent mb-1 py-2">
+          <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent mb-1 py-2">
             Start Learning Today
           </h2>
           <p className="text-xl text-zinc-400 mb-4 max-w-2xl mx-auto">

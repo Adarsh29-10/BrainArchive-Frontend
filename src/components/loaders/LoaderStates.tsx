@@ -12,7 +12,7 @@ export function LoadingState({ message = 'Loading...', fullScreen = false }: Loa
 
   return (
     <div className={`${baseClasses} bg-zinc-950 text-white`}>
-      <Loader2 size={24} className="animate-spin text-pink-500 flex-shrink-0" />
+      <Loader2 size={24} className="animate-spin text-green-500 flex-shrink-0" />
       <span className="text-sm font-medium text-zinc-300">{message}</span>
     </div>
   );

@@ -53,10 +53,10 @@ function EditorSidebar({addBlock} : Props) {
                                     <button
                                         key={block.label}
                                         onClick={() => addBlock(block.type as BlockType)}
-                                        className="mx-1 px-3 py-2.5 bg-zinc-800 border-2 border-zinc-700 rounded-lg hover:border-pink-500 hover:bg-pink-950/30 active:scale-95 transition-all duration-200 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-600/30 group"
+                                        className="mx-1 px-3 py-2.5 bg-zinc-800 border-2 border-zinc-700 rounded-lg hover:border-green-500 hover:bg-green-950/30 active:scale-95 transition-all duration-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-600/30 group"
                                         title={`Add ${block.label}`}
                                     >
-                                        <block.Icon size={18} className="text-pink-500 group-hover:text-pink-400 group-hover:scale-110 transition-all" />
+                                        <block.Icon size={18} className="text-green-500 group-hover:text-green-400 group-hover:scale-110 transition-all" />
                                         
                                     </button>
                                 ))}

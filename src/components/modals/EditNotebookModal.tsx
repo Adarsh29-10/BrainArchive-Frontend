@@ -61,7 +61,7 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
           <h2 className="text-xl sm:text-2xl font-bold text-white">Edit Notebook</h2>
           <button 
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-600"
+            className="p-2 rounded-lg hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-600"
           >
             <X size={24} className="text-zinc-400 hover:text-zinc-200" />
           </button>
@@ -79,7 +79,7 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
                 setTitle(e.target.value);
                 if (titleError) setTitleError('');
               }}
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50 bg-zinc-900 text-white placeholder-zinc-500 ${
+              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-600/50 bg-zinc-900 text-white placeholder-zinc-500 ${
                 titleError
                   ? 'border-red-600 bg-red-950/20'
                   : 'border-zinc-700 hover:border-zinc-600'
@@ -97,7 +97,7 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border-2 border-zinc-700 hover:border-zinc-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50 resize-none bg-zinc-900 text-white placeholder-zinc-500"
+              className="w-full px-4 py-3 rounded-lg border-2 border-zinc-700 hover:border-zinc-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-600/50 resize-none bg-zinc-900 text-white placeholder-zinc-500"
               placeholder="Notebook description..."
               rows={2}
             />
@@ -155,7 +155,7 @@ function EditNotebookModal({ notebook, onClose }: EditNotebookModalProps) {
             <button
               type="submit"
               disabled={editNotebookMutation.isPending}
-              className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-pink-600 to-pink-500 text-white font-semibold hover:from-pink-500 hover:to-pink-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-600 disabled:opacity-50 active:scale-95"
+              className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold hover:from-green-500 hover:to-green-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-600 disabled:opacity-50 active:scale-95"
             >
               {editNotebookMutation.isPending ? 'Saving...' : 'Save Changes'}
             </button>
