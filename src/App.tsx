@@ -1,17 +1,17 @@
-import AuthAxiosBridge from "./auth/AuthAxiosBridge"
-import AuthBootstrap from "./auth/AuthBootstrap"
-import AuthRedirectHandler from "./auth/AuthRedirectHandler"
-import ProtectedRoute from "./auth/ProtectedRoute"
-import Dashboard from "./pages/Dashboard"
-import LandingPage from "./pages/LandingPage"
+import AuthAxiosBridge from "./modules/auth/components/AuthAxiosBridge"
+import AuthBootstrap from "./modules/auth/components/AuthBootstrap"
+import AuthRedirectHandler from "./modules/auth/components/AuthRedirectHandler"
+import ProtectedRoute from "./modules/auth/components/ProtectedRoute"
+import Dashboard from "./modules/notebook/pages/Dashboard"
+import LandingPage from "./modules/landing/pages/LandingPage"
 import { Route, Routes } from "react-router-dom"
-import Editor from "./pages/Editor"
-import AppLayout from "./components/layouts/AppLayout"
-import Profile from "./pages/Profile"
-import PublicNotebooks from "./pages/PublicNotebooks"
-import PublicEditor from "./pages/PublicEditor"
-import AiTools from "./pages/AiTools"
-import NavLayout from "./components/layouts/NavLayout"
+import EditorPage from "./modules/editor/pages/EditorPage"
+import AppLayout from "./modules/app-shell/layouts/AppLayout"
+import ProfilePage from "./modules/profile/pages/ProfilePage"
+import PublicNotebooks from "./modules/notebook/pages/PublicNotebooksPage"
+import PublicEditorPage from "./modules/editor/pages/PublicEditorPage"
+import AiTools from "./modules/ai/pages/AiToolsPage"
+import NavLayout from "./modules/app-shell/layouts/NavLayout"
 
 function App() {
   return (
@@ -30,12 +30,12 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/notebooks" element={<PublicNotebooks />} />
             <Route path="/ai" element={<AiTools />} />
-            <Route path="/public/nb/:notebookId" element={<PublicEditor />} />
+            <Route path="/public/nb/:notebookId" element={<PublicEditorPage />} />
           </Route>
 
           <Route element={<NavLayout />}>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/nb/:notebookId" element={<Editor />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/nb/:notebookId" element={<EditorPage />} />
           </Route>
         </Route>
 
