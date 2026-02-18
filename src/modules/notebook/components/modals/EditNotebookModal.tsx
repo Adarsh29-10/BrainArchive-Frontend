@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Globe, Lock, X } from 'lucide-react';
 import { useUpdateNotebook } from '../../hooks/useNotebooks';
-import type { Notebook } from '../../types/notebook';
+import type { Notebook } from '../../types';
 
 interface EditNotebookModalProps {
   notebook: Notebook | null;
