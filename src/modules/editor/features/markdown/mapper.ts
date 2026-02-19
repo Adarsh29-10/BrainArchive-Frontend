@@ -1,4 +1,4 @@
-import type { Root, RootContent, PhrasingContent, Text  } from "mdast";
+import type { Root, RootContent, PhrasingContent, Text, InlineCode } from "mdast";
 import type { Block } from "../../types";
 
 export function mapMarkdownToBlocks(tree: Root): Block[] {
@@ -75,6 +75,10 @@ function extractText(
     return (node as Text).value;
   }
 
+  if (node.type === "inlineCode") {
+    return (node as InlineCode).value;
+  }
+
   if ("children" in node && Array.isArray(node.children)) {
     return node.children
       .map((child) =>
@@ -85,4 +89,5 @@ function extractText(
 
   return "";
 }
+
 
