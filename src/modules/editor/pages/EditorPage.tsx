@@ -25,7 +25,7 @@ function EditorPage() {
         
 
         <div className="hidden sm:block">
-          <EditorSidebar addBlock={addBlock} />
+          <EditorSidebar addBlock={addBlock} notebookId={notebookId!} />
         </div>
 
         {/* Main editor content  */}
