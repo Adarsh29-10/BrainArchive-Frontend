@@ -1,4 +1,5 @@
 import { api } from "../../../shared/api/axios.api";
+import type { Block } from "../types";
 
 export const addNotebookBlock = async (data: {
     notebookId: string | undefined;
@@ -39,3 +40,13 @@ export const getNotebookById = async (notebookId: string | undefined) => {
     const res = await api.get(`/notebooks/${notebookId}`);
     return res.data.data;
 }
+
+export const addNotebookBlockBulkSave = async (data: {
+    notebookId: string | undefined;
+    blocks: Block[];
+}) => {
+    const {notebookId} = data;
+
+    const res = await api.post(`/notebooks/${notebookId}/block/bulk`, data);
+    return res.data.data;
+} 

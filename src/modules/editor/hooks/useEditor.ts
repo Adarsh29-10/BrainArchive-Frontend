@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { addNotebookBlock, deleteNotebookBlock, getNotebookById, updateNotebookBlockContent } from "../api/editor.api";
+import { addNotebookBlock, addNotebookBlockBulkSave, deleteNotebookBlock, getNotebookById, updateNotebookBlockContent } from "../api/editor.api";
 
 export const useAddNotebookBlock = () => {
     const queryClient = useQueryClient();
@@ -47,4 +47,15 @@ export const useGetNotebookById = (notebookId: string | undefined) => {
         queryFn: () =>  getNotebookById(notebookId),
         enabled: !!notebookId
     })
+}
+
+export const useAddNotebookBlockBulkSave = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: addNotebookBlockBulkSave,
+        onSuccess: ()=> {
+            queryClient.invalidateQueries({ queryKey: ["notebooks"] });
+        },
+    });
 }
