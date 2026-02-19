@@ -3,6 +3,7 @@ import { X, Upload, FileText } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import {convertMarkdownToBlocks} from '../index'
 import { useAddNotebookBlockBulkSave } from '../../../hooks/useEditor';
+import type { FileRejection } from 'react-dropzone';
 
 interface ConvertNotesFromModalProps {
   isOpen: boolean;
@@ -25,7 +26,7 @@ function ConvertNotesFromModal({ isOpen, onClose, notebookId }: ConvertNotesFrom
     onClose();
   };
 
-  const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: { errors: { code: string }[] }[]) => {
+  const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
     if (rejectedFiles.length > 0) {
       const hasInvalidType = rejectedFiles.some((file) =>
         file.errors.some((item) => item.code === 'file-invalid-type')
