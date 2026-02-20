@@ -13,11 +13,13 @@ interface ConvertNotesFromModalProps {
 
 function ConvertNotesFromModal({ isOpen, onClose, notebookId }: ConvertNotesFromModalProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [markdownInput, setMarkdownInput] = useState<string>('');
   const [error, setError] = useState<string>('');
   const addBlockMutation = useAddNotebookBlockBulkSave();
 
   const resetState = () => {
     setSelectedFile(null);
+    setMarkdownInput('');
     setError('');
   };
 
@@ -26,7 +28,7 @@ function ConvertNotesFromModal({ isOpen, onClose, notebookId }: ConvertNotesFrom
     onClose();
   };
 
-  const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
+  const onDrop = useCallback(async (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
     if (rejectedFiles.length > 0) {
       const hasInvalidType = rejectedFiles.some((file) =>
         file.errors.some((item) => item.code === 'file-invalid-type')
@@ -38,7 +40,10 @@ function ConvertNotesFromModal({ isOpen, onClose, notebookId }: ConvertNotesFrom
     }
 
     if (acceptedFiles.length > 0) {
-      setSelectedFile(acceptedFiles[0]);
+      const file = acceptedFiles[0];
+      const markdownText = await file.text();
+      setSelectedFile(file);
+      setMarkdownInput(markdownText);
       setError('');
     }
   }, []);
@@ -66,13 +71,12 @@ function ConvertNotesFromModal({ isOpen, onClose, notebookId }: ConvertNotesFrom
   const handleConvert = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!selectedFile) {
-      setError('Please upload a markdown (.md) file.');
+    if (!markdownInput.trim()) {
+      setError('Please upload a markdown (.md) file or paste markdown text.');
       return;
     }
 
-    const markdownText = await selectedFile.text();
-    
+    const markdownText = markdownInput;
     const blocks = convertMarkdownToBlocks(markdownText);
 
     try {
@@ -105,7 +109,7 @@ function ConvertNotesFromModal({ isOpen, onClose, notebookId }: ConvertNotesFrom
           </button>
         </div>
 
-        <form onSubmit={handleConvert} className="p-4 sm:p-6 space-y-5">
+        <form onSubmit={handleConvert} className="p-4 sm:p-6 space-y-3">
           <div>
             <label className="block text-sm font-semibold text-zinc-100 mb-2">
               Markdown File
@@ -131,12 +135,28 @@ function ConvertNotesFromModal({ isOpen, onClose, notebookId }: ConvertNotesFrom
                 <p className="text-sm text-zinc-200 truncate">{selectedFile.name}</p>
               </div>
             )}
-
-            {error && <p className="mt-2 text-sm text-red-400 font-medium">{error}</p>}
-            <p className="mt-2 text-sm text-zinc-400 font-medium">Caution: This process will replace all current notes and add .md file notes.</p>
           </div>
 
-          <div className="flex gap-3 pt-2">
+          <div>
+            <label className="block text-sm font-semibold text-zinc-100 mb-2">
+              Markdown Text
+            </label>
+            <textarea
+              value={markdownInput}
+              onChange={(e) => {
+                setMarkdownInput(e.target.value);
+                setError('');
+              }}
+              placeholder="Paste markdown content here or upload a .md file above"
+              rows={4}
+              className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-green-600"
+            />
+          </div>
+
+          {error && <p className="text-sm text-red-400 font-medium">{error}</p>}
+          <p className="text-xs sm:text-sm text-zinc-400 font-medium">Caution: This process will replace all current notes and add .md file notes.</p>
+
+          <div className="flex gap-3">
             <button
               type="button"
               onClick={handleClose}
