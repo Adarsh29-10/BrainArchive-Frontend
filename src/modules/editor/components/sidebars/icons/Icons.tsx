@@ -9,3 +9,7 @@ export const P1Icon = () => (
 export const DotMD = () => (
   <span className="font-semibold text-green-500 inline-block">.md</span>
 );
+
+export const AI = () => (
+  <span className="font-semibold text-green-500 inline-block">AI</span>
+);
