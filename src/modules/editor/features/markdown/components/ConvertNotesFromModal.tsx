@@ -154,7 +154,7 @@ function ConvertNotesFromModal({ isOpen, onClose, notebookId }: ConvertNotesFrom
           </div>
 
           {error && <p className="text-sm text-red-400 font-medium">{error}</p>}
-          <p className="text-xs sm:text-sm text-zinc-400 font-medium">Caution: This process will replace all current notes and add .md file notes.</p>
+          <p className="text-xs sm:text-sm text-zinc-400 font-medium">Caution: This process will replace all current notes in this notebook.</p>
 
           <div className="flex gap-3">
             <button
