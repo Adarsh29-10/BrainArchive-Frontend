@@ -2,14 +2,18 @@ import { useEffect, useState } from 'react';
 import { SIDEBAR_SECTIONS } from './SidebarPalette';
 import type { BlockType } from '../../types';
 import { X } from 'lucide-react';
+import { DotMD } from './icons/Icons';
+import ConvertNotesFromModal from '../../features/markdown/components/ConvertNotesFromModal';
 
 type Props = {
   addBlock: (type: BlockType) => void;
+  notebookId: string;
 };
 
-export const EditorSidebarMobile = ({ addBlock }: Props) => {
+export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
   const [activeSection, setActiveSection] = useState<number | null>(null);
   const [keyboardInset, setKeyboardInset] = useState(0);
+  const [isMDModalOpen, setIsMDModalOpen] = useState(false)
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.visualViewport) return;
@@ -55,8 +59,19 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
                 {section.title}
               </button>
             ))}
+
+            <div className="pl-4 pt-1 space-y-3 ">
+              <button
+                  onClick={() => setIsMDModalOpen(true)}
+                  className="mx-1 px-3 py-1 sm:py-2.5 bg-zinc-800 border-2 border-zinc-700 rounded-lg hover:border-green-500 hover:bg-green-950/30 active:scale-95 transition-all duration-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-600/30 group"
+                  title={`.md to notes converter`}
+              >
+                  <DotMD />
+              </button>
+            </div> 
           </div>
         </div>
+          
       </div>
 
       {/* Blocks Panel  */}
@@ -80,27 +95,30 @@ export const EditorSidebarMobile = ({ addBlock }: Props) => {
             </div>
 
             {/* Icons grid */}
-            
-              <div className="flex gap-3">
-                {SIDEBAR_SECTIONS[activeSection].blocks.map((block) => (
-                  <button
-                    key={block.label}
-                    onClick={() => {
-                      addBlock(block.type as BlockType);
-                      setActiveSection(null);
-                    }}
-                    className="w-full aspect-square px-1 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
-                    title={block.label}
-                  >
-                    <block.Icon size={24} className="text-white" />
-                  </button>
-                ))}
-
-              </div>
-            
-          </div>
+            <div className="flex gap-3">
+              {SIDEBAR_SECTIONS[activeSection].blocks.map((block) => (
+                <button
+                  key={block.label}
+                  onClick={() => {
+                    addBlock(block.type as BlockType);
+                    setActiveSection(null);
+                  }}
+                  className="w-full aspect-square px-1 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
+                  title={block.label}
+                >
+                  <block.Icon size={24} className="text-white" />
+                </button>
+              ))}
+            </div>
+          </div> 
         </div>
       )}
+
+      <ConvertNotesFromModal
+        isOpen = {isMDModalOpen}
+        onClose={()=> setIsMDModalOpen(false)}
+        notebookId={notebookId}
+      />
     </>
   );
 };

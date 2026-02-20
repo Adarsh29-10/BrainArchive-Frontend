@@ -19,7 +19,8 @@ function EditorPage() {
         
         <div className="block sm:hidden">
           <EditorSidebarMobile 
-            addBlock={addBlock} 
+            addBlock={addBlock}
+            notebookId={notebookId!}
           />
         </div>
         
