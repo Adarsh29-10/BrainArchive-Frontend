@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { addNotebookBlock, addNotebookBlockBulkSave, deleteNotebookBlock, getNotebookById, updateNotebookBlockContent } from "../api/editor.api";
+import { addNotebookBlock, addNotebookBlockBulkSave, deleteNotebookBlock, getNotebookById, getPublicNotebookById, updateNotebookBlockContent } from "../api/editor.api";
 
 export const useAddNotebookBlock = () => {
     const queryClient = useQueryClient();
@@ -45,6 +45,14 @@ export const useGetNotebookById = (notebookId: string | undefined) => {
     return useQuery({
         queryKey: ['notebooks', notebookId],
         queryFn: () =>  getNotebookById(notebookId),
+        enabled: !!notebookId
+    })
+}
+
+export const useGetPublicNotebookById = (notebookId: string | undefined) => {
+    return useQuery({
+        queryKey: ['notebooks', notebookId],
+        queryFn: () =>  getPublicNotebookById(notebookId),
         enabled: !!notebookId
     })
 }

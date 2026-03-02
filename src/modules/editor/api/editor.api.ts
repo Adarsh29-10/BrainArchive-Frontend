@@ -41,6 +41,11 @@ export const getNotebookById = async (notebookId: string | undefined) => {
     return res.data.data;
 }
 
+export const getPublicNotebookById = async (notebookId: string | undefined) => {
+    const res = await api.get(`/notebooks/public/${notebookId}`);
+    return res.data.data;
+}
+
 export const addNotebookBlockBulkSave = async (data: {
     notebookId: string | undefined;
     blocks: Block[];
