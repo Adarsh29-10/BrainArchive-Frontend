@@ -8,7 +8,6 @@ import { Route, Routes } from "react-router-dom"
 import EditorPage from "./modules/editor/pages/EditorPage"
 import AppLayout from "./modules/app-shell/layouts/AppLayout"
 import ProfilePage from "./modules/profile/pages/ProfilePage"
-import PublicProfilePage from "./modules/profile/pages/PublicProfilePage"
 import PublicNotebooks from "./modules/notebook/pages/PublicNotebooksPage"
 import PublicEditorPage from "./modules/editor/pages/PublicEditorPage"
 import AiTools from "./modules/ai/pages/AiToolsPage"
@@ -29,7 +28,7 @@ function App() {
         {/* Public routes */}
         <Route element={<PublicAwareLayout />}>
           <Route path="/notebooks" element={<PublicNotebooks />} />
-          <Route path="/public/profile/:userId" element={<PublicProfilePage />} />
+          {/* <Route path="/public/profile/:userId" element={<PublicProfilePage />} /> */}
           <Route path="/public/nb/:notebookId" element={<PublicEditorPage />} />
         </Route>
 
