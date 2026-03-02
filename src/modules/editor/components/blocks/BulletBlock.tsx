@@ -55,7 +55,7 @@ function BulletBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, 
   }, []);
 
   return (
-    <div className="relative group ml-2 mb-0.5 select-text">
+    <div className="relative group ml-2 mb-2 select-text">
       <div className="rounded-lg">
         {lines.map((line, index) => (
           <div key={index} className="flex items-start gap-2 group/bullet">
@@ -69,7 +69,7 @@ function BulletBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, 
               value={line}
               readOnly={readOnly}
               placeholder="Bullet point..."
-              className="flex-1 resize-none outline-none pl-2 pt-2 pb-1 pr-6 overflow-hidden bg-zinc-950 text-white select-text"
+              className="flex-1 resize-none outline-none text-lg pl-2 pt-1 pb-1 pr-6 overflow-hidden bg-zinc-950 text-white select-text"
               onChange={e => {
                 if (readOnly) return;
 
