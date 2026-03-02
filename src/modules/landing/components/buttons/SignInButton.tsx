@@ -5,7 +5,7 @@ function SignInButton() {
   return (
     <button
         onClick={() => loginWithRedirect()}
-        className="px-6 py-2 rounded-lg bg-gradient-to-r from-green-700 to-green-600 text-white font-bold hover:from-green-500 hover:to-green-400 hover:shadow-lg hover:shadow-green-600/50 transition-all duration-300 transform hover:scale-105"
+        className="inline-flex items-center justify-center rounded-lg border border-emerald-400/70 bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-black transition-all duration-200 hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25 focus:outline-none focus:ring-2 focus:ring-emerald-300/50"
     >
         Sign In
     </button>
