@@ -5,8 +5,10 @@ const API_URL = 'https://brainarchive.onrender.com';
 const FALLBACK_TITLE = 'BrainArchive';
 const FALLBACK_DESC = 'A public notebook on BrainArchive';
 
-const BOT_UA =
-  /whatsapp|twitter|facebook|linkedin|telegram|bot|crawler|slack|discord|skypeuripreview|googlebot|bingbot|yandex/i;
+type NotebookData = {
+  title?: string;
+  description?: string;
+};
 
 function escapeHtml(value: string): string {
   return value
@@ -19,7 +21,7 @@ function escapeHtml(value: string): string {
 
 function clampText(value: string, max = 200): string {
   const trimmed = value.trim();
-  return trimmed.length > max ? `${trimmed.slice(0, max - 1)}…` : trimmed;
+  return trimmed.length > max ? `${trimmed.slice(0, max - 3)}...` : trimmed;
 }
 
 function buildOgHtml(params: { title: string; description: string; canonicalUrl: string }) {
@@ -52,43 +54,57 @@ function buildOgHtml(params: { title: string; description: string; canonicalUrl:
 </html>`;
 }
 
+async function fetchNotebook(id: string): Promise<NotebookData | null> {
+  const candidates = [
+    `${API_URL}/api/notebooks/public/${encodeURIComponent(id)}`,
+    `${API_URL}/notebooks/public/${encodeURIComponent(id)}`,
+    `${API_URL}/api/notebooks/${encodeURIComponent(id)}`,
+    `${API_URL}/notebooks/${encodeURIComponent(id)}`,
+  ];
+
+  for (const endpoint of candidates) {
+    try {
+      const response = await fetch(endpoint, {
+        headers: { accept: 'application/json' },
+        cache: 'no-store',
+      });
+
+      if (!response.ok) continue;
+
+      const payload = await response.json();
+      const notebook = payload?.data ?? payload;
+
+      if (notebook && (notebook.title || notebook.description)) {
+        return notebook as NotebookData;
+      }
+    } catch {
+      // try next endpoint
+    }
+  }
+
+  return null;
+}
+
 export default async function handler(req: Request) {
   const url = new URL(req.url);
   const queryId = url.searchParams.get('id');
   const pathId = url.pathname.split('/').filter(Boolean).at(-1);
   const id = queryId || (pathId && pathId !== 'og' ? pathId : null);
-  const fallbackUrl = id ? `${APP_URL}/public/nb/${encodeURIComponent(id)}` : `${APP_URL}/notebooks`;
+  const canonicalUrl = id ? `${APP_URL}/public/nb/${encodeURIComponent(id)}` : `${APP_URL}/notebooks`;
 
   if (!id) {
-    return Response.redirect(fallbackUrl, 302);
-  }
-
-  const ua = req.headers.get('user-agent') || '';
-  const isBot = BOT_UA.test(ua);
-
-  if (!isBot) {
-    return Response.redirect(fallbackUrl, 302);
+    return Response.redirect(canonicalUrl, 302);
   }
 
   try {
-    const response = await fetch(`${API_URL}/api/notebooks/public/${encodeURIComponent(id)}`, {
-      headers: { accept: 'application/json' },
-      cache: 'no-store',
-    });
-
-    if (!response.ok) {
-      throw new Error(`Notebook fetch failed with status ${response.status}`);
-    }
-
-    const data = await response.json();
-    const notebook = data?.data ?? {};
+    const notebook = await fetchNotebook(id);
     const title = notebook?.title ? `${String(notebook.title)} - BrainArchive` : FALLBACK_TITLE;
     const description = notebook?.description ? String(notebook.description) : FALLBACK_DESC;
 
     const html = buildOgHtml({
       title,
       description,
-      canonicalUrl: fallbackUrl,
+      canonicalUrl,
     });
 
     return new Response(html, {
@@ -96,13 +112,14 @@ export default async function handler(req: Request) {
       headers: {
         'content-type': 'text/html; charset=utf-8',
         'cache-control': 'public, s-maxage=60, stale-while-revalidate=300',
+        'x-og-source': notebook ? 'notebook' : 'fallback',
       },
     });
   } catch {
     const html = buildOgHtml({
       title: FALLBACK_TITLE,
       description: FALLBACK_DESC,
-      canonicalUrl: fallbackUrl,
+      canonicalUrl,
     });
 
     return new Response(html, {
@@ -110,6 +127,7 @@ export default async function handler(req: Request) {
       headers: {
         'content-type': 'text/html; charset=utf-8',
         'cache-control': 'public, s-maxage=60, stale-while-revalidate=300',
+        'x-og-source': 'fallback',
       },
     });
   }
