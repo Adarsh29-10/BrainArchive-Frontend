@@ -21,7 +21,7 @@ function NavbarLandingPage() {
         <div className=" md:flex items-center gap-4">
           {isAuthenticated ? (
             <>
-              <span className="text-black font-medium">{user?.name}</span>
+              <span className="text-zinc-200 font-medium">{user?.name}</span>
               <LogoutButton />
             </>
           ) : (
