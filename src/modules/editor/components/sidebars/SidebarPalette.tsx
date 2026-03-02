@@ -1,4 +1,4 @@
-import { AlignVerticalJustifyCenterIcon, Code2, Heading, Heading1, Heading2, List } from "lucide-react";
+import { AlignVerticalJustifyCenterIcon, Code2, Heading, Heading1, Heading2, List, Quote } from "lucide-react";
 import {P1Icon, PIcon} from './icons/Icons'
 
 export const SIDEBAR_SECTIONS = [
@@ -34,5 +34,11 @@ export const SIDEBAR_SECTIONS = [
         blocks: [
             { type: 'divider', label: 'Divider', Icon: AlignVerticalJustifyCenterIcon }
         ]
-    }
+    },
+    {
+        title: 'Quotes',
+        blocks: [
+            { type: 'quotes', label: 'Quotes', Icon: Quote }
+        ]
+    },
 ]
