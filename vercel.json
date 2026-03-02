@@ -1,6 +1,16 @@
 {
   "rewrites": [
-    { "source": "/share/nb/:id", "destination": "/api/og?id=:id" },
+    {
+      "source": "/public/nb/:id",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(WhatsApp|Twitter|facebook|LinkedIn|Telegram|Slack|Discord|Googlebot|bingbot|Yandex|bot|crawler).*"
+        }
+      ],
+      "destination": "/api/og?id=:id"
+    },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
