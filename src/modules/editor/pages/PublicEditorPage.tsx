@@ -1,29 +1,109 @@
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { CalendarDays, Check, Link2, UserCircle2 } from 'lucide-react';
+import { Link, useParams } from 'react-router-dom';
 import BlockRenderer from '../components/blocks/BlockRenderer';
 import { useGetNotebookById } from '../hooks/useEditor';
 import { NotebookErrorState, NotebookLoadingState } from '../../../shared/ui/LoaderStates';
 import type { Block } from '../types';
 
+type PublicNotebookDetails = {
+  title: string;
+  description?: string;
+  blocks?: Block[];
+  createdAt?: string | Date;
+  userId: {
+    _id: string,
+    name: string,
+    picture: string
+  }
+};
+
 function PublicEditorPage() {
   const { notebookId } = useParams<{ notebookId: string | undefined }>();
+  const [copied, setCopied] = useState(false);
   const { data, isPending, isError } = useGetNotebookById(notebookId);
 
   if (isPending) return <NotebookLoadingState />;
   if (isError || !data) return <NotebookErrorState />;
 
+  const notebook = data as PublicNotebookDetails;
+  const ownerName = notebook.userId?.name?.trim() || 'Unknown author';
+  const ownerAvatar = notebook.userId?.picture || null;
+  // const ownerId = notebook.userId._id;
+
+  const createdAtLabel = (() => {
+    if (!notebook.createdAt) return 'Unknown date';
+    const date = new Date(notebook.createdAt);
+    if (Number.isNaN(date.getTime())) return 'Unknown date';
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  })();
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // fallback
+    }
+  };
+
   return (
-    <div className="h-full min-h-0 overflow-hidden bg-zinc-950">
-      <main className="h-full min-h-0 px-5 sm:px-6 py-4 overflow-y-auto">
+    <div className="relative h-full min-h-0 overflow-hidden bg-zinc-950">
+      <main className="h-full min-h-0 overflow-y-auto px-5 py-4 pb-24 sm:px-6">
         <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-zinc-100">
-            {data.title}
-          </h1>
-          {data.description?.trim() && (
-            <p className="mt-2 text-sm sm:text-base text-zinc-400">{data.description}</p>
+          <div className="flex items-start justify-between gap-3">
+            <h1 className="text-2xl sm:text-3xl font-bold text-zinc-100">
+              {notebook.title}
+            </h1>
+            <button
+              onClick={handleShare}
+              title={copied ? 'Link copied!' : 'Copy link to share'}
+              className="mt-1 shrink-0 rounded-lg border border-zinc-700 bg-zinc-800/80 p-2 text-zinc-400 transition-all hover:border-zinc-600 hover:bg-zinc-700/80 hover:text-zinc-200 active:scale-95"
+            >
+              {copied ? (
+                <Check className="h-4 w-4 text-emerald-400" />
+              ) : (
+                <Link2 className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+
+          {notebook.description?.trim() && (
+            <p className="mt-2 text-sm sm:text-base text-zinc-400">{notebook.description}</p>
           )}
+
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-200">
+              {ownerAvatar ? (
+                <img
+                  src={ownerAvatar}
+                  alt={ownerName}
+                  className="h-6 w-6 rounded-full border border-zinc-700 object-cover"
+                />
+              ) : (
+                <UserCircle2 className="h-5 w-5 text-zinc-400" />
+              )}
+              <span 
+                className="max-w-48 truncate"
+              >
+                By {ownerName}
+              </span>
+            </div>
+            
+
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
+              <CalendarDays className="h-3.5 w-3.5" />
+              <span>Created {createdAtLabel}</span>
+            </div>
+          </div>
         </div>
 
-        {(data.blocks as Block[] | undefined)?.map((block, index) => (
+        {(notebook.blocks as Block[] | undefined)?.map((block, index) => (
           <BlockRenderer
             key={block._id ?? `public-block-${index}`}
             block={block}
@@ -35,6 +115,27 @@ function PublicEditorPage() {
           />
         ))}
       </main>
+
+      <footer className="pointer-events-none absolute inset-x-0 bottom-0 z-20 p-2 sm:p-3">
+        <div className="pointer-events-auto mx-auto flex max-w-4xl items-center justify-between gap-2 rounded-lg border border-zinc-800 bg-zinc-900/90 px-3 py-2 shadow-2xl shadow-black/40 backdrop-blur-md sm:gap-4 sm:rounded-xl sm:px-5 sm:py-2.5">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="hidden text-base sm:inline">📖</span>
+            <p className="text-xs leading-tight text-zinc-400 sm:text-sm">
+              <span className="font-medium text-zinc-200">BrainArchive</span>
+              <span className="mx-1 hidden text-zinc-600 sm:inline">·</span>
+              <br className="sm:hidden" />
+              <span>Create your own free notebook</span>
+            </p>
+          </div>
+          <Link
+            to="/"
+            className="inline-flex shrink-0 items-center gap-1 rounded-md bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-blue-500 hover:shadow-md hover:shadow-blue-500/20 sm:px-4 sm:py-2 sm:text-sm"
+          >
+            Get Started
+            <span className="hidden sm:inline">→</span>
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 }
