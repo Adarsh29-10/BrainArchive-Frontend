@@ -1,7 +1,7 @@
 export type BlockType =
-    'heading' | 'heading1' | 'heading2' | 'paragraph' | 'paragraph1' | 'document' | 'image' | 'video' | 'code' | 'link' | 'bullet' | 'divider';
+    'heading' | 'heading1' | 'heading2' | 'paragraph' | 'paragraph1' | 'document' | 'image' | 'video' | 'code' | 'link' | 'bullet' | 'divider' | 'quotes';
 
-export type TextBlockType = 'heading' | 'heading1' | 'heading2' | 'paragraph';
+export type TextBlockType = 'heading' | 'heading1' | 'heading2' | 'paragraph' |'quotes';
 
 export interface Block {
     _id?: string;
