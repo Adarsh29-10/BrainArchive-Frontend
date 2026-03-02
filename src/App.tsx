@@ -13,6 +13,7 @@ import PublicNotebooks from "./modules/notebook/pages/PublicNotebooksPage"
 import PublicEditorPage from "./modules/editor/pages/PublicEditorPage"
 import AiTools from "./modules/ai/pages/AiToolsPage"
 import NavLayout from "./modules/app-shell/layouts/NavLayout"
+import PublicAwareLayout from "./modules/app-shell/layouts/PublicAwareLayout"
 
 function App() {
   return (
@@ -25,11 +26,17 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
 
+        {/* Public routes */}
+        <Route element={<PublicAwareLayout />}>
+          <Route path="/notebooks" element={<PublicNotebooks />} />
+          <Route path="/public/profile/:userId" element={<PublicProfilePage />} />
+          <Route path="/public/nb/:notebookId" element={<PublicEditorPage />} />
+        </Route>
+
         {/* Authenticated Routes */}
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/notebooks" element={<PublicNotebooks />} />
             <Route path="/ai" element={<AiTools />} />
           </Route>
 
@@ -37,11 +44,7 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/nb/:notebookId" element={<EditorPage />} />
           </Route>
-
         </Route>
-
-        <Route path="/public/nb/:notebookId" element={<PublicEditorPage />} />
-        <Route path="/public/profile/:userId" element={<PublicProfilePage />} />
 
       </Routes>
     </>
