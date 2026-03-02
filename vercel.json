@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/public/nb/:id", "destination": "/api/og?id=:id" },
+    { "source": "/share/nb/:id", "destination": "/api/og?id=:id" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
