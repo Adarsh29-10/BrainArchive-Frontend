@@ -103,7 +103,7 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
             </div>
 
             {/* Icons grid */}
-            <div className="grid grid-cols-4 gap-2 p-2">
+            <div className="grid grid-cols-3 gap-2 p-2">
               {SIDEBAR_SECTIONS_MOBILE[activeSection].blocks.map((block) => (
                 <button
                   key={block.label}

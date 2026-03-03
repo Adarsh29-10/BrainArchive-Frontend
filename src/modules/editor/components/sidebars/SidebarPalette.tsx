@@ -53,10 +53,10 @@ export const SIDEBAR_SECTIONS_MOBILE = [
             { type: 'heading2', label: 'Heading 2', Icon: Heading2 },
             { type: 'paragraph', label: 'Paragraph', Icon: PIcon },
             { type: 'paragraph1', label: 'Paragraph1', Icon: P1Icon },
+            { type: 'quotes', label: 'Quotes', Icon: Quote },
             { type: 'bullet', label: 'Bullet Points', Icon: List },
-            { type: 'code', label: 'Code Block', Icon: Code2 },
             { type: 'divider', label: 'Divider', Icon: AlignVerticalJustifyCenterIcon },
-            { type: 'quotes', label: 'Quotes', Icon: Quote }
+            { type: 'code', label: 'Code Block', Icon: Code2 },
         ] 
     }
 ]
