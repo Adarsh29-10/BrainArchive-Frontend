@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SIDEBAR_SECTIONS } from './SidebarPalette';
+import { SIDEBAR_SECTIONS_MOBILE } from './SidebarPalette';
 import type { BlockType } from '../../types';
 import { X } from 'lucide-react';
 import { DotMD } from './icons/Icons';
@@ -14,6 +14,12 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
   const [activeSection, setActiveSection] = useState<number | null>(null);
   const [keyboardInset, setKeyboardInset] = useState(0);
   const [isMDModalOpen, setIsMDModalOpen] = useState(false)
+
+  const getIconSizeByType = (type: BlockType) => {
+    if (type === 'paragraph1') return 16;
+    if (type === 'divider') return 18;
+    return 20;
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.visualViewport) return;
@@ -48,7 +54,7 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
           <div 
             className="flex items-center justify-start overflow-x-auto scrollbar-hide"
           >
-            {SIDEBAR_SECTIONS.map((section, index) => (
+            {SIDEBAR_SECTIONS_MOBILE.map((section, index) => (
               <button
                 key={section.title}
                 onClick={() => setActiveSection(activeSection === index ? null : index)}
@@ -97,18 +103,21 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
             </div>
 
             {/* Icons grid */}
-            <div className="flex gap-3">
-              {SIDEBAR_SECTIONS[activeSection].blocks.map((block) => (
+            <div className="grid grid-cols-4 gap-2 p-2">
+              {SIDEBAR_SECTIONS_MOBILE[activeSection].blocks.map((block) => (
                 <button
                   key={block.label}
                   onClick={() => {
                     addBlock(block.type as BlockType);
                     setActiveSection(null);
                   }}
-                  className="w-full aspect-square px-1 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors h-12"
+                  className="w-full aspect-square flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
                   title={block.label}
                 >
-                  <block.Icon size={24} className="text-white" />
+                  <block.Icon
+                    size={getIconSizeByType(block.type as BlockType)}
+                    className="text-white"
+                  />
                 </button>
               ))}
             </div>
