@@ -3,6 +3,35 @@
 @tailwind utilities;
 
 
+/* Firefox / modern browsers */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3f3f46 transparent;   /* thumb: zinc-700, track: transparent */
+}
+
+/* Chrome, Safari, Edge (Webkit) */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #3f3f46;              /* zinc-700 */
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #52525b;              /* zinc-600 */
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #71717a;              /* zinc-500 */
+}
+
 /* hide scrollbar but keep scroll */
 .no-scrollbar {
   scrollbar-width: none;      /* Firefox */
