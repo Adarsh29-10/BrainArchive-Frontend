@@ -33,7 +33,7 @@ function EditorSidebar({addBlock, notebookId} : Props) {
             </div>
 
             {/* Sections - Scrollable only this part*/}
-            <div className="flex-1 pt-6 space-y-3 overflow-y-auto">
+            <div className="flex-1 pt-6 space-y-3 overflow-y-auto [scrollbar-gutter:stable]">
                 {SIDEBAR_SECTIONS.map((section) => (
                     <div key={section.title} className="space-y-2">
                         {/* Section Header */}

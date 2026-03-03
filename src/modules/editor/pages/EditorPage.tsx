@@ -25,12 +25,12 @@ function EditorPage() {
         </div>
         
 
-        <div className="hidden sm:block">
+        <div className="hidden sm:block shrink-0 h-full">
           <EditorSidebar addBlock={addBlock} notebookId={notebookId!} />
         </div>
 
         {/* Main editor content  */}
-        <main className="flex-1 min-h-0 pl-5 pr-2 sm:px-6 py-3 overflow-y-auto pb-28 sm:pb-16">
+        <main className="flex-1 min-h-0 min-w-0 pl-5 pr-2 sm:px-6 py-3 overflow-y-auto pb-28 sm:pb-16">
 
           {/* Header */}
           <div className="mt-2 flex justify-between items-center">
