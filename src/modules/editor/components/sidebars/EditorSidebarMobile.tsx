@@ -47,7 +47,6 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
         <div className='flex items-center justify-between pl-2 pr-4'>
           <div 
             className="flex items-center justify-start overflow-x-auto scrollbar-hide"
-            style={{ bottom: `calc(${keyboardInset}px + env(safe-area-inset-bottom, 0px))` }}
           >
             {SIDEBAR_SECTIONS.map((section, index) => (
               <button
@@ -83,8 +82,8 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
           
           {/* Blocks panel floating above the toolbar */}
           <div
-            className="fixed left-0 right-0 py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto"
-            style={{ bottom: `calc(${keyboardInset + 50}px + env(safe-area-inset-bottom, 0px))` }}
+            className={`fixed left-0 right-0 py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto h-${keyboardInset}`}
+            style={{ bottom: `calc(${keyboardInset+4}px + env(safe-area-inset-bottom, 0px))` }}
           >
             
             {/* Close button */}
