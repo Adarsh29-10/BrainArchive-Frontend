@@ -88,7 +88,7 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
           
           {/* Blocks panel floating above the toolbar */}
           <div
-            className={`fixed left-0 right-0 py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto h-[40%]`}
+            className={`fixed left-0 right-0 py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto h-[50%]`}
             style={{ bottom: `calc(${keyboardInset}px + env(safe-area-inset-bottom, 0px))` }}
           >
             
