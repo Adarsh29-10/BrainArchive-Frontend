@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { SIDEBAR_SECTIONS } from './SidebarPalette';
 import type { BlockType } from '../../types';
 import { X } from 'lucide-react';
@@ -13,20 +13,7 @@ type Props = {
 export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
   const [activeSection, setActiveSection] = useState<number | null>(null);
   const [keyboardInset, setKeyboardInset] = useState(0);
-  const [lockedInset, setLockedInset] = useState<number | null>(null);
   const [isMDModalOpen, setIsMDModalOpen] = useState(false)
-
-  const effectiveInset = lockedInset ?? keyboardInset;
-
-  const handleSectionClick = useCallback((index: number) => {
-    if (activeSection === index) {
-      setActiveSection(null);
-      setLockedInset(null);
-    } else {
-      setActiveSection(index);
-      setLockedInset(keyboardInset);
-    }
-  }, [activeSection, keyboardInset]);
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.visualViewport) return;
@@ -54,15 +41,18 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
     <>
       {/* Mobile toolbar anchored above keyboard */}
       <div
-        className="fixed left-0 right-0 z-40 bg-zinc-900 border-y border-zinc-500 py-2 transition-[bottom] duration-150"
-        style={{ bottom: `calc(${effectiveInset}px + env(safe-area-inset-bottom, 0px))` }}
+        className="fixed left-0 right-0 z-40 bg-zinc-900 border-y border-zinc-500 py-2"
+        style={{ bottom: `calc(${keyboardInset}px + env(safe-area-inset-bottom, 0px))` }}
       >
         <div className='flex items-center justify-between pl-2 pr-4'>
-          <div className="flex items-center justify-start overflow-x-auto scrollbar-hide">
+          <div 
+            className="flex items-center justify-start overflow-x-auto scrollbar-hide"
+            style={{ bottom: `calc(${keyboardInset}px + env(safe-area-inset-bottom, 0px))` }}
+          >
             {SIDEBAR_SECTIONS.map((section, index) => (
               <button
                 key={section.title}
-                onClick={() => handleSectionClick(index)}
+                onClick={() => setActiveSection(activeSection === index ? null : index)}
                 className={`px-3 py-2 text-xs whitespace-nowrap border-r border-zinc-500 last:border-r-0 transition-colors ${
                   activeSection === index
                     ? 'text-zinc-100 bg-zinc-800'
@@ -93,14 +83,14 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
           
           {/* Blocks panel floating above the toolbar */}
           <div
-            className="fixed left-0 right-0 py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto transition-[bottom] duration-150"
-            style={{ bottom: `calc(${effectiveInset + 50}px + env(safe-area-inset-bottom, 0px))` }}
+            className="fixed left-0 right-0 py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto"
+            style={{ bottom: `calc(${keyboardInset + 50}px + env(safe-area-inset-bottom, 0px))` }}
           >
             
             {/* Close button */}
             <div className="flex justify-end p-2 border-b border-zinc-800">
               <button
-                onClick={() => { setActiveSection(null); setLockedInset(null); }}
+                onClick={() => setActiveSection(null)}
                 className="p-1 text-zinc-400 hover:text-zinc-100"
               >
                 <X size={16} />
@@ -115,7 +105,6 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
                   onClick={() => {
                     addBlock(block.type as BlockType);
                     setActiveSection(null);
-                    setLockedInset(null);
                   }}
                   className="w-full aspect-square px-1 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
                   title={block.label}
