@@ -82,12 +82,12 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
           
           {/* Blocks panel floating above the toolbar */}
           <div
-            className={`fixed left-0 right-0 py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto h-${keyboardInset}`}
-            style={{ bottom: `calc(${keyboardInset+4}px + env(safe-area-inset-bottom, 0px))` }}
+            className={`fixed left-0 right-0 py-2 bg-zinc-900 border-y border-zinc-500 flex gap-2.5 pointer-events-auto h-64`}
+            style={{ bottom: `calc(${keyboardInset}px + env(safe-area-inset-bottom, 0px))` }}
           >
             
             {/* Close button */}
-            <div className="flex justify-end p-2 border-b border-zinc-800">
+            <div className="p-2 border-b border-zinc-800">
               <button
                 onClick={() => setActiveSection(null)}
                 className="p-1 text-zinc-400 hover:text-zinc-100"
@@ -105,7 +105,7 @@ export const EditorSidebarMobile = ({ addBlock, notebookId }: Props) => {
                     addBlock(block.type as BlockType);
                     setActiveSection(null);
                   }}
-                  className="w-full aspect-square px-1 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
+                  className="w-full aspect-square px-1 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors h-12"
                   title={block.label}
                 >
                   <block.Icon size={24} className="text-white" />
