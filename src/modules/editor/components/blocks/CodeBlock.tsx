@@ -1,6 +1,8 @@
 import { X } from 'lucide-react';
 import Editor from "@monaco-editor/react";
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
+
+import type { editor } from 'monaco-editor';
 
 interface CodeBlockProps {
   block: {
@@ -15,37 +17,45 @@ interface CodeBlockProps {
   readOnly?: boolean;
 }
 
-const LANGUAGES = [
-  { label: "JavaScript", value: "javascript" },
-  { label: "C", value: "c" },
-  { label: "C++", value: "cpp" },  // monaco recognizes "cpp"
-  { label: "Java", value: "java" },
-  { label: "Python", value: "python" },
-  { label: "TypeScript", value: "typescript" },
-  { label: "JSON", value: "json" },
-  { label: "HTML", value: "html" },
-  { label: "CSS", value: "css" },
-];
+// const LANGUAGES = [
+//   { label: "JavaScript", value: "javascript" },
+//   { label: "C", value: "c" },
+//   { label: "C++", value: "cpp" },  // monaco recognizes "cpp"
+//   { label: "Java", value: "java" },
+//   { label: "Python", value: "python" },
+//   { label: "TypeScript", value: "typescript" },
+//   { label: "JSON", value: "json" },
+//   { label: "HTML", value: "html" },
+//   { label: "CSS", value: "css" },
+// ];
 
 function CodeBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, readOnly = false }: CodeBlockProps) {
   const editorRef = useRef<{ focus: () => void } | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   // Local state but synced with block.language
-  const [selectedLang, setSelectedLang] = useState(block.language || "");
+  // const [selectedLang, setSelectedLang] = useState(block.language || "");
 
   // Sync language ONLY when block.language changes
-  useEffect(() => {
-    if (block.language) {
-      requestAnimationFrame(() => {
-        setSelectedLang(block.language || "");
-      });
-    }
-  }, [block.language]);
+  // useEffect(() => {
+  //   if (block.language) {
+  //     requestAnimationFrame(() => {
+  //       setSelectedLang(block.language || "");
+  //     });
+  //   }
+  // }, [block.language]);
 
   // Mobile responsive font size
   const isMobile = window.innerWidth < 640; 
   const fontSize = isMobile ? 12 : 16;
   const lineHeight = isMobile ? 18 : 20;
+
+  // Dynamic height based on content lines
+  const MIN_LINES = 3;
+  const MAX_LINES = 30;
+  const lineCount = Math.max(MIN_LINES, Math.min((block.content.split('\n').length) + 1, MAX_LINES));
+  const padding = 24; // top 12 + bottom 12
+  const editorHeight = lineCount * lineHeight + padding;
 
   // Auto focus
   useEffect(() => {
@@ -54,12 +64,32 @@ function CodeBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, re
     }
   }, [autoFocus, block._id]);
 
+  // Allow page scrolling through the editor on touch devices
+  const handleEditorMount = useCallback((editorInstance: editor.IStandaloneCodeEditor) => {
+    editorRef.current = editorInstance;
+
+    editorInstance.onDidFocusEditorText(() => {
+      setFocusedBlockId(block._id ?? null);
+    });
+
+    // Let vertical touch events pass through to the page
+    const editorDomNode = editorInstance.getDomNode();
+    if (editorDomNode) {
+      editorDomNode.style.touchAction = 'pan-y';
+      // Also target the internal scrollable overlays
+      const overlays = editorDomNode.querySelectorAll<HTMLElement>('.monaco-scrollable-element');
+      overlays.forEach((el: HTMLElement) => {
+        el.style.touchAction = 'pan-y';
+      });
+    }
+  }, [block._id, setFocusedBlockId]);
+
   return (
-    <div className="relative group mt-5 mb-6 pr-4 select-none">
+    <div ref={containerRef} className="relative group mt-5 mb-6 pr-4 select-none">
       <div className="border-2 border-transparent rounded-lg overflow-hidden ">
 
         {/* Header */}
-        <div className="bg-zinc-800 rounded-t-lg px-4 py-2 flex items-center justify-between">
+        {/* <div className="bg-zinc-800 rounded-t-lg px-4 py-2 flex items-center justify-between">
           <select
             value={selectedLang}
             disabled={readOnly}
@@ -77,33 +107,36 @@ function CodeBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, re
               </option>
             ))}
           </select>
-        </div>
+        </div> */}
 
         {/* Monaco Editor */}
         <Editor
-          height="30vh"
-          language={selectedLang || undefined}
+          height={editorHeight}
+          // language={selectedLang || undefined}
           value={block.content}
           onChange={(value) => {
             if (block._id) {
               onChange(block._id, value || "");
             }
           }}
-          onMount={(editor) => {
-            editor.onDidFocusEditorText(() => {
-              setFocusedBlockId(block._id ?? null);
-            });
-          }}
+          onMount={handleEditorMount}
             
           theme="vs-dark"
           options={{
             minimap: { enabled: false },
             scrollBeyondLastLine: false,
-            wordWrap: "on",
+            scrollbar: {
+              vertical: 'hidden',
+              horizontal: 'auto',
+              handleMouseWheel: false,
+            },
+            overviewRulerLanes: 0,
+            wordWrap: "off",
             fontSize,
             lineHeight,
             padding: { top: 12, bottom: 12 },
             readOnly,
+            domReadOnly: readOnly,
           }}
         />
       </div>
