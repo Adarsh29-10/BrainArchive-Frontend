@@ -2,13 +2,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { addNotebookBlock, addNotebookBlockBulkSave, deleteNotebookBlock, getNotebookById, getPublicNotebookById, updateNotebookBlockContent } from "../api/editor.api";
 
 export const useAddNotebookBlock = () => {
-    const queryClient = useQueryClient();
+    // const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: addNotebookBlock,
-        onSuccess: ()=> {
-            queryClient.invalidateQueries({ queryKey: ["notebooks"] });
-        },
+        // onSuccess: ()=> {
+        //     queryClient.invalidateQueries({ queryKey: ["notebooks"] });
+        // },
     });
 }
 
