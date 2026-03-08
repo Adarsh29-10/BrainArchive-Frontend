@@ -10,9 +10,10 @@ import AppLayout from "./modules/app-shell/layouts/AppLayout"
 import ProfilePage from "./modules/profile/pages/ProfilePage"
 import PublicNotebooks from "./modules/notebook/pages/PublicNotebooksPage"
 import PublicEditorPage from "./modules/editor/pages/PublicEditorPage"
-import AiTools from "./modules/ai/pages/AiToolsPage"
 import NavLayout from "./modules/app-shell/layouts/NavLayout"
 import PublicAwareLayout from "./modules/app-shell/layouts/PublicAwareLayout"
+import { ChatPage } from "./modules/ai/pages/ChatPage"
+import AiDashboard from "./modules/ai/pages/AiDashboard"
 
 function App() {
   return (
@@ -36,12 +37,14 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/ai" element={<AiTools />} />
+            <Route path="/ai" element={<AiDashboard />} />
           </Route>
 
           <Route element={<NavLayout />}>
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/nb/:notebookId" element={<EditorPage />} />
+            <Route path="/ai/chat" element={<ChatPage />} />
+            <Route path="/ai/chat/:sessionId" element={<ChatPage />} />
           </Route>
         </Route>
 
