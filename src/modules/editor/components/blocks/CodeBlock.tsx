@@ -52,7 +52,7 @@ function CodeBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, re
 
   // Dynamic height based on content lines
   const MIN_LINES = 3;
-  const MAX_LINES = 30;
+  const MAX_LINES = 100;
   const lineCount = Math.max(MIN_LINES, Math.min((block.content.split('\n').length) + 1, MAX_LINES));
   const padding = 24; // top 12 + bottom 12
   const editorHeight = lineCount * lineHeight + padding;
@@ -129,6 +129,7 @@ function CodeBlock({ block, onChange, onDelete, autoFocus, setFocusedBlockId, re
               vertical: 'hidden',
               horizontal: 'auto',
               handleMouseWheel: false,
+              
             },
             overviewRulerLanes: 0,
             wordWrap: "off",
