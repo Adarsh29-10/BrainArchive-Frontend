@@ -1,0 +1,18 @@
+import { useQuery } from "@tanstack/react-query"
+import { getAiSessions, getAiSessionsById } from "../api/ai.api"
+
+
+export const useGetAiSessions = () => {
+    return useQuery({
+        queryKey: ['ai-sessionId'],
+        queryFn: getAiSessions
+    })
+}
+
+export const useGetAiSessionsById = (sessionId: string | null) => {
+    return useQuery({
+        queryKey: ['ai-sessionId', sessionId],
+        queryFn: () => getAiSessionsById(sessionId as string),
+        enabled: Boolean(sessionId)
+    })
+}

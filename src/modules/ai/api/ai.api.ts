@@ -1,4 +1,5 @@
 import axios from "axios"
+import { fastapiApi } from "../../../shared/api/fastapi.api"
 
 export const ChatAI = async (data: {
     sessionId?: string | null,
@@ -9,16 +10,22 @@ export const ChatAI = async (data: {
     return response.data.reply
 }
 
-
 export const ChatAIStream = async (data: {
     sessionId?: string | null;
     message: string;
+    token: string;
     onChunk : (chunk: string) => void;
 }) => {
-    const response = await fetch('http://127.0.0.1:3000/chat/stream', {
+    const response = await fetch('http://127.0.0.1:8000/chat/stream', {
         method:'post',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(data)
+        headers: {
+            'Content-Type':'application/json',
+            "Authorization": `Bearer ${data.token}`
+        },
+        body: JSON.stringify({
+            message: data.message, 
+            sessionId: data.sessionId
+        })
     })
     
     const sessionId = response.headers.get('x-session-id')
@@ -45,4 +52,17 @@ export const ChatAIStream = async (data: {
     }
 
     return sessionId
+}
+
+
+export const getAiSessions = async () => {
+    const response = await fastapiApi.get('/sessions')
+
+    return response.data.data;
+}
+
+export const getAiSessionsById = async (sessionId: string) => {
+    const response = await fastapiApi.get(`/sessions/${sessionId}`)
+
+    return response.data.data;
 }
