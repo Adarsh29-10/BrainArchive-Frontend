@@ -3,6 +3,7 @@ import { useRef, useState } from 'react'
 import type { IMessage } from "../../types";
 import { ChatAIStream } from "../../api/ai.api";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface ChatInputBarProps {
     setMessages: React.Dispatch<React.SetStateAction<IMessage[]>>;
@@ -10,24 +11,29 @@ interface ChatInputBarProps {
     setSessionId: (sessionId: string) => void;
 }
 
-export const ChatInputBar = ({setMessages, sessionId, setSessionId  }: ChatInputBarProps) => {
+export const ChatInputBar =  ({setMessages, sessionId, setSessionId  }: ChatInputBarProps) => {
     const [input, setInput] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const {getAccessTokenSilently} = useAuth0();
 
+    
     const resetHeight = () => {
         if (textareaRef.current) {
             textareaRef.current.style.height = 'auto';
         }
     };
-
+    
     const navigate = useNavigate()
-
+    
     const addMessage = async () => {
+
+        const token = await getAccessTokenSilently()
+
         if (!input.trim()) return;
 
         setMessages(prev => [
             ...prev,
-            { id: crypto.randomUUID(), role: "user", text: input }
+            { _id: crypto.randomUUID(), role: "user", content: input }
         ]);
 
         setInput("");
@@ -37,16 +43,17 @@ export const ChatInputBar = ({setMessages, sessionId, setSessionId  }: ChatInput
          
         setMessages(prev => [
             ...prev,
-            { id: aiMessageId , role: "ai", text: '' }
+            { _id: aiMessageId , role: "ai", content: '' }
         ]);
 
         const newSessionId = await ChatAIStream({
             message: input,
             sessionId: sessionId,
+            token,
             onChunk: (chunk) => {
                 setMessages(prev => 
-                    prev.map(msg => msg.id === aiMessageId
-                        ? { ...msg, text: msg.text + chunk } 
+                    prev.map(msg => msg._id === aiMessageId
+                        ? { ...msg, content: msg.content + chunk } 
                         : msg
                     )
                 )
