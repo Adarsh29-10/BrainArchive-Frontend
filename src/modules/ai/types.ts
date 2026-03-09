@@ -1,7 +1,10 @@
 export type IMessageRole = "user" | "ai"
 
 export interface IMessage {
-    id: string | null;
+    _id: string;
+    userId?: string;
+    sessionId?: string;
     role: IMessageRole;
-    text: string;
+    content: string;
+    createdAt?: string;
 }
