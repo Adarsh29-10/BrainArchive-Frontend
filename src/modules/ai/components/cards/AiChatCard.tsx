@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { MoreVertical, Trash2, Edit } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 
 interface AiChatCardProps {
-    title?: string;
+    title: string;
+    sessionId: string;
     onClick?: () => void;
     onDelete?: () => void;
     onRename?: () => void;
@@ -12,7 +14,8 @@ interface AiChatCardProps {
     
 
 function AiChatCard({
-    title = 'New conversation',
+    title,
+    sessionId,
     onClick,
     onDelete,
     onRename,
@@ -33,10 +36,12 @@ function AiChatCard({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    const navigate = useNavigate()
+
     return (
         <article
-            className="group relative w-full rounded-xl border border-zinc-800 bg-zinc-900 text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-zinc-600 hover:bg-zinc-850 hover:shadow-lg hover:shadow-zinc-950/50 cursor-pointer"
-            onClick={onClick}
+            className="group relative w-full rounded-xl border border-zinc-800  bg-zinc-900 text-white cursor-pointer"
+            onClick={() => navigate(`/ai/chat/${sessionId}`)}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
@@ -56,7 +61,7 @@ function AiChatCard({
                 </div>
 
                 {/* Menu */}
-                <div ref={menuRef} className="relative shrink-0">
+                <div ref={menuRef} className="relative flex shrink-0 items-start">
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
@@ -69,14 +74,14 @@ function AiChatCard({
                     </button>
 
                     {isMenuOpen && (
-                        <div className="absolute right-0 top-8 z-50 w-40 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800 py-1 shadow-xl shadow-black/40 animate-in fade-in slide-in-from-top-1">
+                        <div className="absolute right-8 top-0 z-20 w-40 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800 py-1 shadow-xl shadow-black/40 animate-in fade-in slide-in-from-top-1">
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setIsMenuOpen(false);
                                     onRename?.();
                                 }}
-                                className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-zinc-300 transition-colors hover:bg-zinc-700 hover:text-white"
+                                className="flex w-full items-center gap-2 px-3 py-2 text-sm text-zinc-300 transition-colors hover:bg-zinc-700 hover:text-white"
                             >
                             <Edit className="h-3.5 w-3.5" />
                                 Rename
