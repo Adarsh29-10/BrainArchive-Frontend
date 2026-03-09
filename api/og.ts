@@ -88,7 +88,8 @@ async function fetchNotebook(id: string): Promise<NotebookData | null> {
 export default async function handler(req: Request) {
   const url = new URL(req.url);
   const queryId = url.searchParams.get('id');
-  const pathId = url.pathname.split('/').filter(Boolean).at(-1);
+  const pathSegments = url.pathname.split('/').filter(Boolean);
+  const pathId = pathSegments[pathSegments.length - 1];
   const id = queryId || (pathId && pathId !== 'og' ? pathId : null);
   const canonicalUrl = id ? `${APP_URL}/public/nb/${encodeURIComponent(id)}` : `${APP_URL}/notebooks`;
 
