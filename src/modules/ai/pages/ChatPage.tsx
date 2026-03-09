@@ -20,7 +20,7 @@ export const ChatPage = () => {
 
     const allMessages = [
         ...(sessionMessages ?? []),
-        ...messages.filter(m => !sessionMessages?.find(s => s._id === m._id))
+        ...messages.filter(m => !sessionMessages?.find((s: IMessage) => s._id === m._id))
     ]
 
     useEffect(() => {
