@@ -3,7 +3,7 @@ import type { IMessage } from "../../types";
 
 export const MessageBubble = ({ message }: { message: IMessage }) => {
     const isUser = message.role === "user";
-
+    
     return (
         <div className={`flex items-start gap-3`}>
             {/* Avatar */}
@@ -29,7 +29,7 @@ export const MessageBubble = ({ message }: { message: IMessage }) => {
                         : 'bg-zinc-900 text-zinc-300 ring-1 ring-zinc-800'
                 }`}
             >
-                <p className="whitespace-pre-wrap text-lg">{message.text}</p>
+                <p className="whitespace-pre-wrap text-lg">{message.content}</p>
             </div>
         </div>
     );
