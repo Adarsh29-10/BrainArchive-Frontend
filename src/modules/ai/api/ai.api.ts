@@ -16,7 +16,7 @@ export const ChatAIStream = async (data: {
     token: string;
     onChunk : (chunk: string) => void;
 }) => {
-    const response = await fetch('http://127.0.0.1:8000/chat/stream', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL_AI}/chat/stream`, {
         method:'post',
         headers: {
             'Content-Type':'application/json',
