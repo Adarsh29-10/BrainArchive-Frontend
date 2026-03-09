@@ -2,7 +2,9 @@
 import axios from "axios";
 
 export const fastapiApi = axios.create({
-    baseURL: "http://127.0.0.1:8000"
+    // baseURL: "http://127.0.0.1:8000",
+    baseURL: import.meta.env.VITE_API_URL_AI,
+    withCredentials: true,
 });
 
 let getToken: (() => Promise<string>) | null = null;
