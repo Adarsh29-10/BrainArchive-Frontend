@@ -30,7 +30,11 @@ export const ChatAIStream = async (data: {
     
     const sessionId = response.headers.get('x-session-id')
 
-    const reader = response.body?.getReader()
+    if (!response.body) {
+        return sessionId
+    }
+
+    const reader = response.body.getReader()
     const decoder = new TextDecoder();
 
 
