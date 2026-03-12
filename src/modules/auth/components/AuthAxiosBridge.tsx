@@ -8,14 +8,34 @@ import { setFastapiAuthTokenGetter } from "../../../shared/api/fastapi.api";
  * It runs once after login
  */
 function AuthAxiosBridge() {
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently, logout } = useAuth0();
 
   useEffect(() => {
     if (isAuthenticated) {
-      setAuthTokenGetter(getAccessTokenSilently);
-      setFastapiAuthTokenGetter(getAccessTokenSilently);
+
+      const safeGetToken = async () => {
+        try {
+          return await getAccessTokenSilently();
+        }
+        catch(error: unknown){
+          const err = error as { error?: string; message?: string; status?: number };
+
+          if (
+            err?.error === "invalid_grant" ||
+            err?.message?.includes("Unknown or invalid refresh token") ||
+            err?.status === 403
+          ) {
+            logout({logoutParams: { returnTo: window.location.origin }});
+          }
+
+          throw error
+        }
+      }
+
+      setAuthTokenGetter(safeGetToken);
+      setFastapiAuthTokenGetter(safeGetToken);
     }
-  }, [isAuthenticated, getAccessTokenSilently]);
+  }, [isAuthenticated, getAccessTokenSilently, logout]);
 
   return null;
 }

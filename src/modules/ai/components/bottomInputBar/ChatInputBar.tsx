@@ -14,8 +14,7 @@ interface ChatInputBarProps {
 export const ChatInputBar =  ({setMessages, sessionId, setSessionId  }: ChatInputBarProps) => {
     const [input, setInput] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const {getAccessTokenSilently} = useAuth0();
-
+    const {getAccessTokenSilently, logout} = useAuth0();
     
     const resetHeight = () => {
         if (textareaRef.current) {
@@ -27,7 +26,22 @@ export const ChatInputBar =  ({setMessages, sessionId, setSessionId  }: ChatInpu
     
     const addMessage = async () => {
 
-        const token = await getAccessTokenSilently()
+        let token: string
+
+        try {
+            token = await getAccessTokenSilently();
+        } catch (error: unknown) {
+            const err = error as { error?: string; message?: string; status?: number };
+            if (
+                err?.error === "invalid_grant" ||
+                err?.message?.includes("Unknown or invalid refresh token") ||
+                err?.status === 403
+            ) {
+                logout({ logoutParams: { returnTo: window.location.origin } });
+            }
+            return; 
+        }
+
 
         if (!input.trim()) return;
 
