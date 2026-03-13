@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { MoreVertical, Trash2, Edit } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useDeleteAiSession } from '../../hooks/useAi';
 
 
 interface AiChatCardProps {
     title: string;
     sessionId: string;
     onClick?: () => void;
-    onDelete?: () => void;
     onRename?: () => void;
 }
 
@@ -17,13 +17,14 @@ function AiChatCard({
     title,
     sessionId,
     onClick,
-    onDelete,
     onRename,
 }: AiChatCardProps
 ) {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+
+    const deleteMutation = useDeleteAiSession()
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -89,8 +90,10 @@ function AiChatCard({
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    setIsMenuOpen(false);
-                                    onDelete?.();
+                                    deleteMutation.mutate(sessionId, {
+                                        onSuccess: () => setIsMenuOpen(false),
+                                    })
+                                    ;
                                 }}
                                 className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-red-400 transition-colors hover:bg-zinc-700 hover:text-red-300"
                             >

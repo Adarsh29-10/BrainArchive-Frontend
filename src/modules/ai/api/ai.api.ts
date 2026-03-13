@@ -65,8 +65,14 @@ export const getAiSessions = async () => {
     return response.data.data;
 }
 
-export const getAiSessionsById = async (sessionId: string) => {
+export const getAiSessionsById = async (sessionId: string | null) => {
     const response = await fastapiApi.get(`/sessions/${sessionId}`)
+
+    return response.data.data;
+}
+
+export const deleteAiSession = async (sessionId: string) => {
+    const response = await fastapiApi.delete(`/sessions/${sessionId}`)
 
     return response.data.data;
 }

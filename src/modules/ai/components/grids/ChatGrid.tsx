@@ -35,7 +35,6 @@ function ChatGrid() {
     );
   }
 
-  console.log(data)
   return (
     <div className=" space-y-2">
       {
