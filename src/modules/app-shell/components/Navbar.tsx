@@ -8,6 +8,10 @@ function Navbar() {
   const {pathname} = useLocation()
   const navigate = useNavigate()
   const hideBackButton = ['/dashboard', '/ai', '/notebooks'].includes(pathname)
+  const hideAiHistoryButton = ['/profile', '/dashboard', '/notebooks', '/ai'].includes(pathname)
+  const hideHistoryButtonFromNotebook = pathname.startsWith('/nb/') 
+  const hideHistoryButtonFromPublicNotebook = pathname.startsWith('/public/nb/') 
+
 
   if (isLoading) {
     return null;
@@ -31,14 +35,14 @@ function Navbar() {
 
         <div className="flex gap-4">
 
-          {!hideBackButton && <button
+          {!hideBackButton && !hideHistoryButtonFromPublicNotebook && <button
               className="text-xl sm:text-xl font-semibold text-white"
               onClick={handleBack}>
                 {<Home /> }
             </button> 
           }
 
-          {!hideBackButton && <button
+          {!hideAiHistoryButton && !hideHistoryButtonFromNotebook && !hideHistoryButtonFromPublicNotebook && <button
               className="text-xl sm:text-xl font-semibold text-white"
               onClick={() => navigate('/ai')}>
                 {<History /> }
