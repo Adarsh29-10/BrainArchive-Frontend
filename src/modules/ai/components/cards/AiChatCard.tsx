@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { MoreVertical, Trash2, Edit } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteAiSession } from '../../hooks/useAi';
+import { useDeleteAiSession, useRenameAiSession } from '../../hooks/useAi';
+import RenameSessionModal from '../modals/RenameSessionModal';
+import DeleteModal from '../../../notebook/components/modals/DeleteModal';
 
 
 interface AiChatCardProps {
@@ -11,20 +13,19 @@ interface AiChatCardProps {
     onRename?: () => void;
 }
 
-    
-
 function AiChatCard({
     title,
     sessionId,
-    onClick,
-    onRename,
 }: AiChatCardProps
 ) {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
     const deleteMutation = useDeleteAiSession()
+    const renameMutation = useRenameAiSession()
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -41,23 +42,17 @@ function AiChatCard({
 
     return (
         <article
-            className="group relative w-full rounded-xl border border-zinc-800  bg-zinc-900 text-white cursor-pointer"
+            className="group relative w-full rounded-xl border border-zinc-800  bg-zinc-900 text-white cursor-pointer hover:bg-zinc-800"
             onClick={() => navigate(`/ai/chat/${sessionId}`)}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                onClick?.();
-                }
-            }}
         >
         <div className="p-4 sm:p-5">
             {/* Header */}
             <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
-                    <h3 className="truncate text-sm font-medium text-zinc-100 group-hover:text-white">
-                    {title}
+                    <h3 className="truncate text-sm sm:text-lg font-medium text-zinc-100 group-hover:text-white">
+                        {title}
                     </h3>
                 </div>
 
@@ -68,10 +63,10 @@ function AiChatCard({
                             e.stopPropagation();
                             setIsMenuOpen((prev) => !prev);
                         }}
-                        className="rounded-md p-1 text-zinc-500 transition-all hover:bg-zinc-800 hover:text-zinc-300"
+                        className="rounded-md p-1 text-zinc-500 transition-all hover:bg-zinc-700 hover:text-zinc-300"
                         aria-label="Chat options"
                     >
-                        <MoreVertical className="h-4 w-4" />
+                        <MoreVertical className="h-4 w-4 sm:h-6 sm:w-6" />
                     </button>
 
                     {isMenuOpen && (
@@ -80,7 +75,7 @@ function AiChatCard({
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setIsMenuOpen(false);
-                                    onRename?.();
+                                    setIsRenameModalOpen(true);
                                 }}
                                 className="flex w-full items-center gap-2 px-3 py-2 text-sm text-zinc-300 transition-colors hover:bg-zinc-700 hover:text-white"
                             >
@@ -90,10 +85,8 @@ function AiChatCard({
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    deleteMutation.mutate(sessionId, {
-                                        onSuccess: () => setIsMenuOpen(false),
-                                    })
-                                    ;
+                                    setIsMenuOpen(false)
+                                    setIsDeleteModalOpen(true)
                                 }}
                                 className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-red-400 transition-colors hover:bg-zinc-700 hover:text-red-300"
                             >
@@ -105,9 +98,47 @@ function AiChatCard({
                 </div>
             </div>
         </div>
+        
+        {/* Delete Modal */}
+        {isDeleteModalOpen && 
+            <div onClick={(e) => e.stopPropagation()}>
+                <DeleteModal
+                    isOpen = {isDeleteModalOpen}
+                    title='Delete Conversation'
+                    onCancel={() => setIsDeleteModalOpen(false)}
+                    onConfirm={() => 
+                        deleteMutation.mutate(sessionId, {
+                            onSuccess: () => setIsMenuOpen(false),
+                    })}
+                    isLoading={deleteMutation.isPending}
+                /> 
+            </div>
+        }
 
-        {/* Bottom accent line on hover */}
-        <div className="h-[2px] w-full rounded-b-xl bg-gradient-to-r from-transparent via-amber-500/0 to-transparent transition-all duration-300 group-hover:via-green-500/60" />
+        {/* Rename Modal */}
+        {isRenameModalOpen && (
+            <div onClick={(e) => e.stopPropagation()}>
+                <RenameSessionModal
+                    isOpen={isRenameModalOpen}
+                    currentTitle={title}
+                    onClose={() => setIsRenameModalOpen(false)}
+                    onConfirm={(newTitle) => {
+                        renameMutation.mutate(
+                            {
+                                sessionId,
+                                title: newTitle,
+                            },
+                            {
+                                onSuccess: () => {
+                                    setIsRenameModalOpen(false);
+                                },
+                            }
+                        );
+                    }}
+                    isLoading={renameMutation.isPending}
+                />
+            </div>
+        )}
         </article>
     );
 }
