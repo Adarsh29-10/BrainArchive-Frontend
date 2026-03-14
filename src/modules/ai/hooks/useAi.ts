@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { deleteAiSession, getAiSessions, getAiSessionsById } from "../api/ai.api"
+import { deleteAiSession, getAiSessions, getAiSessionsById, renameAiSession } from "../api/ai.api"
 
 
 export const useGetAiSessions = () => {
@@ -26,4 +26,16 @@ export const useDeleteAiSession = () => {
             queryClient.invalidateQueries({queryKey: ["ai-sessionId"]})
         }
     })
+}
+
+
+export const useRenameAiSession = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: renameAiSession,
+        onSuccess: ()=> {
+            queryClient.invalidateQueries({ queryKey: ["ai-sessionId"] });
+        },
+    });
 }

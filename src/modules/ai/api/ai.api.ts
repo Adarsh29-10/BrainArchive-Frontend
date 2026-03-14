@@ -76,3 +76,15 @@ export const deleteAiSession = async (sessionId: string) => {
 
     return response.data.data;
 }
+
+export const renameAiSession = async (data: {
+    sessionId: string,
+    title: string
+}) => {
+    const {sessionId, ...payload} = data;
+
+    const response = await fastapiApi.put(`/sessions/${sessionId}`, payload)
+
+    return response.data.data;
+
+}
