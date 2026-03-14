@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Home } from "lucide-react";
+import { History, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -15,7 +15,7 @@ function Navbar() {
 
   const handleBack = () => {
     if(pathname.startsWith('/nb/')) { navigate('/dashboard')}
-    else if(pathname.startsWith('/chat/')) { navigate('/ai')}
+    else if(pathname.startsWith('/ai/chat/')) { navigate('/dashboard')}
     else navigate(-1)
   }
 
@@ -35,6 +35,13 @@ function Navbar() {
               className="text-xl sm:text-xl font-semibold text-white"
               onClick={handleBack}>
                 {<Home /> }
+            </button> 
+          }
+
+          {!hideBackButton && <button
+              className="text-xl sm:text-xl font-semibold text-white"
+              onClick={() => navigate('/ai')}>
+                {<History /> }
             </button> 
           }
 

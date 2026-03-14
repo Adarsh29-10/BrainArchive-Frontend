@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const NAV_ITEMS = [
   { to: '/notebooks', label: 'Search', Icon: Search },
   { to: '/dashboard', label: 'Home', Icon: Home },
-  { to: '/ai', label: 'AI', Icon: Sparkles },
+  { to: '/ai/chat', label: 'AI', Icon: Sparkles },
 ];
 
 function AppPrimaryNav() {
