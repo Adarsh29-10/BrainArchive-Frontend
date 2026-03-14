@@ -3,7 +3,7 @@ import { AlertTriangle, X } from 'lucide-react';
 interface DeleteModalProps {
   isOpen: boolean;
   title: string;
-  message: string;
+  message?: string;
   itemName?: string;
   isLoading?: boolean;
   onCancel: () => void;
@@ -74,9 +74,9 @@ function DeleteModal({
 
           {/* Warning Message */}
           {isDangerous && (
-            <div className="p-3 bg-red-950/30 rounded-lg border-l-4 border-red-600">
-              <p className="text-sm text-red-300">
-                <strong>⚠️ Warning:</strong> This action cannot be undone. Please proceed with caution.
+            <div className="p-3 bg-red-950/30  border-red-600">
+              <p className="text-sm sm:text-lg text-red-300">
+                <strong>Warning:</strong> This action cannot be undone. Please proceed with caution.
               </p>
             </div>
           )}
